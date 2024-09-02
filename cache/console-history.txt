@@ -1,0 +1,13 @@
+address
+const address = msg.sender
+msg.sender
+await hyaxLocal.getCurrentMaticPrice()
+await hyaxLocal.qualifiedInvestorList()
+await hyaxLocal.treasuryAddress()
+await hyaxLocal.whiteListerAddress()
+await hyaxLocal.maximumInvestmentAllowedInUSD()
+await hyaxLocal.minimumInvestmentAllowedInUSD()
+await hyaxLocal.hyaxPrice()
+const hyaxLocal = HyaxLocal.attach('0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0')
+const HyaxLocal = await ethers.getContractFactory('HYAXLocal')
+const HyaxLocal = await ethers.getContractFactory('HyaxLocal')
