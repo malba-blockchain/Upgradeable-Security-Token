@@ -1,0 +1,103 @@
+Goal: Deploy HYAX Upgradeable token
+
+D:&cd D:\USER\Downloads\ATLAS\Projects\HYAX-Upgradeable-Token
+
+https://docs.openzeppelin.com/learn/setting-up-a-node-project#creating-a-project
+
+---------INITIAL HARDHAT SETUP---------
+
+npm init -y
+
+npm install --save-dev hardhat
+
+npx hardhat init
+
+Create an empty hardhat.config.js
+
+npm install --save-dev @nomicfoundation/hardhat-toolbox
+
+npm install --save-dev hardhat
+
+npm install @openzeppelin/contracts
+
+npm install --save-dev @nomicfoundation/hardhat-ethers ethers
+
+npm install --save-dev @openzeppelin/hardhat-upgrades
+
+npm install --save-dev @nomicfoundation/hardhat-network-helpers
+
+npm install --save dotenv
+
+npm install @chainlink/contracts
+
+Create contracts directory folder.
+
+
+---------INITIAL LOCAL DEPLOYMENT---------
+
+npx hardhat node
+
+npx hardhat compile --force
+
+npx hardhat run --network localhost scripts/deploy_local_HYAX_contract.js
+
+Hyax Local deployed to: 0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0
+
+npx hardhat console --network localhost
+
+const HyaxLocal = await ethers.getContractFactory('HYAXLocal')
+const hyaxLocal = HyaxLocal.attach('0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0')
+
+await hyaxLocal.hyaxPrice()
+await hyaxLocal.minimumInvestmentAllowedInUSD()
+await hyaxLocal.maximumInvestmentAllowedInUSD()
+await hyaxLocal.whiteListerAddress()
+await hyaxLocal.treasuryAddress()
+await hyaxLocal.qualifiedInvestorList()
+
+
+---------EXECUTE LOCAL TESTS---------
+
+npm i hardhat-gas-reporter
+
+npx hardhat test
+
+
+---------DEPLOYING LOCAL UPGRADEABLE VERSION---------
+
+npx hardhat node
+
+npm install --save-dev @openzeppelin/contracts-upgradeable
+
+npx hardhat run --network localhost scripts/deploy_local_upgradeable_HYAX_contract.js
+
+3. Execute local tests DONE
+
+
+CONTINUE HERE:
+
+3.1. Optimize the local code while making the tests work
+
+Make the following solidity code more efficient to decrease the contract code size, to be compliant with the limit introduced in Spurious Dragon.
+
+MAKE ABSOLUTELY SURE YOU DON'T ALTER THE CODE FUNCTIONALITY NOR THE ERROR MESSAGES IN THE REQUIRE NOR THE COMMENTS!!!!!!!:
+
+KEEP OPTIMIZING: addToQualifiedInvestorList
+
+
+
+3.2. Update the Upgradeable version
+
+
+
+
+
+4. Deploy local upgradeable
+
+5. Deploy testnet upgradeable
+
+
+
+---------DONE---------
+
+2. Deploy basic smart contract on local testnet DONE
