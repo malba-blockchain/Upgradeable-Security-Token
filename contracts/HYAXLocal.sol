@@ -39,6 +39,11 @@ contract HYAXLocal is ERC20Pausable, Ownable, ReentrancyGuardUpgradeable {
     event InvestFromMatic(address sender, uint256 maticAmount, uint256 totalInvestmentInUsd, uint256 hyaxAmount);
 
     /**
+     * @dev Emitted when an investment is made using a crypto token.
+     */
+    event InvestFromCryptoToken(TokenType tokenType, address sender, uint256 tokenAmount, uint256 totalInvestmentInUsd, uint256 hyaxAmount);
+
+    /**
      * @dev Emitted when an investment is made using USDC.
      */
     event InvestFromUsdc(address sender, uint256 usdcAmount, uint256 totalInvestmentInUsd, uint256 hyaxAmount);
@@ -176,24 +181,18 @@ contract HYAXLocal is ERC20Pausable, Ownable, ReentrancyGuardUpgradeable {
     address public treasuryAddress;
 
     /**
-     * @dev White list of investors approved after KYC.
+     * @dev Mapping to store the data of the investors
      */
-    mapping(address => bool) public investorsWhiteList;
+    struct InvestorData {
+        bool isWhiteListed; // Whited investors approved after KYC.
+        bool isQualifiedInvestor; //Track qualified investors.
+        uint256 totalHyaxBoughtByInvestor; //Track the total amount of HYAX bought by each investor.
+        uint256 totalUsdDepositedByInvestor; //Track the total amount of USD an investor has deposited to buy the HYAX token.
+    }
 
-    /**
-     * @dev Mapping to track the total amount of HYAX bought by each investor.
-     */
-    mapping(address => uint256) public totalHyaxBoughtByInvestor;
+    mapping(address => InvestorData) public investorData;
 
-    /**
-     * @dev Mapping to track the total amount of USD an investor has deposited to buy the HYAX token.
-     */
-    mapping(address => uint256) public totalUsdDepositedByInvestor;
-
-    /**
-     * @dev Mapping to track qualified investors.
-     */
-    mapping(address => bool) public qualifiedInvestorList;
+    enum TokenType { MATIC, USDC, USDT, WBTC, WETH }
 
     //////////MATIC VARIABLES//////////
 
@@ -413,12 +412,21 @@ contract HYAXLocal is ERC20Pausable, Ownable, ReentrancyGuardUpgradeable {
 
         // Ensure that the investor address to add is not the zero address
         require(_investorAddress != address(0), "Investor address to add to the white list can not be the zero address");
-
-        // Ensure that the investor address has not already been added to the white list
-        require(!investorsWhiteList[_investorAddress], "That investor address has already been added to the white list");
         
-        // Add the investor address to the white list and emit the event
-        investorsWhiteList[_investorAddress] = true;
+        // Ensure that the investor address has not already been added to the white list
+        require(!investorData[_investorAddress].isWhiteListed, "That investor address has already been added to the white list");
+        
+        // Create a new InvestorData struct
+        InvestorData memory newInvestorData;
+
+        newInvestorData.isWhiteListed = true; // Mark the investor as whitelisted
+        newInvestorData.isQualifiedInvestor = false; // Initially, the investor is not a qualified investor
+        newInvestorData.totalHyaxBoughtByInvestor = 0; // Initialize the total HYAX bought to zero
+        newInvestorData.totalUsdDepositedByInvestor = 0; // Initialize the total USD deposited to zero
+
+        // Add the investor data to the mapping using the investor's address as the key
+        investorData[_investorAddress] = newInvestorData;
+        
         emit InvestorAddedToWhiteList(msg.sender, _investorAddress);
     }
 
@@ -432,16 +440,18 @@ contract HYAXLocal is ERC20Pausable, Ownable, ReentrancyGuardUpgradeable {
         require(_investorAddress != address(0), "Investor address to remove from the white list can not be the zero address");
 
         // Ensure that the investor address is registered on the white list
-        require(investorsWhiteList[_investorAddress], "That investor address is not registered on the white list");
+        require(investorData[_investorAddress].isWhiteListed, "That investor address is not registered on the white list");
 
         // Remove the investor address from the white list and emit the event
-        investorsWhiteList[_investorAddress] = false;
+        investorData[_investorAddress].isWhiteListed = false;
+      
         emit InvestorRemovedFromWhiteList(msg.sender, _investorAddress);
     }
 
     modifier investorIsOnWhiteList {
+
         // Ensure that the sender's address is on the white list
-        require(investorsWhiteList[msg.sender] == true, "Investor address has not been added to the white list");
+        require(investorData[msg.sender].isWhiteListed, "Investor address has not been added to the white list");
         _;
     }
 
@@ -461,15 +471,15 @@ contract HYAXLocal is ERC20Pausable, Ownable, ReentrancyGuardUpgradeable {
         require(_qualifiedInvestorAddress != address(0), "Investor address to add to the qualified investor list can not be the zero address");
 
         // Ensure that the investor address to add is already in the white list of investors
-        require(investorsWhiteList[_qualifiedInvestorAddress] == true, "Investor address must be first added to the investor white list");
-
+        require(investorData[_qualifiedInvestorAddress].isWhiteListed, "Investor address must be first added to the investor white list");
+   
         // Ensure that the investor address has not already been added to the qualified investor list
-        require(qualifiedInvestorList[_qualifiedInvestorAddress] != true, "That investor address has already been added to the qualified investor list");
-
+        require(!investorData[_qualifiedInvestorAddress].isQualifiedInvestor, "That investor address has already been added to the qualified investor list");
+        
         // Add the investor address to the qualified investor list
-        qualifiedInvestorList[_qualifiedInvestorAddress] = true;
-
-        //Emit the event of investor added to the qualified investor list
+        investorData[_qualifiedInvestorAddress].isQualifiedInvestor = true;
+       
+        // Emit the event of investor added to the qualified investor list
         emit InvestorAddedToQualifiedInvestorList(msg.sender, _qualifiedInvestorAddress);
     }
 
@@ -483,12 +493,12 @@ contract HYAXLocal is ERC20Pausable, Ownable, ReentrancyGuardUpgradeable {
         require(_qualifiedInvestorAddress != address(0), "Investor address to remove from the qualified investor list can not be the zero address");
 
         // Ensure that the investor address is registered on the qualified investor list
-        require(qualifiedInvestorList[_qualifiedInvestorAddress] == true, "That investor address is not registered on the qualified investor list");
+        require(investorData[_qualifiedInvestorAddress].isQualifiedInvestor, "That investor address is not registered on the qualified investor list");
 
         // Remove the investor address from the qualified investor list
-        qualifiedInvestorList[_qualifiedInvestorAddress] = false;
-
-        //Emit the event of investor removed from the qualified investor list
+        investorData[_qualifiedInvestorAddress].isQualifiedInvestor = false; 
+        
+        // Emit the event of investor removed from the qualified investor list
         emit InvestorRemovedFromQualifiedInvestorList(msg.sender, _qualifiedInvestorAddress);
     }
 
@@ -497,17 +507,15 @@ contract HYAXLocal is ERC20Pausable, Ownable, ReentrancyGuardUpgradeable {
      * @param _amount The amount of HYAX tokens to issue.
      */
     function tokenIssuance(uint256 _amount) public onlyOwner nonReentrant {
-        
+            
         // Ensure that the amount to issue in this execution is at least 1 token
-        require(_amount >= 1 * 10 ** decimals(), "Amount of HYAX tokens to issue must be at least 1 token");
-        
+        require(_amount >= 10 ** decimals(), "Amount of HYAX tokens to issue must be at least 1 token");
+            
         // Ensure that the amount to issue in this execution is maximum 1000 M tokens
         require(_amount <= 1000000000 * 10 ** decimals(), "Amount of HYAX tokens to issue at a time must be maximum 1000 M");
-        
+            
         // Validate the amount to issue doesn't go beyond the established total supply
-        uint256 newTotalSupply = totalSupply() + _amount;
-        
-        require(newTotalSupply <= 10000000000 * 10 ** decimals(), "Amount of HYAX tokens to issue surpases the 10,000 M tokens");
+        require(totalSupply() + _amount <= 10000000000 * 10 ** decimals(), "Amount of HYAX tokens to issue surpases the 10,000 M tokens");
 
         // Mint the specified amount of tokens to the owner
         _mint(owner(), _amount);
@@ -522,13 +530,14 @@ contract HYAXLocal is ERC20Pausable, Ownable, ReentrancyGuardUpgradeable {
      * @param _investorAddress The address of the investor making the investment.
      */
     function validateMaximumInvestedAmountAndInvestorLimit(uint256 _totalInvestmentInUsd, address _investorAddress) public view {
-
-        // Calculate the new total amount invested in USD by adding the current transaction's investment to the investor's total
-        uint256 newTotalAmountInvestedInUSD = _totalInvestmentInUsd + totalUsdDepositedByInvestor[_investorAddress];
         
-        //If the amount to buy in USD is greater than the maximum established, then validate if the investor is qualified
-        if(newTotalAmountInvestedInUSD > maximumInvestmentAllowedInUSD) {
-            require(qualifiedInvestorList[_investorAddress] == true, "To buy that amount of HYAX its required to be a qualified investor");
+        // Calculate the new total amount invested in USD by adding the current transaction's investment to the investor's total
+        uint256 newTotalAmountInvestedInUSD = _totalInvestmentInUsd + investorData[_investorAddress].totalUsdDepositedByInvestor;
+       
+        // If the amount to buy in USD is greater than the maximum established, then validate if the investor is qualified
+        if (newTotalAmountInvestedInUSD > maximumInvestmentAllowedInUSD) {
+
+            require(investorData[_investorAddress].isQualifiedInvestor, "To buy that amount of HYAX its required to be a qualified investor");
         }
     }
 
@@ -541,180 +550,78 @@ contract HYAXLocal is ERC20Pausable, Ownable, ReentrancyGuardUpgradeable {
     */
     function investFromMatic() external investorIsOnWhiteList payable nonReentrant returns (bool){
 
-        //Transfer MATIC to this contract. Its automatically done with the payable tag
+        // Transfer MATIC to this contract. Its automatically done with the payable tag
 
-        //Calculate total HYAX to return while validating minimum investment and if there are HYAX tokens left to sell
-        (uint256 totalInvestmentInUsd, uint256 totalHyaxTokenToReturn) = this.calculateTotalHyaxTokenToReturn(msg.value, this.getCurrentMaticPrice());
+        // Calculate total HYAX to return while validating minimum investment and if there are HYAX tokens left to sell
+        (uint256 totalInvestmentInUsd, uint256 totalHyaxTokenToReturn) = calculateTotalHyaxTokenToReturn(msg.value, getCurrentMaticPrice());
 
-        //If the amount of HYAX to buy is greater than the maximum established, then validate if the investor is qualified
-        this.validateMaximumInvestedAmountAndInvestorLimit(totalInvestmentInUsd, msg.sender);
+        // If the amount of HYAX to buy is greater than the maximum established, then validate if the investor is qualified
+        validateMaximumInvestedAmountAndInvestorLimit(totalInvestmentInUsd, msg.sender);
 
-        //Transfer MATIC to the treasury address
-        bool successSendingMatic = payable(treasuryAddress).send(msg.value);
-        require (successSendingMatic, "There was an error on sending the MATIC investment to the treasury");
+        // Transfer MATIC to the treasury address
+        require(payable(treasuryAddress).send(msg.value), "There was an error on sending the MATIC investment to the treasury");
 
-        //Transfer HYAX token to the investor wallet
-        bool successSendingHyaxToken = this.transfer(msg.sender, totalHyaxTokenToReturn);
-        require (successSendingHyaxToken, "There was an error on sending back the HYAX Token to the investor");
+        // Transfer HYAX token to the investor wallet
+        require(this.transfer(msg.sender, totalHyaxTokenToReturn), "There was an error on sending back the HYAX Token to the investor");
 
-        //Update the total amount of USD that a investor has deposited
-        totalUsdDepositedByInvestor[msg.sender] += totalInvestmentInUsd;
+        // Update the total amount of USD that an investor has deposited
+        investorData[msg.sender].totalUsdDepositedByInvestor += totalInvestmentInUsd;
+        
+        // Update the total amount of HYAX that an investor has bought
+        investorData[msg.sender].totalHyaxBoughtByInvestor += totalHyaxTokenToReturn;
 
-        //Update the total amount of HYAX that a investor has bought
-        totalHyaxBoughtByInvestor[msg.sender] += totalHyaxTokenToReturn;
-
-        //Emit the event of successful investment
+        // Emit the event of successful investment
         emit InvestFromMatic(msg.sender, msg.value, totalInvestmentInUsd, totalHyaxTokenToReturn);
 
-        return successSendingHyaxToken;
+        return true;
     }
 
-    /**
-     * @dev Function allowing an investor on the whitelist to invest using USDC.
-     * @param _amount The amount of USDC to invest.
-     * @return A boolean indicating the success of the investment and HYAX token transfer.
-     */
-    function investFromUsdc(uint256 _amount) external investorIsOnWhiteList nonReentrant returns (bool) {
+    function investFromCryptoToken(TokenType tokenType, uint256 _amount) external investorIsOnWhiteList nonReentrant returns (bool) {
+        // Get the token contract and price function based on the token type
+        ERC20TokenInterface token;
+        uint256 currentTokenPrice;
 
-        //Calculate total HYAX to return while validating minimum investment and if there are HYAX tokens left to sell
-        (uint256 totalInvestmentInUsd, uint256 totalHyaxTokenToReturn) = this.calculateTotalHyaxTokenToReturn(_amount, this.getCurrentUsdcPrice());
+        if (tokenType == TokenType.USDC) {
+            token = usdcToken;
+            currentTokenPrice = this.getCurrentUsdcPrice();
+        } else if (tokenType == TokenType.USDT) {
+            token = usdtToken;
+            currentTokenPrice = this.getCurrentUsdtPrice();
+        } else if (tokenType == TokenType.WBTC) {
+            token = wbtcToken;
+            currentTokenPrice = this.getCurrentWbtcPrice();
+        } else if (tokenType == TokenType.WETH) {
+            token = wethToken;
+            currentTokenPrice = this.getCurrentWethPrice();
+        } else {
+            revert("Invalid token type");
+        }
 
-        //If the amount of HYAX to buy is greater than the maximum established, then validate if the investor is qualified
-        this.validateMaximumInvestedAmountAndInvestorLimit(totalInvestmentInUsd, msg.sender);
+        // Calculate total HYAX to return while validating minimum investment and if there are HYAX tokens left to sell
+        (uint256 totalInvestmentInUsd, uint256 totalHyaxTokenToReturn) = calculateTotalHyaxTokenToReturn(_amount, currentTokenPrice);
 
-        //Transfer USDC to this contract
-        bool successReceivingUsdc  = usdcToken.transferFrom(msg.sender, address(this), _amount);
-        require (successReceivingUsdc, "There was an error on receiving the USDC investment");
+        // If the amount of HYAX to buy is greater than the maximum established, then validate if the investor is qualified
+        validateMaximumInvestedAmountAndInvestorLimit(totalInvestmentInUsd, msg.sender);
 
-        //Transfer USDC to the treasury address
-        bool successSendingUsdc = usdcToken.transfer(payable(treasuryAddress), _amount);
-        require (successSendingUsdc, "There was an error on sending the USDC investment to the treasury");
+        // Transfer the specified token to this contract
+        require(token.transferFrom(msg.sender, address(this), _amount), "There was an error on receiving the token investment");
 
-        //Transfer HYAX token to the investor wallet
-        bool successSendingHyaxToken = this.transfer(msg.sender, totalHyaxTokenToReturn);
-        require (successSendingHyaxToken, "There was an error on sending back the HYAX Token to the investor");
+        // Transfer the token to the treasury address
+        require(token.transfer(payable(treasuryAddress), _amount), "There was an error on sending the token investment to the treasury");
 
-        //Update the total amount of USD that a investor has deposited
-        totalUsdDepositedByInvestor[msg.sender] += totalInvestmentInUsd;
+        // Transfer HYAX token to the investor wallet
+        require(this.transfer(msg.sender, totalHyaxTokenToReturn), "There was an error on sending back the HYAX Token to the investor");
 
-        //Update the total amount of HYAX that a investor has bought
-        totalHyaxBoughtByInvestor[msg.sender] += totalHyaxTokenToReturn;
+        // Update the total amount of USD that an investor has deposited
+        investorData[msg.sender].totalUsdDepositedByInvestor += totalInvestmentInUsd;
 
-        //Emit the event of successful investment
-        emit InvestFromUsdc(msg.sender, _amount, totalInvestmentInUsd, totalHyaxTokenToReturn);
+        // Update the total amount of HYAX that an investor has bought
+        investorData[msg.sender].totalHyaxBoughtByInvestor += totalHyaxTokenToReturn;
 
-        return successSendingHyaxToken;
-    }
+        // Emit the event of successful investment
+        emit InvestFromCryptoToken(tokenType, msg.sender, _amount, totalInvestmentInUsd, totalHyaxTokenToReturn);
 
-    /**
-     * @dev Function allowing an investor on the whitelist to invest using USDT.
-     * @param _amount The amount of USDT to invest.
-     * @return A boolean indicating the success of the investment and HYAX token transfer.
-     */
-    function investFromUsdt(uint256 _amount) external investorIsOnWhiteList nonReentrant returns (bool) {
-
-        //Calculate total HYAX to return while validating minimum investment and if there are HYAX tokens left to sell
-        (uint256 totalInvestmentInUsd, uint256 totalHyaxTokenToReturn) = this.calculateTotalHyaxTokenToReturn(_amount, this.getCurrentUsdtPrice());
-
-        //If the amount of HYAX to buy is greater than the maximum established, then validate if the investor is qualified
-        this.validateMaximumInvestedAmountAndInvestorLimit(totalInvestmentInUsd, msg.sender);
-
-        //Transfer USDT to this contract
-        bool successReceivingUsdt  = usdtToken.transferFrom(msg.sender, address(this), _amount);
-        require (successReceivingUsdt, "There was an error on receiving the USDT investment");
-
-        //Transfer USDT to the treasury address
-        bool successSendingUsdt = usdtToken.transfer(payable(treasuryAddress), _amount);
-        require (successSendingUsdt, "There was an error on sending the USDT investment to the treasury");
-        
-        //Transfer HYAX token to the investor wallet
-        bool successSendingHyaxToken = this.transfer(msg.sender, totalHyaxTokenToReturn);
-        require (successSendingHyaxToken, "There was an error on sending back the HYAX Token to the investor");
-
-        //Update the total amount of USD that a investor has deposited
-        totalUsdDepositedByInvestor[msg.sender] += totalInvestmentInUsd;
-
-        //Update the total amount of HYAX that a investor has bought
-        totalHyaxBoughtByInvestor[msg.sender] += totalHyaxTokenToReturn;
-
-        //Emit the event of successful investment
-        emit InvestFromUsdt(msg.sender, _amount, totalInvestmentInUsd, totalHyaxTokenToReturn);
-  
-        return successSendingHyaxToken;
-    }
-
-    /**
-     * @dev Function allowing an investor on the whitelist to invest using WBTC.
-     * @param _amount The amount of WBTC to invest.
-     * @return A boolean indicating the success of the investment and HYAX token transfer.
-     */
-    function investFromWbtc(uint256 _amount) external investorIsOnWhiteList nonReentrant returns (bool) {
-
-        //Calculate total HYAX to return while validating minimum investment and if there are HYAX tokens left to sell
-        (uint256 totalInvestmentInUsd, uint256 totalHyaxTokenToReturn) = this.calculateTotalHyaxTokenToReturn(_amount, this.getCurrentWbtcPrice());
-
-        //If the amount of HYAX to buy is greater than the maximum established, then validate if the investor is qualified
-        this.validateMaximumInvestedAmountAndInvestorLimit(totalInvestmentInUsd, msg.sender);
-
-        //Transfer WBTC to this contract
-        bool successReceivingWbtc  = wbtcToken.transferFrom(msg.sender, address(this), _amount);
-        require (successReceivingWbtc, "There was an error on receiving the WBTC investment");
-
-        //Transfer WBTC to the treasury address
-        bool successSendingWbtc = wbtcToken.transfer(payable(treasuryAddress), _amount);
-        require (successSendingWbtc, "There was an error on sending the WBTC investment to the treasury");
-        
-        //Transfer HYAX token to the investor wallet
-        bool successSendingHyaxToken = this.transfer(msg.sender, totalHyaxTokenToReturn);
-        require (successSendingHyaxToken, "There was an error on sending back the HYAX Token to the investor");
-
-        //Update the total amount of USD that a investor has deposited
-        totalUsdDepositedByInvestor[msg.sender] += totalInvestmentInUsd;
-
-        //Update the total amount of HYAX that a investor has bought
-        totalHyaxBoughtByInvestor[msg.sender] += totalHyaxTokenToReturn;
-
-        //Emit the event of successful investment
-        emit InvestFromWbtc(msg.sender, _amount, totalInvestmentInUsd, totalHyaxTokenToReturn);
-
-        return successSendingHyaxToken;
-    }
-
-    /**
-     * @dev Function allowing an investor on the whitelist to invest using WETH.
-     * @param _amount The amount of WETH to invest.
-     * @return A boolean indicating the success of the investment and HYAX token transfer.
-     */
-    function investFromWeth(uint256 _amount) external investorIsOnWhiteList nonReentrant returns (bool) {
-
-        //Calculate total HYAX to return while validating minimum investment and if there are HYAX tokens left to sell
-        (uint256 totalInvestmentInUsd, uint256 totalHyaxTokenToReturn) = this.calculateTotalHyaxTokenToReturn(_amount, this.getCurrentWethPrice());
-
-        //If the amount of HYAX to buy is greater than the maximum established, then validate if the investor is qualified
-        this.validateMaximumInvestedAmountAndInvestorLimit(totalInvestmentInUsd, msg.sender);
-
-        //Transfer WETH to this contract
-        bool successReceivingWeth  = wethToken.transferFrom(msg.sender, address(this), _amount);
-        require (successReceivingWeth, "There was an error on receiving the WETH investment");
-
-        //Transfer WETH to the treasury address
-        bool successSendingWeth = wethToken.transfer(payable(treasuryAddress), _amount);
-        require (successSendingWeth, "There was an error on sending the WETH investment to the treasury");
-
-        //Transfer HYAX token to the investor wallet
-        bool successSendingHyaxToken = this.transfer(msg.sender, totalHyaxTokenToReturn);
-        require (successSendingHyaxToken, "There was an error on sending back the HYAX Token to the investor");
-
-        //Update the total amount of USD that a investor has deposited
-        totalUsdDepositedByInvestor[msg.sender] += totalInvestmentInUsd;
-
-        //Update the total amount of HYAX that a investor has bought
-        totalHyaxBoughtByInvestor[msg.sender] += totalHyaxTokenToReturn;
-
-        //Emit the event of successful investment
-        emit InvestFromWeth(msg.sender, _amount, totalInvestmentInUsd, totalHyaxTokenToReturn);
-
-        return successSendingHyaxToken;
+        return true;
     }
 
     /////////////VARIABLE UPDATE FUNCTIONS ONLY OWNER//////////
@@ -1269,5 +1176,4 @@ contract HYAXLocal is ERC20Pausable, Ownable, ReentrancyGuardUpgradeable {
      */
     receive() external payable nonReentrant {
     }
-
 }
