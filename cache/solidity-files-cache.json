@@ -2,15 +2,15 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "D:\\USER\\Downloads\\ATLAS\\Projects\\HYAX-Upgradeable-Token\\contracts\\HYAXLocal.sol": {
-      "lastModificationDate": 1725384651114,
-      "contentHash": "c3f5642600ee094f3429db6703a96f0e",
+      "lastModificationDate": 1725465436989,
+      "contentHash": "dfb0c56aab062c1c21cfeeffd62a394c",
       "sourceName": "contracts/HYAXLocal.sol",
       "solcConfig": {
         "version": "0.8.20",
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 100
+            "runs": 10000
           },
           "evmVersion": "paris",
           "outputSelection": {
@@ -53,7 +53,7 @@
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 100
+            "runs": 10000
           },
           "evmVersion": "paris",
           "outputSelection": {
@@ -92,7 +92,7 @@
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 100
+            "runs": 10000
           },
           "evmVersion": "paris",
           "outputSelection": {
@@ -131,7 +131,7 @@
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 100
+            "runs": 10000
           },
           "evmVersion": "paris",
           "outputSelection": {
@@ -171,7 +171,7 @@
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 100
+            "runs": 10000
           },
           "evmVersion": "paris",
           "outputSelection": {
@@ -208,7 +208,7 @@
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 100
+            "runs": 10000
           },
           "evmVersion": "paris",
           "outputSelection": {
@@ -245,7 +245,7 @@
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 100
+            "runs": 10000
           },
           "evmVersion": "paris",
           "outputSelection": {
@@ -284,7 +284,7 @@
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 100
+            "runs": 10000
           },
           "evmVersion": "paris",
           "outputSelection": {
@@ -321,7 +321,7 @@
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 100
+            "runs": 10000
           },
           "evmVersion": "paris",
           "outputSelection": {
@@ -363,7 +363,7 @@
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 100
+            "runs": 10000
           },
           "evmVersion": "paris",
           "outputSelection": {
@@ -402,7 +402,7 @@
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 100
+            "runs": 10000
           },
           "evmVersion": "paris",
           "outputSelection": {
@@ -441,7 +441,7 @@
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 100
+            "runs": 10000
           },
           "evmVersion": "paris",
           "outputSelection": {
@@ -478,7 +478,7 @@
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 100
+            "runs": 10000
           },
           "evmVersion": "paris",
           "outputSelection": {
@@ -517,7 +517,7 @@
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 100
+            "runs": 10000
           },
           "evmVersion": "paris",
           "outputSelection": {
@@ -556,7 +556,7 @@
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 100
+            "runs": 10000
           },
           "evmVersion": "paris",
           "outputSelection": {
@@ -595,7 +595,7 @@
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 100
+            "runs": 10000
           },
           "evmVersion": "paris",
           "outputSelection": {
@@ -634,7 +634,7 @@
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 100
+            "runs": 10000
           },
           "evmVersion": "paris",
           "outputSelection": {
@@ -673,7 +673,7 @@
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 100
+            "runs": 10000
           },
           "evmVersion": "paris",
           "outputSelection": {
@@ -712,7 +712,7 @@
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 100
+            "runs": 10000
           },
           "evmVersion": "paris",
           "outputSelection": {
@@ -751,7 +751,7 @@
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 100
+            "runs": 10000
           },
           "evmVersion": "paris",
           "outputSelection": {
@@ -790,7 +790,7 @@
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 100
+            "runs": 10000
           },
           "evmVersion": "paris",
           "outputSelection": {
@@ -829,7 +829,7 @@
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 100
+            "runs": 10000
           },
           "evmVersion": "paris",
           "outputSelection": {
@@ -868,7 +868,7 @@
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 100
+            "runs": 10000
           },
           "evmVersion": "paris",
           "outputSelection": {
@@ -907,7 +907,7 @@
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 100
+            "runs": 10000
           },
           "evmVersion": "paris",
           "outputSelection": {
@@ -947,7 +947,7 @@
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 100
+            "runs": 10000
           },
           "evmVersion": "paris",
           "outputSelection": {
@@ -988,7 +988,7 @@
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 100
+            "runs": 10000
           },
           "evmVersion": "paris",
           "outputSelection": {
@@ -1027,7 +1027,7 @@
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 100
+            "runs": 10000
           },
           "evmVersion": "paris",
           "outputSelection": {
@@ -1067,7 +1067,7 @@
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 100
+            "runs": 10000
           },
           "evmVersion": "paris",
           "outputSelection": {
@@ -1109,7 +1109,7 @@
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 100
+            "runs": 10000
           },
           "evmVersion": "paris",
           "outputSelection": {
@@ -1146,7 +1146,7 @@
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 100
+            "runs": 10000
           },
           "evmVersion": "paris",
           "outputSelection": {
@@ -1174,6 +1174,92 @@
       ],
       "artifacts": [
         "IERC20MetadataUpgradeable"
+      ]
+    },
+    "D:\\USER\\Downloads\\ATLAS\\Projects\\HYAX-Upgradeable-Token\\contracts\\HYAXLocalUpgradeable.sol": {
+      "lastModificationDate": 1725465956445,
+      "contentHash": "515cd62609e96bb90a6a1ade5321a00a",
+      "sourceName": "contracts/HYAXLocalUpgradeable.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 10000
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "storageLayout"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20PausableUpgradeable.sol",
+        "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol",
+        "@chainlink/contracts/src/v0.8/shared/interfaces/AggregatorV3Interface.sol",
+        "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol"
+      ],
+      "versionPragmas": [
+        "0.8.20"
+      ],
+      "artifacts": [
+        "ERC20TokenInterface",
+        "HYAXLocalUpgradeable"
+      ]
+    },
+    "D:\\USER\\Downloads\\ATLAS\\Projects\\HYAX-Upgradeable-Token\\contracts\\HYAXLocalUpgradeableV2.sol": {
+      "lastModificationDate": 1725466773310,
+      "contentHash": "ca2314607f807ea39a6b31339ae1fdc3",
+      "sourceName": "contracts/HYAXLocalUpgradeableV2.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 10000
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "storageLayout"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20PausableUpgradeable.sol",
+        "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol",
+        "@chainlink/contracts/src/v0.8/shared/interfaces/AggregatorV3Interface.sol",
+        "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol"
+      ],
+      "versionPragmas": [
+        "0.8.20"
+      ],
+      "artifacts": [
+        "ERC20TokenInterface",
+        "HYAXLocalUpgradeableV2"
       ]
     }
   }

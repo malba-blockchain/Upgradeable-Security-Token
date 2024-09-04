@@ -210,7 +210,7 @@ describe("Test case #3. Add investor address to white list", function () {
     const { hyax, owner, addr1, addr2, addr3 } = await loadFixture(deployContractAndSetVariables);
 
     await expect(hyax.connect(owner).addToWhiteList(ethers.ZeroAddress))
-      .to.be.revertedWith('Investor address to add to the white list can not be the zero address');
+      .to.be.revertedWith('Investor address to add to the white list cannot be the zero address');
   });
 
   it("3.3. Should properly execute the function because it's executed with the owner address and a valid address as parameter", async function () {
@@ -291,7 +291,7 @@ describe("Test case #4. Remove investor address from the white list", function (
     const { hyax, owner, addr1, addr2, addr3 } = await loadFixture(deployContractAndSetVariables);
 
     await expect(hyax.connect(owner).removeFromWhiteList(ethers.ZeroAddress))
-      .to.be.revertedWith('Investor address to remove from the white list can not be the zero address');
+      .to.be.revertedWith('Investor address to remove from the white list cannot be the zero address');
   });
 
   it("4.3. Should properly execute the function because it's executed with the owner address and a valid address as parameter", async function () {
@@ -417,7 +417,7 @@ describe("Test case #6. Add investor address to qualified investor list", functi
     await hyax.connect(owner).updateWhiteListerAddress(addr1.address);
 
     await expect(hyax.connect(addr1).addToQualifiedInvestorList(ethers.ZeroAddress))
-      .to.be.revertedWith('Investor address to add to the qualified investor list can not be the zero address');
+      .to.be.revertedWith('Investor address to add to the qualified investor list cannot be the zero address');
   });
 
   it("6.3. Should revert the function becase the address has not been added yet to the investors white list", async function () {
@@ -514,7 +514,7 @@ describe("Test case #7. Remove investor address from qualified investor list", f
     const { hyax, owner, addr1, addr2, addr3 } = await loadFixture(deployContractAndSetVariables);
 
     await expect(hyax.connect(owner).removeFromQualifiedInvestorList(ethers.ZeroAddress))
-      .to.be.revertedWith('Investor address to remove from the qualified investor list can not be the zero address');
+      .to.be.revertedWith('Investor address to remove from the qualified investor list cannot be the zero address');
   });
 
   it("7.3. Should properly execute the function because it's executed with the owner address and a valid address as parameter", async function () {
@@ -957,7 +957,7 @@ describe("Test case #15. Invest from MATIC", function () {
     const maticPriceDataFeedMock = await MaticPriceDataFeedMock.deploy();
 
     //Update the address of the MATIC price data feed mock
-    await hyax.connect(owner).updateMaticPriceFeedAddress(maticPriceDataFeedMock.target);
+    await hyax.connect(owner).updatePriceFeedAddress(0, maticPriceDataFeedMock.target);
 
 
     //Update the white lister address
@@ -1059,7 +1059,7 @@ describe("Test case #15. Invest from MATIC", function () {
     console.log("valueToInvest", valueToInvest.toString());
 
     // Calculate the total HYAX to return in the MATIC investment
-    var [totalInvestmentInUsd, totalHyaxTokenToReturn] = await hyax.calculateTotalHyaxTokenToReturn(valueToInvest, await hyax.getCurrentMaticPrice());
+    var [totalInvestmentInUsd, totalHyaxTokenToReturn] = await hyax.calculateTotalHyaxTokenToReturn(valueToInvest, await hyax.getCurrentTokenPrice(0));
 
     // Send the investment in MATIC to the smart contract to receive HYAX tokens in return
     await hyax.connect(addr2).investFromMatic({ value: valueToInvest });
@@ -1099,7 +1099,7 @@ describe("Test case #16. Invest from crypto token USDC", function () {
     const usdcPriceDataFeedMock = await UsdcPriceDataFeedMock.deploy();
 
     //Update the address of the USDC price data feed mock
-    await hyax.connect(owner).updateUsdcPriceFeedAddress(usdcPriceDataFeedMock.target);
+    await hyax.connect(owner).updatePriceFeedAddress(1, usdcPriceDataFeedMock.target);
 
 
     //Deploy the USDC token mock
@@ -1114,7 +1114,7 @@ describe("Test case #16. Invest from crypto token USDC", function () {
     );
 
     //Update the address of the USDC token mock
-    await hyax.connect(owner).updateUsdcTokenAddress(usdcToken.target);
+    await hyax.connect(owner).updateTokenAddress(1, usdcToken.target);
 
     //Update the white lister address
     await hyax.connect(owner).updateWhiteListerAddress(addr1.address);
@@ -1232,7 +1232,7 @@ describe("Test case #17. Invest from crypto token USDT", function () {
     const usdtPriceDataFeedMock = await UsdtPriceDataFeedMock.deploy();
 
     //Update the address of the USDT price data feed mock
-    await hyax.connect(owner).updateUsdtPriceFeedAddress(usdtPriceDataFeedMock.target);
+    await hyax.connect(owner).updatePriceFeedAddress(2, usdtPriceDataFeedMock.target);
 
 
     //Deploy the USDT token mock
@@ -1247,7 +1247,7 @@ describe("Test case #17. Invest from crypto token USDT", function () {
     );
 
     //Update the address of the USDT token mock
-    await hyax.connect(owner).updateUsdtTokenAddress(usdtToken.target);
+    await hyax.connect(owner).updateTokenAddress(2, usdtToken.target);
 
 
     //Update the white lister address
@@ -1364,7 +1364,7 @@ describe("Test case #19. Invest from crypto token WBTC", function () {
     const wbtcPriceDataFeedMock = await WbtcPriceDataFeedMock.deploy();
 
     //Update the address of the WBTC price data feed mock
-    await hyax.connect(owner).updateWbtcPriceFeedAddress(wbtcPriceDataFeedMock.target);
+    await hyax.connect(owner).updatePriceFeedAddress(3, wbtcPriceDataFeedMock.target);
 
 
     //Deploy the WBTC token mock
@@ -1379,7 +1379,7 @@ describe("Test case #19. Invest from crypto token WBTC", function () {
     );
 
     //Update the address of the WBTC token mock
-    await hyax.connect(owner).updateWbtcTokenAddress(wbtcToken.target);
+    await hyax.connect(owner).updateTokenAddress(3, wbtcToken.target);
 
 
     //Update the white lister address
@@ -1496,7 +1496,7 @@ describe("Test case #18. Invest from crypto token WETH", function () {
     const wethPriceDataFeedMock = await WethPriceDataFeedMock.deploy();
 
     //Update the address of the WETH price data feed mock
-    await hyax.connect(owner).updateWethPriceFeedAddress(wethPriceDataFeedMock.target);
+    await hyax.connect(owner).updatePriceFeedAddress(4, wethPriceDataFeedMock.target);
 
 
     //Deploy the WETH token mock
@@ -1511,7 +1511,7 @@ describe("Test case #18. Invest from crypto token WETH", function () {
     );
 
     //Update the address of the WETH token mock
-    await hyax.connect(owner).updateWethTokenAddress(wethToken.target);
+    await hyax.connect(owner).updateTokenAddress(4, wethToken.target);
 
 
     //Update the white lister address
@@ -1791,7 +1791,7 @@ describe("Test case #23. Update white lister address", function () {
     const { hyax, deployer, owner, addr1, addr2, addr3 } = await loadFixture(deployContractAndSetVariables);
 
     await expect(hyax.connect(owner).updateWhiteListerAddress(ethers.ZeroAddress))
-      .to.be.revertedWith('The white lister address can not be the zero address');
+      .to.be.revertedWith('The white lister address cannot be the zero address');
   });
 
   it("23.3. Should properly execute the function because it has a valid address and valid parameter", async function () {
@@ -1843,7 +1843,7 @@ describe("Test case #24. Update treasury address", function () {
     const { hyax, deployer, owner, addr1, addr2, addr3 } = await loadFixture(deployContractAndSetVariables);
 
     await expect(hyax.connect(owner).updateTreasuryAddress(ethers.ZeroAddress))
-      .to.be.revertedWith('The treasury address can not be the zero address');
+      .to.be.revertedWith('The treasury address cannot be the zero address');
   });
 
   it("24.3. Should properly execute the function because it has a valid address and valid parameter", async function () {
@@ -1856,8 +1856,7 @@ describe("Test case #24. Update treasury address", function () {
 
 });
 
-
-describe("Test case #25. Update MATIC price feed address", function () {
+describe("Test case #25. Update crypto token MATIC price feed address", function () {
 
   //Create fixture to deploy smart contract and set initial variables
   async function deployContractAndSetVariables() {
@@ -1893,21 +1892,21 @@ describe("Test case #25. Update MATIC price feed address", function () {
     const { hyax, deployer, owner, addr1, addr2, addr3, maticPriceDataFeedMock } = await loadFixture(deployContractAndSetVariables);
 
     //This is the actual MATIC price feed address on the local testnet
-    await expect(hyax.connect(addr1).updateMaticPriceFeedAddress(maticPriceDataFeedMock.target))
+    await expect(hyax.connect(addr1).updatePriceFeedAddress(0, maticPriceDataFeedMock.target))
       .to.be.revertedWithCustomError(hyax, 'OwnableUnauthorizedAccount');
   });
 
   it("25.2. Should revert transaction because of execution with invalid parameter", async function () {
     const { hyax, deployer, owner, addr1, addr2, addr3 } = await loadFixture(deployContractAndSetVariables);
 
-    await expect(hyax.connect(owner).updateMaticPriceFeedAddress(ethers.ZeroAddress))
-      .to.be.revertedWith('The price data feed address can not be the zero address');
+    await expect(hyax.connect(owner).updatePriceFeedAddress(0, ethers.ZeroAddress))
+      .to.be.revertedWith('The price data feed address cannot be the zero address');
   });
 
   it("25.3. Should revert transaction because of execution with an address that's not a data feed", async function () {
     const { hyax, owner, deployer, addr1, addr2, addr3, maticPriceDataFeedMock } = await loadFixture(deployContractAndSetVariables);
 
-    expect(hyax.connect(owner).updateMaticPriceFeedAddress(hyax.target))
+    expect(hyax.connect(owner).updatePriceFeedAddress(0, hyax.target))
       .to.be.revertedWith('The new address does not seem to belong to a MATIC price data feed');
   });
 
@@ -1915,7 +1914,7 @@ describe("Test case #25. Update MATIC price feed address", function () {
     const { hyax, owner, deployer, addr1, addr2, addr3, maticPriceDataFeedMock } = await loadFixture(deployContractAndSetVariables);
 
     //This is the actual MATIC price feed address on the local testnet
-    await hyax.connect(owner).updateMaticPriceFeedAddress(maticPriceDataFeedMock.target);
+    await hyax.connect(owner).updatePriceFeedAddress(0, maticPriceDataFeedMock.target);
 
     expect(await hyax.maticPriceFeedAddress()).to.equal(maticPriceDataFeedMock.target);
   });
@@ -1953,22 +1952,22 @@ describe("Test case #26. Update USDC token address in the polygon network", func
     const { hyax, deployer, owner, addr1, addr2, addr3 } = await loadFixture(deployContractAndSetVariables);
 
     //This is the actual USDC token address on the polygon mainnet
-    await expect(hyax.connect(addr1).updateUsdcTokenAddress('0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174'))
+    await expect(hyax.connect(addr1).updateTokenAddress(1, '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174'))
       .to.be.revertedWithCustomError(hyax, 'OwnableUnauthorizedAccount');
   });
 
   it("26.2. Should revert transaction because of execution with invalid parameter", async function () {
     const { hyax, deployer, owner, addr1, addr2, addr3 } = await loadFixture(deployContractAndSetVariables);
 
-    await expect(hyax.connect(owner).updateUsdcTokenAddress(ethers.ZeroAddress))
-      .to.be.revertedWith('The token address can not be the zero address');
+    await expect(hyax.connect(owner).updateTokenAddress(1, ethers.ZeroAddress))
+      .to.be.revertedWith('The token address cannot be the zero address');
   });
 
   it("26.3. Should properly execute the function because it has a valid address and valid parameter", async function () {
     const { hyax, owner, deployer, addr1, addr2, addr3 } = await loadFixture(deployContractAndSetVariables);
 
     //This is the actual USDC token address on the polygon mainnet
-    await hyax.connect(owner).updateUsdcTokenAddress('0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174');
+    await hyax.connect(owner).updateTokenAddress(1, '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174');
 
     expect(await hyax.usdcTokenAddress()).to.equal('0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174');
   });
@@ -1976,7 +1975,7 @@ describe("Test case #26. Update USDC token address in the polygon network", func
 });
 
 
-describe("Test case #27. Update USDC price feed address", function () {
+describe("Test case #27. Update crypto token USDC price feed address", function () {
 
   //Create fixture to deploy smart contract and set initial variables
   async function deployContractAndSetVariables() {
@@ -2012,21 +2011,21 @@ describe("Test case #27. Update USDC price feed address", function () {
     const { hyax, deployer, owner, addr1, addr2, addr3, usdcPriceDataFeedMock } = await loadFixture(deployContractAndSetVariables);
 
     //This is the actual USDC price feed address on the local testnet
-    await expect(hyax.connect(addr1).updateUsdcPriceFeedAddress(usdcPriceDataFeedMock.target))
+    await expect(hyax.connect(addr1).updatePriceFeedAddress(1, usdcPriceDataFeedMock.target))
       .to.be.revertedWithCustomError(hyax, 'OwnableUnauthorizedAccount');
   });
 
   it("27.2. Should revert transaction because of execution with invalid parameter", async function () {
     const { hyax, deployer, owner, addr1, addr2, addr3 } = await loadFixture(deployContractAndSetVariables);
 
-    await expect(hyax.connect(owner).updateUsdcPriceFeedAddress(ethers.ZeroAddress))
-      .to.be.revertedWith('The price data feed address can not be the zero address');
+    await expect(hyax.connect(owner).updatePriceFeedAddress(1, ethers.ZeroAddress))
+      .to.be.revertedWith('The price data feed address cannot be the zero address');
   });
 
   it("27.3. Should revert transaction because of execution with an address that's not a data feed", async function () {
     const { hyax, owner, deployer, addr1, addr2, addr3 } = await loadFixture(deployContractAndSetVariables);
 
-    expect(hyax.connect(owner).updateUsdcPriceFeedAddress(hyax.target))
+    expect(hyax.connect(owner).updatePriceFeedAddress(1, hyax.target))
       .to.be.revertedWith('The new address does not seem to belong to a USDC price data feed');
   });
 
@@ -2034,7 +2033,7 @@ describe("Test case #27. Update USDC price feed address", function () {
     const { hyax, owner, deployer, addr1, addr2, addr3, usdcPriceDataFeedMock } = await loadFixture(deployContractAndSetVariables);
 
     //This is the actual USDC price feed address on the local testnet
-    await hyax.connect(owner).updateUsdcPriceFeedAddress(usdcPriceDataFeedMock.target);
+    await hyax.connect(owner).updatePriceFeedAddress(1, usdcPriceDataFeedMock.target);
 
     expect(await hyax.usdcPriceFeedAddress()).to.equal(usdcPriceDataFeedMock.target);
   });
@@ -2072,22 +2071,22 @@ describe("Test case #28. Update USDT token address in the polygon network", func
     const { hyax, deployer, owner, addr1, addr2, addr3 } = await loadFixture(deployContractAndSetVariables);
 
     //This is the actual USDT token address on the polygon mainnet
-    await expect(hyax.connect(addr1).updateUsdtTokenAddress('0xc2132D05D31c914a87C6611C10748AEb04B58e8F'))
+    await expect(hyax.connect(addr1).updateTokenAddress(2, '0xc2132D05D31c914a87C6611C10748AEb04B58e8F'))
       .to.be.revertedWithCustomError(hyax, 'OwnableUnauthorizedAccount');
   });
 
   it("28.2. Should revert transaction because of execution with invalid parameter", async function () {
     const { hyax, deployer, owner, addr1, addr2, addr3 } = await loadFixture(deployContractAndSetVariables);
 
-    await expect(hyax.connect(owner).updateUsdtTokenAddress(ethers.ZeroAddress))
-      .to.be.revertedWith('The token address can not be the zero address');
+    await expect(hyax.connect(owner).updateTokenAddress(2, ethers.ZeroAddress))
+      .to.be.revertedWith('The token address cannot be the zero address');
   });
 
   it("28.3. Should properly execute the function because it has a valid address and valid parameter", async function () {
     const { hyax, owner, deployer, addr1, addr2, addr3 } = await loadFixture(deployContractAndSetVariables);
 
     //This is the actual USDT token address on the polygon mainnet
-    await hyax.connect(owner).updateUsdtTokenAddress('0xc2132D05D31c914a87C6611C10748AEb04B58e8F');
+    await hyax.connect(owner).updateTokenAddress(2, '0xc2132D05D31c914a87C6611C10748AEb04B58e8F');
 
     expect(await hyax.usdtTokenAddress()).to.equal('0xc2132D05D31c914a87C6611C10748AEb04B58e8F');
   });
@@ -2095,7 +2094,7 @@ describe("Test case #28. Update USDT token address in the polygon network", func
 });
 
 
-describe("Test case #29. Update USDT price feed address", function () {
+describe("Test case #29. Update crypto token USDT price feed address", function () {
 
   //Create fixture to deploy smart contract and set initial variables
   async function deployContractAndSetVariables() {
@@ -2131,21 +2130,21 @@ describe("Test case #29. Update USDT price feed address", function () {
     const { hyax, deployer, owner, addr1, addr2, addr3, usdtPriceDataFeedMock } = await loadFixture(deployContractAndSetVariables);
 
     //This is the actual USDT price feed address on the local testnet
-    await expect(hyax.connect(addr1).updateUsdtPriceFeedAddress(usdtPriceDataFeedMock.target))
+    await expect(hyax.connect(addr1).updatePriceFeedAddress(2, usdtPriceDataFeedMock.target))
       .to.be.revertedWithCustomError(hyax, 'OwnableUnauthorizedAccount');
   });
 
   it("29.2. Should revert transaction because of execution with invalid parameter", async function () {
     const { hyax, deployer, owner, addr1, addr2, addr3 } = await loadFixture(deployContractAndSetVariables);
 
-    await expect(hyax.connect(owner).updateUsdtPriceFeedAddress(ethers.ZeroAddress))
-      .to.be.revertedWith('The price data feed address can not be the zero address');
+    await expect(hyax.connect(owner).updatePriceFeedAddress(2, ethers.ZeroAddress))
+      .to.be.revertedWith('The price data feed address cannot be the zero address');
   });
 
   it("29.3. Should revert transaction because of execution with an address that's not a data feed", async function () {
     const { hyax, owner, deployer, addr1, addr2, addr3 } = await loadFixture(deployContractAndSetVariables);
 
-    expect(hyax.connect(owner).updateUsdtPriceFeedAddress(hyax.target))
+    expect(hyax.connect(owner).updatePriceFeedAddress(2, hyax.target))
       .to.be.revertedWith('The new address does not seem to belong to a USDT price data feed');
   });
 
@@ -2153,7 +2152,7 @@ describe("Test case #29. Update USDT price feed address", function () {
     const { hyax, owner, deployer, addr1, addr2, addr3, usdtPriceDataFeedMock } = await loadFixture(deployContractAndSetVariables);
 
     //This is the actual USDC price feed address on the local testnet
-    await hyax.connect(owner).updateUsdtPriceFeedAddress(usdtPriceDataFeedMock.target);
+    await hyax.connect(owner).updatePriceFeedAddress(2, usdtPriceDataFeedMock.target);
 
     expect(await hyax.usdtPriceFeedAddress()).to.equal(usdtPriceDataFeedMock.target);
   });
@@ -2191,22 +2190,22 @@ describe("Test case #30. Update WBTC token address in the polygon network", func
     const { hyax, deployer, owner, addr1, addr2, addr3 } = await loadFixture(deployContractAndSetVariables);
 
     //This is the actual WBTC token address on the polygon mainnet
-    await expect(hyax.connect(addr1).updateWbtcTokenAddress('0x1BFD67037B42Cf73acF2047067bd4F2C47D9BfD6'))
+    await expect(hyax.connect(addr1).updateTokenAddress(3, '0x1BFD67037B42Cf73acF2047067bd4F2C47D9BfD6'))
       .to.be.revertedWithCustomError(hyax, 'OwnableUnauthorizedAccount');
   });
 
   it("30.2. Should revert transaction because of execution with invalid parameter", async function () {
     const { hyax, deployer, owner, addr1, addr2, addr3 } = await loadFixture(deployContractAndSetVariables);
 
-    await expect(hyax.connect(owner).updateWbtcTokenAddress(ethers.ZeroAddress))
-      .to.be.revertedWith('The token address can not be the zero address');
+    await expect(hyax.connect(owner).updateTokenAddress(3, ethers.ZeroAddress))
+      .to.be.revertedWith('The token address cannot be the zero address');
   });
 
   it("230.3. Should properly execute the function because it has a valid address and valid parameter", async function () {
     const { hyax, owner, deployer, addr1, addr2, addr3 } = await loadFixture(deployContractAndSetVariables);
 
     //This is the actual WBTC token address on the polygon mainnet
-    await hyax.connect(owner).updateWbtcTokenAddress('0x1BFD67037B42Cf73acF2047067bd4F2C47D9BfD6');
+    await hyax.connect(owner).updateTokenAddress(3, '0x1BFD67037B42Cf73acF2047067bd4F2C47D9BfD6');
 
     expect(await hyax.wbtcTokenAddress()).to.equal('0x1BFD67037B42Cf73acF2047067bd4F2C47D9BfD6');
   });
@@ -2214,7 +2213,8 @@ describe("Test case #30. Update WBTC token address in the polygon network", func
 });
 
 
-describe("Test case #31. Update WBTC price feed address", function () {
+
+describe("Test case #31. Update crypto token WBTC price feed address", function () {
 
   //Create fixture to deploy smart contract and set initial variables
   async function deployContractAndSetVariables() {
@@ -2250,21 +2250,21 @@ describe("Test case #31. Update WBTC price feed address", function () {
     const { hyax, deployer, owner, addr1, addr2, addr3, wbtcPriceDataFeedMock } = await loadFixture(deployContractAndSetVariables);
 
     //This is the actual WBTC price feed address on the local testnet
-    await expect(hyax.connect(addr1).updateWbtcPriceFeedAddress(wbtcPriceDataFeedMock.target))
+    await expect(hyax.connect(addr1).updatePriceFeedAddress(3, wbtcPriceDataFeedMock.target))
       .to.be.revertedWithCustomError(hyax, 'OwnableUnauthorizedAccount');
   });
 
   it("31.2. Should revert transaction because of execution with invalid parameter", async function () {
     const { hyax, deployer, owner, addr1, addr2, addr3 } = await loadFixture(deployContractAndSetVariables);
 
-    await expect(hyax.connect(owner).updateWbtcPriceFeedAddress(ethers.ZeroAddress))
-      .to.be.revertedWith('The price data feed address can not be the zero address');
+    await expect(hyax.connect(owner).updatePriceFeedAddress(3, ethers.ZeroAddress))
+      .to.be.revertedWith('The price data feed address cannot be the zero address');
   });
 
   it("31.3. Should revert transaction because of execution with an address that's not a data feed", async function () {
     const { hyax, owner, deployer, addr1, addr2, addr3 } = await loadFixture(deployContractAndSetVariables);
 
-    expect(hyax.connect(owner).updateWbtcPriceFeedAddress(hyax.target))
+    expect(hyax.connect(owner).updatePriceFeedAddress(3, hyax.target))
       .to.be.revertedWith('The new address does not seem to belong to a WBTC price data feed');
   });
 
@@ -2272,7 +2272,7 @@ describe("Test case #31. Update WBTC price feed address", function () {
     const { hyax, owner, deployer, addr1, addr2, addr3, wbtcPriceDataFeedMock } = await loadFixture(deployContractAndSetVariables);
 
     //This is the actual WBTC price feed address on the local testnet
-    await hyax.connect(owner).updateWbtcPriceFeedAddress(wbtcPriceDataFeedMock.target);
+    await hyax.connect(owner).updatePriceFeedAddress(3, wbtcPriceDataFeedMock.target);
 
     expect(await hyax.wbtcPriceFeedAddress()).to.equal(wbtcPriceDataFeedMock.target);
   });
@@ -2316,22 +2316,22 @@ describe("Test case #32. Update WETH token address in the polygon network", func
     const { hyax, deployer, owner, addr1, addr2, addr3 } = await loadFixture(deployContractAndSetVariables);
 
     //This is the actual WETH token address on the polygon mainnet
-    await expect(hyax.connect(addr1).updateWethTokenAddress('0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619'))
+    await expect(hyax.connect(addr1).updateTokenAddress(4, '0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619'))
       .to.be.revertedWithCustomError(hyax, 'OwnableUnauthorizedAccount');
   });
 
   it("32.2. Should revert transaction because of execution with invalid parameter", async function () {
     const { hyax, deployer, owner, addr1, addr2, addr3 } = await loadFixture(deployContractAndSetVariables);
 
-    await expect(hyax.connect(owner).updateWethTokenAddress(ethers.ZeroAddress))
-      .to.be.revertedWith('The token address can not be the zero address');
+    await expect(hyax.connect(owner).updateTokenAddress(4, ethers.ZeroAddress))
+      .to.be.revertedWith('The token address cannot be the zero address');
   });
 
   it("32.3. Should properly execute the function because it has a valid address and valid parameter", async function () {
     const { hyax, owner, deployer, addr1, addr2, addr3 } = await loadFixture(deployContractAndSetVariables);
 
     //This is the actual WETH token address on the polygon mainnet
-    await hyax.connect(owner).updateWethTokenAddress('0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619');
+    await hyax.connect(owner).updateTokenAddress(4, '0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619');
 
     expect(await hyax.wethTokenAddress()).to.equal('0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619');
   });
@@ -2339,7 +2339,7 @@ describe("Test case #32. Update WETH token address in the polygon network", func
 });
 
 
-describe("Test case #33. Update WETH price feed address", function () {
+describe("Test case #33. Update crypto token WETH price feed address", function () {
 
   //Create fixture to deploy smart contract and set initial variables
   async function deployContractAndSetVariables() {
@@ -2375,21 +2375,21 @@ describe("Test case #33. Update WETH price feed address", function () {
     const { hyax, deployer, owner, addr1, addr2, addr3, wethPriceDataFeedMock } = await loadFixture(deployContractAndSetVariables);
 
     //This is the actual WETH price feed address on the local testnet
-    await expect(hyax.connect(addr1).updateWethPriceFeedAddress(wethPriceDataFeedMock.target))
+    await expect(hyax.connect(addr1).updatePriceFeedAddress(4, wethPriceDataFeedMock.target))
       .to.be.revertedWithCustomError(hyax, 'OwnableUnauthorizedAccount');
   });
 
   it("33.2. Should revert transaction because of execution with invalid parameter", async function () {
     const { hyax, deployer, owner, addr1, addr2, addr3 } = await loadFixture(deployContractAndSetVariables);
 
-    await expect(hyax.connect(owner).updateWethPriceFeedAddress(ethers.ZeroAddress))
-      .to.be.revertedWith('The price data feed address can not be the zero address');
+    await expect(hyax.connect(owner).updatePriceFeedAddress(4, ethers.ZeroAddress))
+      .to.be.revertedWith('The price data feed address cannot be the zero address');
   });
 
   it("33.3. Should revert transaction because of execution with an address that's not a data feed", async function () {
     const { hyax, owner, deployer, addr1, addr2, addr3 } = await loadFixture(deployContractAndSetVariables);
 
-    expect(hyax.connect(owner).updateWethPriceFeedAddress(hyax.target))
+    expect(hyax.connect(owner).updatePriceFeedAddress(4, hyax.target))
       .to.be.revertedWith('The new address does not seem to belong to a ETH price data feed');
   });
 
@@ -2397,7 +2397,7 @@ describe("Test case #33. Update WETH price feed address", function () {
     const { hyax, owner, deployer, addr1, addr2, addr3, wethPriceDataFeedMock } = await loadFixture(deployContractAndSetVariables);
 
     //This is the actual WETH price feed address on the local testnet
-    await hyax.connect(owner).updateWethPriceFeedAddress(wethPriceDataFeedMock.target);
+    await hyax.connect(owner).updatePriceFeedAddress(4, wethPriceDataFeedMock.target);
 
     expect(await hyax.wethPriceFeedAddress()).to.equal(wethPriceDataFeedMock.target);
   });
@@ -2555,7 +2555,7 @@ describe("Test case #36. Transfer ownership", function () {
     const { hyax, deployer, owner, addr1, addr2, addr3 } = await loadFixture(deployContractAndSetVariables);
 
     await expect(hyax.transferOwnership(hyax.target))
-      .to.be.revertedWith('Ownable: new owner can not be the same contract address');
+      .to.be.revertedWith('Ownable: new owner cannot be the same contract address');
   });
 
   it("36.4. Should properly execute the function because it's done from the owner address", async function () {
@@ -2597,7 +2597,7 @@ describe("Test case #37. Get current MATIC price", function () {
     const maticPriceDataFeedMock = await MaticPriceDataFeedMock.deploy();
 
     //Update the address of the MATIC price data feed mock
-    await hyax.connect(owner).updateMaticPriceFeedAddress(maticPriceDataFeedMock.target);
+    await hyax.connect(owner).updatePriceFeedAddress(0,maticPriceDataFeedMock.target);
 
 
     //Return values as fixture for the testing cases
@@ -2608,7 +2608,7 @@ describe("Test case #37. Get current MATIC price", function () {
     const { hyax, deployer, owner, addr1, addr2, addr3 } = await loadFixture(deployContractAndSetVariables);
 
     //Current MATIC price 41137400 = $0.41137400
-    expect(await hyax.getCurrentMaticPrice()).to.equal(41137400);
+    expect(await hyax.getCurrentTokenPrice(0)).to.equal(41137400);
   });
 
 });
@@ -2642,7 +2642,7 @@ describe("Test case #38. Get current USDC price", function () {
     const usdcPriceDataFeedMock = await UsdcPriceDataFeedMock.deploy();
 
     //Update the address of the USDC price data feed mock
-    await hyax.connect(owner).updateUsdcPriceFeedAddress(usdcPriceDataFeedMock.target);
+    await hyax.connect(owner).updatePriceFeedAddress(1, usdcPriceDataFeedMock.target);
 
     //Return values as fixture for the testing cases
     return { hyax, deployer, owner, addr1, addr2, addr3 };
@@ -2652,7 +2652,7 @@ describe("Test case #38. Get current USDC price", function () {
     const { hyax, deployer, owner, addr1, addr2, addr3 } = await loadFixture(deployContractAndSetVariables);
 
     //Current USDC price 99992042 = $0.99992042
-    expect(await hyax.getCurrentUsdcPrice()).to.equal(99992042);
+    expect(await hyax.getCurrentTokenPrice(1)).to.equal(99992042);
   });
 
 });
@@ -2686,7 +2686,7 @@ describe("Test case #39. Get current USDT price", function () {
     const usdtPriceDataFeedMock = await UsdtPriceDataFeedMock.deploy();
 
     //Update the address of the USDT price data feed mock
-    await hyax.connect(owner).updateUsdtPriceFeedAddress(usdtPriceDataFeedMock.target);
+    await hyax.connect(owner).updatePriceFeedAddress(2, usdtPriceDataFeedMock.target);
 
     //Return values as fixture for the testing cases
     return { hyax, deployer, owner, addr1, addr2, addr3 };
@@ -2695,7 +2695,7 @@ describe("Test case #39. Get current USDT price", function () {
   it("39.1. Should properly execute the function because it's reading the value parameter of the USDT data price mock", async function () {
     const { hyax, deployer, owner, addr1, addr2, addr3 } = await loadFixture(deployContractAndSetVariables);
     //Current USDT price 100006000 = $1.00006000
-    expect(await hyax.getCurrentUsdtPrice()).to.equal(100006000);
+    expect(await hyax.getCurrentTokenPrice(2)).to.equal(100006000);
   });
 
 });
@@ -2729,7 +2729,7 @@ describe("Test case #40. Get current WBTC price", function () {
     const wbtcPriceDataFeedMock = await WbtcPriceDataFeedMock.deploy();
 
     //Update the address of the WBTC price data feed mock
-    await hyax.connect(owner).updateWbtcPriceFeedAddress(wbtcPriceDataFeedMock.target);
+    await hyax.connect(owner).updatePriceFeedAddress(3, wbtcPriceDataFeedMock.target);
 
     //Return values as fixture for the testing cases
     return { hyax, deployer, owner, addr1, addr2, addr3 };
@@ -2738,7 +2738,7 @@ describe("Test case #40. Get current WBTC price", function () {
   it("40.1. Should properly execute the function because it's reading the value parameter of the WBTC data price mock", async function () {
     const { hyax, deployer, owner, addr1, addr2, addr3 } = await loadFixture(deployContractAndSetVariables);
     //Current Bitcoin price 5844229670000 = $58,442.29670000
-    expect(await hyax.getCurrentWbtcPrice()).to.equal(5844229670000);
+    expect(await hyax.getCurrentTokenPrice(3)).to.equal(5844229670000);
   });
 
 });
@@ -2772,7 +2772,7 @@ describe("Test case #41. Get current WETH price", function () {
     const wethPriceDataFeedMock = await WethPriceDataFeedMock.deploy();
 
     //Update the address of the WETH price data feed mock
-    await hyax.connect(owner).updateWethPriceFeedAddress(wethPriceDataFeedMock.target);
+    await hyax.connect(owner).updatePriceFeedAddress(4, wethPriceDataFeedMock.target);
 
     //Return values as fixture for the testing cases
     return { hyax, deployer, owner, addr1, addr2, addr3 };
@@ -2782,7 +2782,7 @@ describe("Test case #41. Get current WETH price", function () {
     const { hyax, deployer, owner, addr1, addr2, addr3 } = await loadFixture(deployContractAndSetVariables);
 
     //Current WETH price 261484866809 = 2,614.84866809
-    expect(await hyax.getCurrentWethPrice()).to.equal(261484866809);
+    expect(await hyax.getCurrentTokenPrice(4)).to.equal(261484866809);
   });
 
 });

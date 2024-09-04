@@ -44,26 +44,6 @@ contract HYAXLocal is ERC20Pausable, Ownable, ReentrancyGuardUpgradeable {
     event InvestFromCryptoToken(TokenType tokenType, address sender, uint256 tokenAmount, uint256 totalInvestmentInUsd, uint256 hyaxAmount);
 
     /**
-     * @dev Emitted when an investment is made using USDC.
-     */
-    event InvestFromUsdc(address sender, uint256 usdcAmount, uint256 totalInvestmentInUsd, uint256 hyaxAmount);
-
-    /**
-     * @dev Emitted when an investment is made using USDT.
-     */
-    event InvestFromUsdt(address sender, uint256 usdtAmount, uint256 totalInvestmentInUsd, uint256 hyaxAmount);
-
-    /**
-     * @dev Emitted when an investment is made using WETH.
-     */
-    event InvestFromWeth(address sender, uint256 wethAmount, uint256 totalInvestmentInUsd, uint256 hyaxAmount);
-
-    /**
-     * @dev Emitted when an investment is made using WBTC.
-     */
-    event InvestFromWbtc(address sender, uint256 wbtcAmount, uint256 totalInvestmentInUsd, uint256 hyaxAmount);
-
-    /**
      * @dev Emitted when the HYAX price is updated.
      */
     event UpdatedHyaxPrice(uint256 _newHyaxPrice);
@@ -190,8 +170,10 @@ contract HYAXLocal is ERC20Pausable, Ownable, ReentrancyGuardUpgradeable {
         uint256 totalUsdDepositedByInvestor; //Track the total amount of USD an investor has deposited to buy the HYAX token.
     }
 
+    // Mapping to store investor data, indexed by their address 
     mapping(address => InvestorData) public investorData;
 
+    // Enum defining the supported token types
     enum TokenType { MATIC, USDC, USDT, WBTC, WETH }
 
     //////////MATIC VARIABLES//////////
@@ -411,7 +393,7 @@ contract HYAXLocal is ERC20Pausable, Ownable, ReentrancyGuardUpgradeable {
     function addToWhiteList(address _investorAddress) external onlyOwnerOrWhitelister {
 
         // Ensure that the investor address to add is not the zero address
-        require(_investorAddress != address(0), "Investor address to add to the white list can not be the zero address");
+        require(_investorAddress != address(0), "Investor address to add to the white list cannot be the zero address");
         
         // Ensure that the investor address has not already been added to the white list
         require(!investorData[_investorAddress].isWhiteListed, "That investor address has already been added to the white list");
@@ -437,7 +419,7 @@ contract HYAXLocal is ERC20Pausable, Ownable, ReentrancyGuardUpgradeable {
     function removeFromWhiteList(address _investorAddress) external onlyOwnerOrWhitelister {
 
         // Ensure that the investor address to remove is not the zero address
-        require(_investorAddress != address(0), "Investor address to remove from the white list can not be the zero address");
+        require(_investorAddress != address(0), "Investor address to remove from the white list cannot be the zero address");
 
         // Ensure that the investor address is registered on the white list
         require(investorData[_investorAddress].isWhiteListed, "That investor address is not registered on the white list");
@@ -468,7 +450,7 @@ contract HYAXLocal is ERC20Pausable, Ownable, ReentrancyGuardUpgradeable {
     function addToQualifiedInvestorList(address _qualifiedInvestorAddress) external onlyOwnerOrWhitelister {
 
         // Ensure that the investor address to add is not the zero address
-        require(_qualifiedInvestorAddress != address(0), "Investor address to add to the qualified investor list can not be the zero address");
+        require(_qualifiedInvestorAddress != address(0), "Investor address to add to the qualified investor list cannot be the zero address");
 
         // Ensure that the investor address to add is already in the white list of investors
         require(investorData[_qualifiedInvestorAddress].isWhiteListed, "Investor address must be first added to the investor white list");
@@ -490,7 +472,7 @@ contract HYAXLocal is ERC20Pausable, Ownable, ReentrancyGuardUpgradeable {
     function removeFromQualifiedInvestorList(address _qualifiedInvestorAddress) external onlyOwnerOrWhitelister {
 
         // Ensure that the investor address to remove is not the zero address
-        require(_qualifiedInvestorAddress != address(0), "Investor address to remove from the qualified investor list can not be the zero address");
+        require(_qualifiedInvestorAddress != address(0), "Investor address to remove from the qualified investor list cannot be the zero address");
 
         // Ensure that the investor address is registered on the qualified investor list
         require(investorData[_qualifiedInvestorAddress].isQualifiedInvestor, "That investor address is not registered on the qualified investor list");
@@ -553,7 +535,7 @@ contract HYAXLocal is ERC20Pausable, Ownable, ReentrancyGuardUpgradeable {
         // Transfer MATIC to this contract. Its automatically done with the payable tag
 
         // Calculate total HYAX to return while validating minimum investment and if there are HYAX tokens left to sell
-        (uint256 totalInvestmentInUsd, uint256 totalHyaxTokenToReturn) = calculateTotalHyaxTokenToReturn(msg.value, getCurrentMaticPrice());
+        (uint256 totalInvestmentInUsd, uint256 totalHyaxTokenToReturn) = calculateTotalHyaxTokenToReturn(msg.value, this.getCurrentTokenPrice(TokenType.MATIC));
 
         // If the amount of HYAX to buy is greater than the maximum established, then validate if the investor is qualified
         validateMaximumInvestedAmountAndInvestorLimit(totalInvestmentInUsd, msg.sender);
@@ -576,6 +558,13 @@ contract HYAXLocal is ERC20Pausable, Ownable, ReentrancyGuardUpgradeable {
         return true;
     }
 
+    /**
+    * @dev Function to allow an investor on the whitelist to invest using a specified cryptocurrency.
+    *
+    * @param tokenType The type of cryptocurrency to invest with.
+    * @param _amount The amount of the cryptocurrency to invest.
+    * @return A boolean indicating the success of the investment and HYAX token transfer.
+    */
     function investFromCryptoToken(TokenType tokenType, uint256 _amount) external investorIsOnWhiteList nonReentrant returns (bool) {
         // Get the token contract and price function based on the token type
         ERC20TokenInterface token;
@@ -583,16 +572,16 @@ contract HYAXLocal is ERC20Pausable, Ownable, ReentrancyGuardUpgradeable {
 
         if (tokenType == TokenType.USDC) {
             token = usdcToken;
-            currentTokenPrice = this.getCurrentUsdcPrice();
+            currentTokenPrice = this.getCurrentTokenPrice(tokenType);
         } else if (tokenType == TokenType.USDT) {
             token = usdtToken;
-            currentTokenPrice = this.getCurrentUsdtPrice();
+            currentTokenPrice = this.getCurrentTokenPrice(tokenType);
         } else if (tokenType == TokenType.WBTC) {
             token = wbtcToken;
-            currentTokenPrice = this.getCurrentWbtcPrice();
+            currentTokenPrice = this.getCurrentTokenPrice(tokenType);
         } else if (tokenType == TokenType.WETH) {
             token = wethToken;
-            currentTokenPrice = this.getCurrentWethPrice();
+            currentTokenPrice = this.getCurrentTokenPrice(tokenType);
         } else {
             revert("Invalid token type");
         }
@@ -699,7 +688,7 @@ contract HYAXLocal is ERC20Pausable, Ownable, ReentrancyGuardUpgradeable {
     function updateWhiteListerAddress(address _newWhiteListerAddress) external onlyOwner {
 
         // Ensure the new whitelister address is not the zero address
-        require(_newWhiteListerAddress != address(0), "The white lister address can not be the zero address");
+        require(_newWhiteListerAddress != address(0), "The white lister address cannot be the zero address");
         
         //Ensure that the update transaction is not repeated for the same parameter, just as a good practice
         require(_newWhiteListerAddress != whiteListerAddress, "White lister address has already been modified to that value");
@@ -718,7 +707,7 @@ contract HYAXLocal is ERC20Pausable, Ownable, ReentrancyGuardUpgradeable {
     function updateTreasuryAddress(address _newTreasuryAddress) external onlyOwner {
 
         // Ensure the new treasury address is not the zero address
-        require(_newTreasuryAddress != address(0), "The treasury address can not be the zero address");
+        require(_newTreasuryAddress != address(0), "The treasury address cannot be the zero address");
 
         //Ensure that the update transaction is not repeated for the same parameter, just as a good practice
         require(_newTreasuryAddress != treasuryAddress, "Treasury address has already been modified to that value");
@@ -731,409 +720,141 @@ contract HYAXLocal is ERC20Pausable, Ownable, ReentrancyGuardUpgradeable {
     }
 
     /**
-     * @dev Function to update the address of the oracle that provides the MATIC price feed.
-     * @param _newMaticPriceFeedAddress The new address of the MATIC price feed oracle.
+     * @dev Function to update the address of the crypto token on the blockchain.
+     * @param newTokenAddress The new address of the token on the blockchain.
      */
-    function updateMaticPriceFeedAddress(address _newMaticPriceFeedAddress) external onlyOwner {
-        
-        // Ensure the new MATIC price feed address is not the zero address
-        require(_newMaticPriceFeedAddress != address(0), "The price data feed address can not be the zero address");
-        
-        //Ensure that the update transaction is not repeated for the same parameter, just as a good practice
-        require(_newMaticPriceFeedAddress != maticPriceFeedAddress, "MATIC price feed address has already been modified to that value");
-        
-        //Temporary data feed to perform the validation of the data feed descriptions
-        AggregatorV3Interface tempDataFeedMatic = AggregatorV3Interface(_newMaticPriceFeedAddress);
+    function updateTokenAddress(TokenType tokenType, address newTokenAddress) external onlyOwner {
+        // Ensure the new token address is not the zero address
+        require(newTokenAddress != address(0), "The token address cannot be the zero address");
 
-        //Validate if the new address is actually a price feed address. Attempt to call the description function 
-        try tempDataFeedMatic.description() returns (string memory descriptionValue) {
-
-            //Get the hash value of the MATIC/USD string
-            bytes32 hashOfExpectedMaticFeedDescription = keccak256(abi.encodePacked('MATIC / USD'));
-
-            //Get the hash value of the description of the price data feed
-            bytes32 hashOfCurrentMaticFeedDescription = keccak256(abi.encodePacked(descriptionValue));
-            
-            //Validate the data feed is actually the address of a MATIC/USD oracle by comparing the hashes of the expected description and temporal description
-            require(hashOfExpectedMaticFeedDescription == hashOfCurrentMaticFeedDescription, "The new address does not seem to belong to a MATIC price data feed");
-        
-        } catch  {
-            //In case there is an error obtaining the description of the data feed, revert the transaction
-            revert("The new address does not seem to belong to a MATIC price data feed");
+        // Check and update addresses based on token type
+        if (tokenType == TokenType.USDC) {
+            require(newTokenAddress != usdcTokenAddress, "USDC token address has already been modified to that value");
+            usdcTokenAddress = newTokenAddress;
+            usdcToken = ERC20TokenInterface(newTokenAddress);
+            emit UpdatedUsdcTokenAddress(newTokenAddress);
+        } else if (tokenType == TokenType.USDT) {
+            require(newTokenAddress != usdtTokenAddress, "USDT token address has already been modified to that value");
+            usdtTokenAddress = newTokenAddress;
+            usdtToken = ERC20TokenInterface(newTokenAddress);
+            emit UpdatedUsdtTokenAddress(newTokenAddress);
+        } else if (tokenType == TokenType.WBTC) {
+            require(newTokenAddress != wbtcTokenAddress, "WBTC token address has already been modified to that value");
+            wbtcTokenAddress = newTokenAddress;
+            wbtcToken = ERC20TokenInterface(newTokenAddress);
+            emit UpdatedWbtcTokenAddress(newTokenAddress);
+        } else if (tokenType == TokenType.WETH) {
+            require(newTokenAddress != wethTokenAddress, "WETH token address has already been modified to that value");
+            wethTokenAddress = newTokenAddress;
+            wethToken = ERC20TokenInterface(newTokenAddress);
+            emit UpdatedWethTokenAddress(newTokenAddress);
+        } else {
+            revert("Invalid token type");
         }
-
-        // Update the MATIC price feed address
-        maticPriceFeedAddress = _newMaticPriceFeedAddress;
-
-        // Update the MATIC price feed interface
-        dataFeedMatic = AggregatorV3Interface(maticPriceFeedAddress);
-
-        // Emit an event to signal the updated MATIC price feed address
-        emit UpdatedMaticPriceFeedAddress(_newMaticPriceFeedAddress);
     }
 
-    /**
-     * @dev Function to update the address of the USDC token on the Polygon blockchain.
-     * @param _newUsdcTokenAddress The new address of the USDC token on Polygon.
+    /*
+     * @dev Function to update the address of the oracle that provides the Token price feed.
+     * @param newPriceFeedAddress The new address of the Token price feed oracle.
      */
-    function updateUsdcTokenAddress(address _newUsdcTokenAddress) external onlyOwner {
-        
-        // Ensure the new USDC token address is not the zero address
-        require(_newUsdcTokenAddress != address(0), "The token address can not be the zero address");
-
-        //Ensure that the update transaction is not repeated for the same parameter, just as a good practice
-        require(_newUsdcTokenAddress != usdcTokenAddress, "USDC token address has already been modified to that value");
-
-        // Update the USDC token address
-        usdcTokenAddress = _newUsdcTokenAddress;
-
-        // Update the USDC token interface
-        usdcToken = ERC20TokenInterface(usdcTokenAddress);
-
-        // Emit an event to signal the updated USDC token address
-        emit UpdatedUsdcTokenAddress(_newUsdcTokenAddress);
-    }
-
-    /**
-     * @dev Function to update the address of the oracle that provides the USDC price feed.
-     * @param _newUsdcPriceFeedAddress The new address of the USDC price feed oracle.
-     */
-    function updateUsdcPriceFeedAddress(address _newUsdcPriceFeedAddress) external onlyOwner {
-
-        // Ensure the new USDC price feed address is not the zero address
-        require(_newUsdcPriceFeedAddress != address(0), "The price data feed address can not be the zero address");
-        
-        //Ensure that the update transaction is not repeated for the same parameter, just as a good practice
-        require(_newUsdcPriceFeedAddress != usdcPriceFeedAddress, "USDC price feed address has already been modified to that value");
+    function updatePriceFeedAddress(TokenType tokenType, address newPriceFeedAddress) external onlyOwner {
+        // Ensure the new price feed address is not the zero address
+        require(newPriceFeedAddress != address(0), "The price data feed address cannot be the zero address");
 
         //Temporary data feed to perform the validation of the data feed descriptions
-        AggregatorV3Interface tempDataFeedUsdc = AggregatorV3Interface(_newUsdcPriceFeedAddress);
+        AggregatorV3Interface tempDataFeed = AggregatorV3Interface(newPriceFeedAddress);
+   
+        //Store the hash value of the expected TOKEN/USD string
+        bytes32 hashOfExpectedDescription;
 
-        //Validate if the new address is actually a price feed address. Attempt to call the description function 
-        try tempDataFeedUsdc.description() returns (string memory descriptionValue) {
+        //Store the hash value of the current TOKEN/USD string
+        bytes32 hashOfCurrentDescription;
 
-            //Get the hash value of the USDC/USD string
-            bytes32 hashOfExpectedUsdcFeedDescription = keccak256(abi.encodePacked('USDC / USD'));
-
-            //Get the hash value of the description of the price data feed
-            bytes32 hashOfCurrentUsdcFeedDescription = keccak256(abi.encodePacked(descriptionValue));
-            
-            //Validate the data feed is actually the address of a USDC/USD oracle by comparing the hashes of the expected description and temporal description
-            require(hashOfExpectedUsdcFeedDescription == hashOfCurrentUsdcFeedDescription, "The new address does not seem to belong to a USDC price data feed");
-        
-        } catch  {
-            //In case there is an error obtaining the description of the data feed, revert the transaction
-            revert("The new address does not seem to belong to a USDC price data feed");
+        //Ensure that the update transaction is not repeated for the same parameter, just as a good practice
+        if (tokenType == TokenType.MATIC) {
+            require(newPriceFeedAddress != maticPriceFeedAddress, "MATIC price feed address has already been modified to that value");
+            hashOfExpectedDescription = keccak256(abi.encodePacked('MATIC / USD'));
+        } else if (tokenType == TokenType.USDC) {
+            require(newPriceFeedAddress != usdcPriceFeedAddress, "USDC price feed address has already been modified to that value");
+            hashOfExpectedDescription = keccak256(abi.encodePacked('USDC / USD'));
+        } else if (tokenType == TokenType.USDT) {
+            require(newPriceFeedAddress != usdtPriceFeedAddress, "USDT price feed address has already been modified to that value");
+            hashOfExpectedDescription = keccak256(abi.encodePacked('USDT / USD'));
+        } else if (tokenType == TokenType.WBTC) {
+            require(newPriceFeedAddress != wbtcPriceFeedAddress, "WBTC price feed address has already been modified to that value");
+            hashOfExpectedDescription = keccak256(abi.encodePacked('WBTC / USD'));
+        } else if (tokenType == TokenType.WETH) {
+            require(newPriceFeedAddress != wethPriceFeedAddress, "WETH price feed address has already been modified to that value");
+            hashOfExpectedDescription = keccak256(abi.encodePacked('ETH / USD'));
+        } else {
+            revert("Invalid token type");
         }
 
-        // Update the USDC price feed address
-        usdcPriceFeedAddress = _newUsdcPriceFeedAddress;
-
-        // Update the USDC price feed interface
-        dataFeedUsdc = AggregatorV3Interface(usdcPriceFeedAddress);
-
-        // Emit an event to signal the updated USDC price feed address
-        emit UpdatedUsdcPriceFeedAddress(_newUsdcPriceFeedAddress);
-    }
-
-    /**
-     * @dev Function to update the address of the USDT token on the Polygon blockchain.
-     * @param _newUsdtTokenAddress The new address of the USDT token on Polygon.
-     */
-    function updateUsdtTokenAddress(address _newUsdtTokenAddress) external onlyOwner {
-
-        // Ensure the new USDT token address is not the zero address
-        require(_newUsdtTokenAddress != address(0), "The token address can not be the zero address");
-
-        //Ensure that the update transaction is not repeated for the same parameter, just as a good practice
-        require(_newUsdtTokenAddress != usdtTokenAddress, "USDT token address has already been modified to that value");
-
-        // Update the USDT token address
-        usdtTokenAddress = _newUsdtTokenAddress;
-
-        // Update the USDT token interface
-        usdtToken = ERC20TokenInterface(usdtTokenAddress);
-
-        // Emit an event to signal the updated USDT token address
-        emit UpdatedUsdtTokenAddress(_newUsdtTokenAddress);
-    }
-
-    /**
-     * @dev Function to update the address of the oracle that provides the USDT price feed.
-     * @param _newUsdtPriceFeedAddress The new address of the USDT price feed oracle.
-     */
-    function updateUsdtPriceFeedAddress(address _newUsdtPriceFeedAddress) external onlyOwner {
-
-        // Ensure the new USDT price feed address is not the zero address
-        require(_newUsdtPriceFeedAddress != address(0), "The price data feed address can not be the zero address");
-
-        //Ensure that the update transaction is not repeated for the same parameter, just as a good practice
-        require(_newUsdtPriceFeedAddress != usdtPriceFeedAddress, "USDT price feed address has already been modified to that value");
-
-        //Temporary data feed to perform the validation of the data feed descriptions
-        AggregatorV3Interface tempDataFeedUsdt = AggregatorV3Interface(_newUsdtPriceFeedAddress);
-
-        //Validate if the new address is actually a price feed address. Attempt to call the description function 
-        try tempDataFeedUsdt.description() returns (string memory descriptionValue) {
-
-            //Get the hash value of the USDT/USD string
-            bytes32 hashOfExpectedUsdtFeedDescription = keccak256(abi.encodePacked('USDT / USD'));
-
-            //Get the hash value of the description of the price data feed
-            bytes32 hashOfCurrentUsdtFeedDescription = keccak256(abi.encodePacked(descriptionValue));
-            
-            //Validate the data feed is actually the address of a USDT/USD oracle by comparing the hashes of the expected description and temporal description
-            require(hashOfExpectedUsdtFeedDescription == hashOfCurrentUsdtFeedDescription, "The new address does not seem to belong to a USDT price data feed");
-        
-        } catch  {
-            //In case there is an error obtaining the description of the data feed, revert the transaction
-            revert("The new address does not seem to belong to a USDT price data feed");
+        //Validate the data feed is actually the address of a TOKEN/USD oracle by comparing the hashes of the expected description and temporal description
+        try tempDataFeed.description() returns (string memory descriptionValue) {
+            hashOfCurrentDescription = keccak256(abi.encodePacked(descriptionValue));
+            require(hashOfExpectedDescription == hashOfCurrentDescription, "The new address does not seem to belong to the correct price data feed");
+        } catch {
+            revert("The new address does not seem to belong to the correct price data feed");
         }
 
-        // Update the USDT price feed address
-        usdtPriceFeedAddress = _newUsdtPriceFeedAddress;
-
-        // Update the USDT price feed interface
-        dataFeedUsdt = AggregatorV3Interface(usdtPriceFeedAddress);
-
-        // Emit an event to signal the updated USDT price feed address
-        emit UpdatedUsdtPriceFeedAddress(_newUsdtPriceFeedAddress);
-    }
-
-    /**
-     * @dev Function to update the address of the WBTC token on the Polygon blockchain.
-     * @param _newWbtcTokenAddress The new address of the WBTC token on Polygon.
-     */
-    function updateWbtcTokenAddress(address _newWbtcTokenAddress) external onlyOwner {
-
-        // Ensure the new WBTC token address is not the zero address
-        require(_newWbtcTokenAddress != address(0), "The token address can not be the zero address");
-
-        //Ensure that the update transaction is not repeated for the same parameter, just as a good practice
-        require(_newWbtcTokenAddress != wbtcTokenAddress, "WBTC token address has already been modified to that value");
-
-        // Update the WBTC token address
-        wbtcTokenAddress = _newWbtcTokenAddress;
-
-        // Update the WBTC token interface
-        wbtcToken = ERC20TokenInterface(wbtcTokenAddress);
-
-        // Emit an event to signal the updated WBTC token address
-        emit UpdatedWbtcTokenAddress(_newWbtcTokenAddress);
-    }
-
-    /**
-     * @dev Function to update the address of the oracle that provides the WBTC price feed.
-     * @param _newWbtcPriceFeedAddress The new address of the WBTC price feed oracle.
-     */
-    function updateWbtcPriceFeedAddress(address _newWbtcPriceFeedAddress) external onlyOwner {
-
-        // Ensure the new WBTC price feed address is not the zero address
-        require(_newWbtcPriceFeedAddress != address(0), "The price data feed address can not be the zero address");
-        
-        //Ensure that the update transaction is not repeated for the same parameter, just as a good practice
-        require(_newWbtcPriceFeedAddress != wbtcPriceFeedAddress, "WBTC price feed address has already been modified to that value");
-
-        //Temporary data feed to perform the validation of the data feed descriptions
-        AggregatorV3Interface tempDataFeedWbtc = AggregatorV3Interface(_newWbtcPriceFeedAddress);
-
-        //Validate if the new address is actually a price feed address. Attempt to call the description function 
-        try tempDataFeedWbtc.description() returns (string memory descriptionValue) {
-
-            //Get the hash value of the WBTC/USD string
-            bytes32 hashOfExpectedWbtcFeedDescription = keccak256(abi.encodePacked('WBTC / USD'));
-
-            //Get the hash value of the description of the price data feed
-            bytes32 hashOfCurrentWbtcFeedDescription = keccak256(abi.encodePacked(descriptionValue));
-            
-            //Validate the data feed is actually the address of a WBTC/USD oracle by comparing the hashes of the expected description and temporal description
-            require(hashOfExpectedWbtcFeedDescription == hashOfCurrentWbtcFeedDescription, "The new address does not seem to belong to a WBTC price data feed");
-        
-        } catch  {
-            //In case there is an error obtaining the description of the data feed, revert the transaction
-            revert("The new address does not seem to belong to a WBTC price data feed");
+        // Update the price feed address and interface based on the token type
+        if (tokenType == TokenType.MATIC) {
+            maticPriceFeedAddress = newPriceFeedAddress;
+            dataFeedMatic = AggregatorV3Interface(maticPriceFeedAddress);
+            emit UpdatedMaticPriceFeedAddress(newPriceFeedAddress);
+        } else if (tokenType == TokenType.USDC) {
+            usdcPriceFeedAddress = newPriceFeedAddress;
+            dataFeedUsdc = AggregatorV3Interface(usdcPriceFeedAddress);
+            emit UpdatedUsdcPriceFeedAddress(newPriceFeedAddress);
+        } else if (tokenType == TokenType.USDT) {
+            usdtPriceFeedAddress = newPriceFeedAddress;
+            dataFeedUsdt = AggregatorV3Interface(usdtPriceFeedAddress);
+            emit UpdatedUsdtPriceFeedAddress(newPriceFeedAddress);
+        } else if (tokenType == TokenType.WBTC) {
+            wbtcPriceFeedAddress = newPriceFeedAddress;
+            dataFeedWbtc = AggregatorV3Interface(wbtcPriceFeedAddress);
+            emit UpdatedWbtcPriceFeedAddress(newPriceFeedAddress);
+        } else if (tokenType == TokenType.WETH) {
+            wethPriceFeedAddress = newPriceFeedAddress;
+            dataFeedWeth = AggregatorV3Interface(wethPriceFeedAddress);
+            emit UpdatedWethPriceFeedAddress(newPriceFeedAddress);
         }
-
-        // Update the WBTC price feed address
-        wbtcPriceFeedAddress = _newWbtcPriceFeedAddress;
-
-        // Update the WBTC price feed interface
-        dataFeedWbtc = AggregatorV3Interface(wbtcPriceFeedAddress);
-
-        // Emit an event to signal the updated WBTC price feed address
-        emit UpdatedWbtcPriceFeedAddress(_newWbtcPriceFeedAddress);
     }
-
-    /**
-     * @dev Function to update the address of the WETH token on the Polygon blockchain.
-     * @param _newWethTokenAddress The new address of the WETH token on Polygon.
-     */
-    function updateWethTokenAddress(address _newWethTokenAddress) external onlyOwner {
-
-        // Ensure the new WETH token address is not the zero address
-        require(_newWethTokenAddress != address(0), "The token address can not be the zero address");
-
-        //Ensure that the update transaction is not repeated for the same parameter, just as a good practice
-        require(_newWethTokenAddress != wethTokenAddress, "WETH token address has already been modified to that value");
-
-        // Update the WETH token address
-        wethTokenAddress = _newWethTokenAddress;
-
-        // Update the WETH token interface
-        wethToken = ERC20TokenInterface(wethTokenAddress);
-
-        // Emit an event to signal the updated WETH token address
-        emit UpdatedWethTokenAddress(_newWethTokenAddress);
-    }
-
-    /**
-     * @dev Function to update the address of the oracle that provides the WETH price feed.
-     * @param _newWethPriceFeedAddress The new address of the WETH price feed oracle.
-     */
-    function updateWethPriceFeedAddress(address _newWethPriceFeedAddress) external onlyOwner {
-
-        // Ensure the new WETH price feed address is not the zero address
-        require(_newWethPriceFeedAddress != address(0), "The price data feed address can not be the zero address");
-
-        //Ensure that the update transaction is not repeated for the same parameter, just as a good practice
-        require(_newWethPriceFeedAddress != wethPriceFeedAddress, "WETH price feed address has already been modified to that value");
-
-        //Temporary data feed to perform the validation of the data feed descriptions
-        AggregatorV3Interface tempDataFeedWeth = AggregatorV3Interface(_newWethPriceFeedAddress);
-
-        //Validate if the new address is actually a price feed address. Attempt to call the description function 
-        try tempDataFeedWeth.description() returns (string memory descriptionValue) {
-
-            //Get the hash value of the ETH/USD string
-            bytes32 hashOfExpectedWethFeedDescription = keccak256(abi.encodePacked('ETH / USD'));
-
-            //Get the hash value of the description of the price data feed
-            bytes32 hashOfCurrentWethFeedDescription = keccak256(abi.encodePacked(descriptionValue));
-            
-            //Validate the data feed is actually the address of a ETH/USD oracle by comparing the hashes of the expected description and temporal description
-            require(hashOfExpectedWethFeedDescription == hashOfCurrentWethFeedDescription, "The new address does not seem to belong to a ETH price data feed");
-        
-        } catch  {
-            //In case there is an error obtaining the description of the data feed, revert the transaction
-            revert("The new address does not seem to belong to a ETH price data feed");
-        }
-
-        // Update the WETH price feed address
-        wethPriceFeedAddress = _newWethPriceFeedAddress;
-
-        // Update the WETH price feed interface
-        dataFeedWeth = AggregatorV3Interface(wethPriceFeedAddress);
-
-        // Emit an event to signal the updated WETH price feed address
-        emit UpdatedWethPriceFeedAddress(_newWethPriceFeedAddress);
-    }
-
 
     /////////////ORACLE PRICE FEED FUNCTIONS//////////
-
     /**
-     * @dev Function to get the current price of MATIC in USD.
-     * @return The current price of MATIC in USD with 8 decimals.
+     * @dev Function to get the current price of the token in USD.
+     * @return The current price of the token in USD with 8 decimals.
      */
-    function getCurrentMaticPrice() public view returns (uint256) {
+    function getCurrentTokenPrice(TokenType tokenType) public view returns (uint256) {
 
-        try dataFeedMatic.latestRoundData() returns (
-            uint80 /*roundID*/, 
-            int256 answer,
-            uint /*startedAt*/,
-            uint /*timeStamp*/,
-            uint80 /*answeredInRound*/
-        ) 
-        {
-            return uint256(answer);
+        AggregatorV3Interface dataFeed;
 
-        } catch  {
-            revert("There was an error obtaining the MATIC price from the oracle");
+        if (tokenType == TokenType.MATIC) {
+            dataFeed = dataFeedMatic;
+        } else if (tokenType == TokenType.USDC) {
+            dataFeed = dataFeedUsdc;
+        } else if (tokenType == TokenType.USDT) {
+            dataFeed = dataFeedUsdt;
+        } else if (tokenType == TokenType.WBTC) {
+            dataFeed = dataFeedWbtc;
+        } else if (tokenType == TokenType.WETH) {
+            dataFeed = dataFeedWeth;
+        } else {
+            revert("Invalid token type");
         }
-        
-    }
 
-    /**
-     * @dev Function to get the current price of USDC in USD.
-     * @return The current price of USDC in USD with 8 decimals.
-     */
-    function getCurrentUsdcPrice() public view returns (uint256) {
-
-        try dataFeedUsdc.latestRoundData() returns (
-            uint80 /*roundID*/, 
+        try dataFeed.latestRoundData() returns (
+            uint80 /*roundID*/,
             int256 answer,
             uint /*startedAt*/,
             uint /*timeStamp*/,
             uint80 /*answeredInRound*/
-        ) 
-        {
+        ) {
             return uint256(answer);
-
-        } catch  {
-            revert("There was an error obtaining the USDC price from the oracle");
-        }
-    }
-
-    /**
-     * @dev Function to get the current price of USDT in USD.
-     * @return The current price of USDT in USD with 8 decimals.
-     */
-    function getCurrentUsdtPrice() public view returns (uint256) {
-
-        try dataFeedUsdt.latestRoundData() returns (
-            uint80 /*roundID*/, 
-            int256 answer,
-            uint /*startedAt*/,
-            uint /*timeStamp*/,
-            uint80 /*answeredInRound*/
-        ) 
-        {
-            return uint256(answer);
-
-        } catch  {
-            revert("There was an error obtaining the USDT price from the oracle");
-        }
-    }
-
-    /**
-     * @dev Function to get the current price of WBTC in USD.
-     * @return The current price of WBTC in USD with 8 decimals.
-     */
-    function getCurrentWbtcPrice() public view returns (uint256) {
-        
-        try dataFeedWbtc.latestRoundData() returns (
-            uint80 /*roundID*/, 
-            int256 answer,
-            uint /*startedAt*/,
-            uint /*timeStamp*/,
-            uint80 /*answeredInRound*/
-        ) 
-        {
-            return uint256(answer);
-
-        } catch  {
-            revert("There was an error obtaining the WBTC price from the oracle");
-        }
-    }
-
-    /**
-     * @dev Function to get the current price of WETH in USD.
-     * @return The current price of WETH in USD with 8 decimals.
-     */
-    function getCurrentWethPrice() public view returns (uint256) {
-
-        try dataFeedWeth.latestRoundData() returns (
-            uint80 /*roundID*/, 
-            int256 answer,
-            uint /*startedAt*/,
-            uint /*timeStamp*/,
-            uint80 /*answeredInRound*/
-        ) 
-        {
-            return uint256(answer);
-
-        } catch  {
-            revert("There was an error obtaining the WETH price from the oracle");
+        } catch {
+            revert("There was an error obtaining the price from the oracle");
         }
     }
 
@@ -1166,7 +887,7 @@ contract HYAXLocal is ERC20Pausable, Ownable, ReentrancyGuardUpgradeable {
         require(newOwner != address(0), "Ownable: new owner is the zero address");
 
         //Validate the new owner is not the same contract address, otherwise management of the smart contract will be lost
-        require(newOwner != address(this), "Ownable: new owner can not be the same contract address");
+        require(newOwner != address(this), "Ownable: new owner cannot be the same contract address");
         
         _transferOwnership(newOwner);
     }

@@ -4,6 +4,8 @@ D:&cd D:\USER\Downloads\ATLAS\Projects\HYAX-Upgradeable-Token
 
 https://docs.openzeppelin.com/learn/setting-up-a-node-project#creating-a-project
 
+1. Create initial hardhat setup
+
 ---------INITIAL HARDHAT SETUP---------
 
 npm init -y
@@ -32,6 +34,8 @@ npm install @chainlink/contracts
 
 Create contracts directory folder.
 
+
+2. Deploy basic smart contract on local testnet DONE
 
 ---------INITIAL LOCAL DEPLOYMENT---------
 
@@ -73,31 +77,110 @@ npx hardhat run --network localhost scripts/deploy_local_upgradeable_HYAX_contra
 
 3. Execute local tests DONE
 
-
-CONTINUE HERE:
-
 3.1. Optimize the local code while making the tests work
 
 Make the following solidity code more efficient to decrease the contract code size, to be compliant with the limit introduced in Spurious Dragon.
 
 MAKE ABSOLUTELY SURE YOU DON'T ALTER THE CODE FUNCTIONALITY NOR THE ERROR MESSAGES IN THE REQUIRE NOR THE COMMENTS!!!!!!!:
 
-KEEP OPTIMIZING: addToQualifiedInvestorList
+Replacing investorData:
+investorsWhiteList DONE
+qualifiedInvestorList DONE
+totalHyaxBoughtByInvestor DONE
+totalUsdDepositedByInvestor DONE
+
+Create a main function to handle all repetivite investment from DONE
+
+Create a main function to handle all updateTokenPriceFeedAddress: Matic, USDC, USDT, WBTC, WETH DONE
+Create a main function to handle all updateTokenAddress: USDC, USDT, WBTC, WETH DONE
+Create a main function to handle all getCurrentTokenPrice: Matic, USDC, USDT, WBTC, WETH DONE DONE
+
+3.2. Update the Upgradeable version DONE
+
+
+4. Deploy local upgradeable DONE
+
+npx hardhat run --network localhost scripts/deploy_local_upgradeable_HYAX_contract.js
+
+Upgradeable HYAX Local deployed to: 0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0
+
+npx hardhat console --network localhost
+
+const HYAXLocalUpgradeable= await ethers.getContractFactory('HYAXLocalUpgradeable')
+
+const hyaxLocalUpgradeable = HYAXLocalUpgradeable.attach('0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0')
+
+await hyaxLocalUpgradeable.validateMaximumInvestedAmountAndInvestorLimit('200000','0x70997970C51812dc3A010C7d01b50e0d17dc79C8')
 
 
 
-3.2. Update the Upgradeable version
+
+4.1. Update local upgradeable with V2 (No investor limit, deleted validateMaximumInvestedAmountAndInvestorLimit) DONE
+
+npx hardhat run --network localhost scripts/upgrade_local_upgradeable_HYAX_contractV2.js
+
+
+npx hardhat console --network localhost
+
+const HYAXLocalUpgradeable= await ethers.getContractFactory('HYAXLocalUpgradeable')
+
+const hyaxLocalUpgradeable = HYAXLocalUpgradeable.attach('0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0')
+
+await hyaxLocalUpgradeable.validateMaximumInvestedAmountAndInvestorLimit('200000','0x70997970C51812dc3A010C7d01b50e0d17dc79C8')
+
+
+4.2. Update local upgradeable with V3 (Revert to the original version) DONE
+
+npx hardhat run --network localhost scripts/upgrade_local_upgradeable_HYAX_contractV3.js
+
+
+npx hardhat console --network localhost
+
+const HYAXLocalUpgradeable= await ethers.getContractFactory('HYAXLocalUpgradeable')
+
+const hyaxLocalUpgradeable = HYAXLocalUpgradeable.attach('0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0')
+
+await hyaxLocalUpgradeable.validateMaximumInvestedAmountAndInvestorLimit('200000','0x70997970C51812dc3A010C7d01b50e0d17dc79C8')
+
+
+5. Deploy testnet upgradeable 
+
+---------DEPLOYING TESTNET BASIC VERSION---------
+
+START BY GETTING A PRIVATE KEY FROM AN ACCOUNT IN METAMASK TO ADD TO AN .ENV FILE
+
+npx hardhat run --network polygonAmoy scripts/deploy_testnet_HYAX_contract.js
+
+https://amoy.polygonscan.com/address/0x28cd558137b0b02c23100d7311bcbb12a30579a1#writeContract
+
+
+
+CONTINUE HEREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+
+Use remix to deply it if that's the case
+
+---------DEPLOYING TESTNET UPGRADEABLE VERSION--------
+
+
+(IMPLEMENTATION) Stores the logic
+
+
+(PROXY) Stores the variables
+
+
+(PROXY ADMIN)
+
+
+npm install --save-dev @nomicfoundation/hardhat-verify
+
+npx hardhat verify --network polygonAmoy 
 
 
 
 
 
-4. Deploy local upgradeable
-
-5. Deploy testnet upgradeable
 
 
 
----------DONE---------
 
-2. Deploy basic smart contract on local testnet DONE
+
