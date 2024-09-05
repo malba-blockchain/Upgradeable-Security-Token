@@ -1,0 +1,1262 @@
+{
+  "manifestVersion": "3.2",
+  "proxies": [
+    {
+      "address": "0x289F70Ab95274E26238c0eb8a4a06F4990B5b95f",
+      "txHash": "0x13a574059b57f10f3237acbb4a8b0ed792b7a63bed5c107a7b4aab06d73ebe99",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xF8C247ee795f091846A14A2B37eC11A76da45bAd",
+      "txHash": "0x3c6bb4d3329ec1b29647f9ed9f331225a1e6699877d88798a4a39a52a93d8dec",
+      "kind": "transparent"
+    }
+  ],
+  "impls": {
+    "e8768599521570c15f094db5777c5ed5206b36cdad21f5b2979a66add797832f": {
+      "address": "0x2c285c8bfcE3bFCe85b60b5B72bA515B91E261f8",
+      "txHash": "0x90cfbd1ec07b12649e5810f813e0e87f1947d781912626d20cb8faae18745820",
+      "layout": {
+        "solcVersion": "0.8.20",
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:63",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:68"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\utils\\ContextUpgradeable.sol:36"
+          },
+          {
+            "label": "_balances",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "ERC20Upgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\token\\ERC20\\ERC20Upgradeable.sol:40"
+          },
+          {
+            "label": "_allowances",
+            "offset": 0,
+            "slot": "52",
+            "type": "t_mapping(t_address,t_mapping(t_address,t_uint256))",
+            "contract": "ERC20Upgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\token\\ERC20\\ERC20Upgradeable.sol:42"
+          },
+          {
+            "label": "_totalSupply",
+            "offset": 0,
+            "slot": "53",
+            "type": "t_uint256",
+            "contract": "ERC20Upgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\token\\ERC20\\ERC20Upgradeable.sol:44"
+          },
+          {
+            "label": "_name",
+            "offset": 0,
+            "slot": "54",
+            "type": "t_string_storage",
+            "contract": "ERC20Upgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\token\\ERC20\\ERC20Upgradeable.sol:46"
+          },
+          {
+            "label": "_symbol",
+            "offset": 0,
+            "slot": "55",
+            "type": "t_string_storage",
+            "contract": "ERC20Upgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\token\\ERC20\\ERC20Upgradeable.sol:47"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "56",
+            "type": "t_array(t_uint256)45_storage",
+            "contract": "ERC20Upgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\token\\ERC20\\ERC20Upgradeable.sol:376"
+          },
+          {
+            "label": "_paused",
+            "offset": 0,
+            "slot": "101",
+            "type": "t_bool",
+            "contract": "PausableUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\security\\PausableUpgradeable.sol:29"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "102",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "PausableUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\security\\PausableUpgradeable.sol:116"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "151",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ERC20PausableUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\token\\ERC20\\extensions\\ERC20PausableUpgradeable.sol:48"
+          },
+          {
+            "label": "_owner",
+            "offset": 0,
+            "slot": "201",
+            "type": "t_address",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\access\\OwnableUpgradeable.sol:22"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "202",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\access\\OwnableUpgradeable.sol:94"
+          },
+          {
+            "label": "_status",
+            "offset": 0,
+            "slot": "251",
+            "type": "t_uint256",
+            "contract": "ReentrancyGuardUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\security\\ReentrancyGuardUpgradeable.sol:38"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "252",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "ReentrancyGuardUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\security\\ReentrancyGuardUpgradeable.sol:88"
+          },
+          {
+            "label": "hyaxPrice",
+            "offset": 0,
+            "slot": "301",
+            "type": "t_uint256",
+            "contract": "HYAXLocalUpgradeable",
+            "src": "contracts\\HYAXLocalUpgradeable.sol:141"
+          },
+          {
+            "label": "minimumInvestmentAllowedInUSD",
+            "offset": 0,
+            "slot": "302",
+            "type": "t_uint256",
+            "contract": "HYAXLocalUpgradeable",
+            "src": "contracts\\HYAXLocalUpgradeable.sol:146"
+          },
+          {
+            "label": "maximumInvestmentAllowedInUSD",
+            "offset": 0,
+            "slot": "303",
+            "type": "t_uint256",
+            "contract": "HYAXLocalUpgradeable",
+            "src": "contracts\\HYAXLocalUpgradeable.sol:151"
+          },
+          {
+            "label": "whiteListerAddress",
+            "offset": 0,
+            "slot": "304",
+            "type": "t_address",
+            "contract": "HYAXLocalUpgradeable",
+            "src": "contracts\\HYAXLocalUpgradeable.sol:156"
+          },
+          {
+            "label": "treasuryAddress",
+            "offset": 0,
+            "slot": "305",
+            "type": "t_address",
+            "contract": "HYAXLocalUpgradeable",
+            "src": "contracts\\HYAXLocalUpgradeable.sol:161"
+          },
+          {
+            "label": "investorData",
+            "offset": 0,
+            "slot": "306",
+            "type": "t_mapping(t_address,t_struct(InvestorData)4790_storage)",
+            "contract": "HYAXLocalUpgradeable",
+            "src": "contracts\\HYAXLocalUpgradeable.sol:174"
+          },
+          {
+            "label": "maticPriceFeedAddress",
+            "offset": 0,
+            "slot": "307",
+            "type": "t_address",
+            "contract": "HYAXLocalUpgradeable",
+            "src": "contracts\\HYAXLocalUpgradeable.sol:188"
+          },
+          {
+            "label": "dataFeedMatic",
+            "offset": 0,
+            "slot": "308",
+            "type": "t_contract(AggregatorV3Interface)45",
+            "contract": "HYAXLocalUpgradeable",
+            "src": "contracts\\HYAXLocalUpgradeable.sol:193"
+          },
+          {
+            "label": "usdcTokenAddress",
+            "offset": 0,
+            "slot": "309",
+            "type": "t_address",
+            "contract": "HYAXLocalUpgradeable",
+            "src": "contracts\\HYAXLocalUpgradeable.sol:200"
+          },
+          {
+            "label": "usdcPriceFeedAddress",
+            "offset": 0,
+            "slot": "310",
+            "type": "t_address",
+            "contract": "HYAXLocalUpgradeable",
+            "src": "contracts\\HYAXLocalUpgradeable.sol:205"
+          },
+          {
+            "label": "dataFeedUsdc",
+            "offset": 0,
+            "slot": "311",
+            "type": "t_contract(AggregatorV3Interface)45",
+            "contract": "HYAXLocalUpgradeable",
+            "src": "contracts\\HYAXLocalUpgradeable.sol:210"
+          },
+          {
+            "label": "usdcToken",
+            "offset": 0,
+            "slot": "312",
+            "type": "t_contract(ERC20TokenInterface)4628",
+            "contract": "HYAXLocalUpgradeable",
+            "src": "contracts\\HYAXLocalUpgradeable.sol:215"
+          },
+          {
+            "label": "usdtTokenAddress",
+            "offset": 0,
+            "slot": "313",
+            "type": "t_address",
+            "contract": "HYAXLocalUpgradeable",
+            "src": "contracts\\HYAXLocalUpgradeable.sol:222"
+          },
+          {
+            "label": "usdtPriceFeedAddress",
+            "offset": 0,
+            "slot": "314",
+            "type": "t_address",
+            "contract": "HYAXLocalUpgradeable",
+            "src": "contracts\\HYAXLocalUpgradeable.sol:227"
+          },
+          {
+            "label": "dataFeedUsdt",
+            "offset": 0,
+            "slot": "315",
+            "type": "t_contract(AggregatorV3Interface)45",
+            "contract": "HYAXLocalUpgradeable",
+            "src": "contracts\\HYAXLocalUpgradeable.sol:232"
+          },
+          {
+            "label": "usdtToken",
+            "offset": 0,
+            "slot": "316",
+            "type": "t_contract(ERC20TokenInterface)4628",
+            "contract": "HYAXLocalUpgradeable",
+            "src": "contracts\\HYAXLocalUpgradeable.sol:237"
+          },
+          {
+            "label": "wbtcTokenAddress",
+            "offset": 0,
+            "slot": "317",
+            "type": "t_address",
+            "contract": "HYAXLocalUpgradeable",
+            "src": "contracts\\HYAXLocalUpgradeable.sol:244"
+          },
+          {
+            "label": "wbtcPriceFeedAddress",
+            "offset": 0,
+            "slot": "318",
+            "type": "t_address",
+            "contract": "HYAXLocalUpgradeable",
+            "src": "contracts\\HYAXLocalUpgradeable.sol:249"
+          },
+          {
+            "label": "dataFeedWbtc",
+            "offset": 0,
+            "slot": "319",
+            "type": "t_contract(AggregatorV3Interface)45",
+            "contract": "HYAXLocalUpgradeable",
+            "src": "contracts\\HYAXLocalUpgradeable.sol:254"
+          },
+          {
+            "label": "wbtcToken",
+            "offset": 0,
+            "slot": "320",
+            "type": "t_contract(ERC20TokenInterface)4628",
+            "contract": "HYAXLocalUpgradeable",
+            "src": "contracts\\HYAXLocalUpgradeable.sol:259"
+          },
+          {
+            "label": "wethTokenAddress",
+            "offset": 0,
+            "slot": "321",
+            "type": "t_address",
+            "contract": "HYAXLocalUpgradeable",
+            "src": "contracts\\HYAXLocalUpgradeable.sol:266"
+          },
+          {
+            "label": "wethPriceFeedAddress",
+            "offset": 0,
+            "slot": "322",
+            "type": "t_address",
+            "contract": "HYAXLocalUpgradeable",
+            "src": "contracts\\HYAXLocalUpgradeable.sol:271"
+          },
+          {
+            "label": "dataFeedWeth",
+            "offset": 0,
+            "slot": "323",
+            "type": "t_contract(AggregatorV3Interface)45",
+            "contract": "HYAXLocalUpgradeable",
+            "src": "contracts\\HYAXLocalUpgradeable.sol:276"
+          },
+          {
+            "label": "wethToken",
+            "offset": 0,
+            "slot": "324",
+            "type": "t_contract(ERC20TokenInterface)4628",
+            "contract": "HYAXLocalUpgradeable",
+            "src": "contracts\\HYAXLocalUpgradeable.sol:281"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)45_storage": {
+            "label": "uint256[45]",
+            "numberOfBytes": "1440"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]",
+            "numberOfBytes": "1568"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_contract(AggregatorV3Interface)45": {
+            "label": "contract AggregatorV3Interface",
+            "numberOfBytes": "20"
+          },
+          "t_contract(ERC20TokenInterface)4628": {
+            "label": "contract ERC20TokenInterface",
+            "numberOfBytes": "20"
+          },
+          "t_mapping(t_address,t_mapping(t_address,t_uint256))": {
+            "label": "mapping(address => mapping(address => uint256))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_struct(InvestorData)4790_storage)": {
+            "label": "mapping(address => struct HYAXLocalUpgradeable.InvestorData)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_string_storage": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_struct(InvestorData)4790_storage": {
+            "label": "struct HYAXLocalUpgradeable.InvestorData",
+            "members": [
+              {
+                "label": "isWhiteListed",
+                "type": "t_bool",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "isQualifiedInvestor",
+                "type": "t_bool",
+                "offset": 1,
+                "slot": "0"
+              },
+              {
+                "label": "totalHyaxBoughtByInvestor",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "totalUsdDepositedByInvestor",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "2"
+              }
+            ],
+            "numberOfBytes": "96"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        },
+        "namespaces": {}
+      }
+    },
+    "c501424c12e255815c4d57d029d817e9511aad1e09f16a6bb40e7454635d8591": {
+      "address": "0xfa514a251A7430B32aa03E8A65ff30BabeDA7327",
+      "txHash": "0x267542b7668839d8fdedb5405e9d5e062fbf3ecd2849202363970092c034d2cb",
+      "layout": {
+        "solcVersion": "0.8.20",
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:63",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:68"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\utils\\ContextUpgradeable.sol:36"
+          },
+          {
+            "label": "_balances",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "ERC20Upgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\token\\ERC20\\ERC20Upgradeable.sol:40"
+          },
+          {
+            "label": "_allowances",
+            "offset": 0,
+            "slot": "52",
+            "type": "t_mapping(t_address,t_mapping(t_address,t_uint256))",
+            "contract": "ERC20Upgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\token\\ERC20\\ERC20Upgradeable.sol:42"
+          },
+          {
+            "label": "_totalSupply",
+            "offset": 0,
+            "slot": "53",
+            "type": "t_uint256",
+            "contract": "ERC20Upgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\token\\ERC20\\ERC20Upgradeable.sol:44"
+          },
+          {
+            "label": "_name",
+            "offset": 0,
+            "slot": "54",
+            "type": "t_string_storage",
+            "contract": "ERC20Upgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\token\\ERC20\\ERC20Upgradeable.sol:46"
+          },
+          {
+            "label": "_symbol",
+            "offset": 0,
+            "slot": "55",
+            "type": "t_string_storage",
+            "contract": "ERC20Upgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\token\\ERC20\\ERC20Upgradeable.sol:47"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "56",
+            "type": "t_array(t_uint256)45_storage",
+            "contract": "ERC20Upgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\token\\ERC20\\ERC20Upgradeable.sol:376"
+          },
+          {
+            "label": "_paused",
+            "offset": 0,
+            "slot": "101",
+            "type": "t_bool",
+            "contract": "PausableUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\security\\PausableUpgradeable.sol:29"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "102",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "PausableUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\security\\PausableUpgradeable.sol:116"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "151",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ERC20PausableUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\token\\ERC20\\extensions\\ERC20PausableUpgradeable.sol:48"
+          },
+          {
+            "label": "_owner",
+            "offset": 0,
+            "slot": "201",
+            "type": "t_address",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\access\\OwnableUpgradeable.sol:22"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "202",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\access\\OwnableUpgradeable.sol:94"
+          },
+          {
+            "label": "_status",
+            "offset": 0,
+            "slot": "251",
+            "type": "t_uint256",
+            "contract": "ReentrancyGuardUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\security\\ReentrancyGuardUpgradeable.sol:38"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "252",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "ReentrancyGuardUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\security\\ReentrancyGuardUpgradeable.sol:88"
+          },
+          {
+            "label": "hyaxPrice",
+            "offset": 0,
+            "slot": "301",
+            "type": "t_uint256",
+            "contract": "HYAXLocalUpgradeableV2",
+            "src": "contracts\\HYAXLocalUpgradeableV2.sol:141"
+          },
+          {
+            "label": "minimumInvestmentAllowedInUSD",
+            "offset": 0,
+            "slot": "302",
+            "type": "t_uint256",
+            "contract": "HYAXLocalUpgradeableV2",
+            "src": "contracts\\HYAXLocalUpgradeableV2.sol:146"
+          },
+          {
+            "label": "maximumInvestmentAllowedInUSD",
+            "offset": 0,
+            "slot": "303",
+            "type": "t_uint256",
+            "contract": "HYAXLocalUpgradeableV2",
+            "src": "contracts\\HYAXLocalUpgradeableV2.sol:151"
+          },
+          {
+            "label": "whiteListerAddress",
+            "offset": 0,
+            "slot": "304",
+            "type": "t_address",
+            "contract": "HYAXLocalUpgradeableV2",
+            "src": "contracts\\HYAXLocalUpgradeableV2.sol:156"
+          },
+          {
+            "label": "treasuryAddress",
+            "offset": 0,
+            "slot": "305",
+            "type": "t_address",
+            "contract": "HYAXLocalUpgradeableV2",
+            "src": "contracts\\HYAXLocalUpgradeableV2.sol:161"
+          },
+          {
+            "label": "investorData",
+            "offset": 0,
+            "slot": "306",
+            "type": "t_mapping(t_address,t_struct(InvestorData)6600_storage)",
+            "contract": "HYAXLocalUpgradeableV2",
+            "src": "contracts\\HYAXLocalUpgradeableV2.sol:174"
+          },
+          {
+            "label": "maticPriceFeedAddress",
+            "offset": 0,
+            "slot": "307",
+            "type": "t_address",
+            "contract": "HYAXLocalUpgradeableV2",
+            "src": "contracts\\HYAXLocalUpgradeableV2.sol:188"
+          },
+          {
+            "label": "dataFeedMatic",
+            "offset": 0,
+            "slot": "308",
+            "type": "t_contract(AggregatorV3Interface)45",
+            "contract": "HYAXLocalUpgradeableV2",
+            "src": "contracts\\HYAXLocalUpgradeableV2.sol:193"
+          },
+          {
+            "label": "usdcTokenAddress",
+            "offset": 0,
+            "slot": "309",
+            "type": "t_address",
+            "contract": "HYAXLocalUpgradeableV2",
+            "src": "contracts\\HYAXLocalUpgradeableV2.sol:200"
+          },
+          {
+            "label": "usdcPriceFeedAddress",
+            "offset": 0,
+            "slot": "310",
+            "type": "t_address",
+            "contract": "HYAXLocalUpgradeableV2",
+            "src": "contracts\\HYAXLocalUpgradeableV2.sol:205"
+          },
+          {
+            "label": "dataFeedUsdc",
+            "offset": 0,
+            "slot": "311",
+            "type": "t_contract(AggregatorV3Interface)45",
+            "contract": "HYAXLocalUpgradeableV2",
+            "src": "contracts\\HYAXLocalUpgradeableV2.sol:210"
+          },
+          {
+            "label": "usdcToken",
+            "offset": 0,
+            "slot": "312",
+            "type": "t_contract(ERC20TokenInterface)6438",
+            "contract": "HYAXLocalUpgradeableV2",
+            "src": "contracts\\HYAXLocalUpgradeableV2.sol:215"
+          },
+          {
+            "label": "usdtTokenAddress",
+            "offset": 0,
+            "slot": "313",
+            "type": "t_address",
+            "contract": "HYAXLocalUpgradeableV2",
+            "src": "contracts\\HYAXLocalUpgradeableV2.sol:222"
+          },
+          {
+            "label": "usdtPriceFeedAddress",
+            "offset": 0,
+            "slot": "314",
+            "type": "t_address",
+            "contract": "HYAXLocalUpgradeableV2",
+            "src": "contracts\\HYAXLocalUpgradeableV2.sol:227"
+          },
+          {
+            "label": "dataFeedUsdt",
+            "offset": 0,
+            "slot": "315",
+            "type": "t_contract(AggregatorV3Interface)45",
+            "contract": "HYAXLocalUpgradeableV2",
+            "src": "contracts\\HYAXLocalUpgradeableV2.sol:232"
+          },
+          {
+            "label": "usdtToken",
+            "offset": 0,
+            "slot": "316",
+            "type": "t_contract(ERC20TokenInterface)6438",
+            "contract": "HYAXLocalUpgradeableV2",
+            "src": "contracts\\HYAXLocalUpgradeableV2.sol:237"
+          },
+          {
+            "label": "wbtcTokenAddress",
+            "offset": 0,
+            "slot": "317",
+            "type": "t_address",
+            "contract": "HYAXLocalUpgradeableV2",
+            "src": "contracts\\HYAXLocalUpgradeableV2.sol:244"
+          },
+          {
+            "label": "wbtcPriceFeedAddress",
+            "offset": 0,
+            "slot": "318",
+            "type": "t_address",
+            "contract": "HYAXLocalUpgradeableV2",
+            "src": "contracts\\HYAXLocalUpgradeableV2.sol:249"
+          },
+          {
+            "label": "dataFeedWbtc",
+            "offset": 0,
+            "slot": "319",
+            "type": "t_contract(AggregatorV3Interface)45",
+            "contract": "HYAXLocalUpgradeableV2",
+            "src": "contracts\\HYAXLocalUpgradeableV2.sol:254"
+          },
+          {
+            "label": "wbtcToken",
+            "offset": 0,
+            "slot": "320",
+            "type": "t_contract(ERC20TokenInterface)6438",
+            "contract": "HYAXLocalUpgradeableV2",
+            "src": "contracts\\HYAXLocalUpgradeableV2.sol:259"
+          },
+          {
+            "label": "wethTokenAddress",
+            "offset": 0,
+            "slot": "321",
+            "type": "t_address",
+            "contract": "HYAXLocalUpgradeableV2",
+            "src": "contracts\\HYAXLocalUpgradeableV2.sol:266"
+          },
+          {
+            "label": "wethPriceFeedAddress",
+            "offset": 0,
+            "slot": "322",
+            "type": "t_address",
+            "contract": "HYAXLocalUpgradeableV2",
+            "src": "contracts\\HYAXLocalUpgradeableV2.sol:271"
+          },
+          {
+            "label": "dataFeedWeth",
+            "offset": 0,
+            "slot": "323",
+            "type": "t_contract(AggregatorV3Interface)45",
+            "contract": "HYAXLocalUpgradeableV2",
+            "src": "contracts\\HYAXLocalUpgradeableV2.sol:276"
+          },
+          {
+            "label": "wethToken",
+            "offset": 0,
+            "slot": "324",
+            "type": "t_contract(ERC20TokenInterface)6438",
+            "contract": "HYAXLocalUpgradeableV2",
+            "src": "contracts\\HYAXLocalUpgradeableV2.sol:281"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)45_storage": {
+            "label": "uint256[45]",
+            "numberOfBytes": "1440"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]",
+            "numberOfBytes": "1568"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_contract(AggregatorV3Interface)45": {
+            "label": "contract AggregatorV3Interface",
+            "numberOfBytes": "20"
+          },
+          "t_contract(ERC20TokenInterface)6438": {
+            "label": "contract ERC20TokenInterface",
+            "numberOfBytes": "20"
+          },
+          "t_mapping(t_address,t_mapping(t_address,t_uint256))": {
+            "label": "mapping(address => mapping(address => uint256))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_struct(InvestorData)6600_storage)": {
+            "label": "mapping(address => struct HYAXLocalUpgradeableV2.InvestorData)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_string_storage": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_struct(InvestorData)6600_storage": {
+            "label": "struct HYAXLocalUpgradeableV2.InvestorData",
+            "members": [
+              {
+                "label": "isWhiteListed",
+                "type": "t_bool",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "isQualifiedInvestor",
+                "type": "t_bool",
+                "offset": 1,
+                "slot": "0"
+              },
+              {
+                "label": "totalHyaxBoughtByInvestor",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "totalUsdDepositedByInvestor",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "2"
+              }
+            ],
+            "numberOfBytes": "96"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        },
+        "namespaces": {}
+      }
+    },
+    "66c5e79541fccddc0f54cdce113c482f64978522c53322c273aadd9c57b01a8f": {
+      "address": "0x8BED82CDe7862787498d9bF6dB79F0f7496f04b9",
+      "txHash": "0x9eae49783f439d92068f3d27e4d0685a5237231bd2484782e7da6bca01b5b91a",
+      "layout": {
+        "solcVersion": "0.8.20",
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:63",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:68"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\utils\\ContextUpgradeable.sol:36"
+          },
+          {
+            "label": "_balances",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "ERC20Upgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\token\\ERC20\\ERC20Upgradeable.sol:40"
+          },
+          {
+            "label": "_allowances",
+            "offset": 0,
+            "slot": "52",
+            "type": "t_mapping(t_address,t_mapping(t_address,t_uint256))",
+            "contract": "ERC20Upgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\token\\ERC20\\ERC20Upgradeable.sol:42"
+          },
+          {
+            "label": "_totalSupply",
+            "offset": 0,
+            "slot": "53",
+            "type": "t_uint256",
+            "contract": "ERC20Upgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\token\\ERC20\\ERC20Upgradeable.sol:44"
+          },
+          {
+            "label": "_name",
+            "offset": 0,
+            "slot": "54",
+            "type": "t_string_storage",
+            "contract": "ERC20Upgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\token\\ERC20\\ERC20Upgradeable.sol:46"
+          },
+          {
+            "label": "_symbol",
+            "offset": 0,
+            "slot": "55",
+            "type": "t_string_storage",
+            "contract": "ERC20Upgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\token\\ERC20\\ERC20Upgradeable.sol:47"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "56",
+            "type": "t_array(t_uint256)45_storage",
+            "contract": "ERC20Upgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\token\\ERC20\\ERC20Upgradeable.sol:376"
+          },
+          {
+            "label": "_paused",
+            "offset": 0,
+            "slot": "101",
+            "type": "t_bool",
+            "contract": "PausableUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\security\\PausableUpgradeable.sol:29"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "102",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "PausableUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\security\\PausableUpgradeable.sol:116"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "151",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ERC20PausableUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\token\\ERC20\\extensions\\ERC20PausableUpgradeable.sol:48"
+          },
+          {
+            "label": "_owner",
+            "offset": 0,
+            "slot": "201",
+            "type": "t_address",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\access\\OwnableUpgradeable.sol:22"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "202",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\access\\OwnableUpgradeable.sol:94"
+          },
+          {
+            "label": "_status",
+            "offset": 0,
+            "slot": "251",
+            "type": "t_uint256",
+            "contract": "ReentrancyGuardUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\security\\ReentrancyGuardUpgradeable.sol:38"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "252",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "ReentrancyGuardUpgradeable",
+            "src": "@openzeppelin\\contracts-upgradeable\\security\\ReentrancyGuardUpgradeable.sol:88"
+          },
+          {
+            "label": "hyaxPrice",
+            "offset": 0,
+            "slot": "301",
+            "type": "t_uint256",
+            "contract": "HYAXLocalUpgradeable",
+            "src": "contracts\\HYAXLocalUpgradeable.sol:141"
+          },
+          {
+            "label": "minimumInvestmentAllowedInUSD",
+            "offset": 0,
+            "slot": "302",
+            "type": "t_uint256",
+            "contract": "HYAXLocalUpgradeable",
+            "src": "contracts\\HYAXLocalUpgradeable.sol:146"
+          },
+          {
+            "label": "maximumInvestmentAllowedInUSD",
+            "offset": 0,
+            "slot": "303",
+            "type": "t_uint256",
+            "contract": "HYAXLocalUpgradeable",
+            "src": "contracts\\HYAXLocalUpgradeable.sol:151"
+          },
+          {
+            "label": "whiteListerAddress",
+            "offset": 0,
+            "slot": "304",
+            "type": "t_address",
+            "contract": "HYAXLocalUpgradeable",
+            "src": "contracts\\HYAXLocalUpgradeable.sol:156"
+          },
+          {
+            "label": "treasuryAddress",
+            "offset": 0,
+            "slot": "305",
+            "type": "t_address",
+            "contract": "HYAXLocalUpgradeable",
+            "src": "contracts\\HYAXLocalUpgradeable.sol:161"
+          },
+          {
+            "label": "investorData",
+            "offset": 0,
+            "slot": "306",
+            "type": "t_mapping(t_address,t_struct(InvestorData)4790_storage)",
+            "contract": "HYAXLocalUpgradeable",
+            "src": "contracts\\HYAXLocalUpgradeable.sol:174"
+          },
+          {
+            "label": "maticPriceFeedAddress",
+            "offset": 0,
+            "slot": "307",
+            "type": "t_address",
+            "contract": "HYAXLocalUpgradeable",
+            "src": "contracts\\HYAXLocalUpgradeable.sol:188"
+          },
+          {
+            "label": "dataFeedMatic",
+            "offset": 0,
+            "slot": "308",
+            "type": "t_contract(AggregatorV3Interface)45",
+            "contract": "HYAXLocalUpgradeable",
+            "src": "contracts\\HYAXLocalUpgradeable.sol:193"
+          },
+          {
+            "label": "usdcTokenAddress",
+            "offset": 0,
+            "slot": "309",
+            "type": "t_address",
+            "contract": "HYAXLocalUpgradeable",
+            "src": "contracts\\HYAXLocalUpgradeable.sol:200"
+          },
+          {
+            "label": "usdcPriceFeedAddress",
+            "offset": 0,
+            "slot": "310",
+            "type": "t_address",
+            "contract": "HYAXLocalUpgradeable",
+            "src": "contracts\\HYAXLocalUpgradeable.sol:205"
+          },
+          {
+            "label": "dataFeedUsdc",
+            "offset": 0,
+            "slot": "311",
+            "type": "t_contract(AggregatorV3Interface)45",
+            "contract": "HYAXLocalUpgradeable",
+            "src": "contracts\\HYAXLocalUpgradeable.sol:210"
+          },
+          {
+            "label": "usdcToken",
+            "offset": 0,
+            "slot": "312",
+            "type": "t_contract(ERC20TokenInterface)4628",
+            "contract": "HYAXLocalUpgradeable",
+            "src": "contracts\\HYAXLocalUpgradeable.sol:215"
+          },
+          {
+            "label": "usdtTokenAddress",
+            "offset": 0,
+            "slot": "313",
+            "type": "t_address",
+            "contract": "HYAXLocalUpgradeable",
+            "src": "contracts\\HYAXLocalUpgradeable.sol:222"
+          },
+          {
+            "label": "usdtPriceFeedAddress",
+            "offset": 0,
+            "slot": "314",
+            "type": "t_address",
+            "contract": "HYAXLocalUpgradeable",
+            "src": "contracts\\HYAXLocalUpgradeable.sol:227"
+          },
+          {
+            "label": "dataFeedUsdt",
+            "offset": 0,
+            "slot": "315",
+            "type": "t_contract(AggregatorV3Interface)45",
+            "contract": "HYAXLocalUpgradeable",
+            "src": "contracts\\HYAXLocalUpgradeable.sol:232"
+          },
+          {
+            "label": "usdtToken",
+            "offset": 0,
+            "slot": "316",
+            "type": "t_contract(ERC20TokenInterface)4628",
+            "contract": "HYAXLocalUpgradeable",
+            "src": "contracts\\HYAXLocalUpgradeable.sol:237"
+          },
+          {
+            "label": "wbtcTokenAddress",
+            "offset": 0,
+            "slot": "317",
+            "type": "t_address",
+            "contract": "HYAXLocalUpgradeable",
+            "src": "contracts\\HYAXLocalUpgradeable.sol:244"
+          },
+          {
+            "label": "wbtcPriceFeedAddress",
+            "offset": 0,
+            "slot": "318",
+            "type": "t_address",
+            "contract": "HYAXLocalUpgradeable",
+            "src": "contracts\\HYAXLocalUpgradeable.sol:249"
+          },
+          {
+            "label": "dataFeedWbtc",
+            "offset": 0,
+            "slot": "319",
+            "type": "t_contract(AggregatorV3Interface)45",
+            "contract": "HYAXLocalUpgradeable",
+            "src": "contracts\\HYAXLocalUpgradeable.sol:254"
+          },
+          {
+            "label": "wbtcToken",
+            "offset": 0,
+            "slot": "320",
+            "type": "t_contract(ERC20TokenInterface)4628",
+            "contract": "HYAXLocalUpgradeable",
+            "src": "contracts\\HYAXLocalUpgradeable.sol:259"
+          },
+          {
+            "label": "wethTokenAddress",
+            "offset": 0,
+            "slot": "321",
+            "type": "t_address",
+            "contract": "HYAXLocalUpgradeable",
+            "src": "contracts\\HYAXLocalUpgradeable.sol:266"
+          },
+          {
+            "label": "wethPriceFeedAddress",
+            "offset": 0,
+            "slot": "322",
+            "type": "t_address",
+            "contract": "HYAXLocalUpgradeable",
+            "src": "contracts\\HYAXLocalUpgradeable.sol:271"
+          },
+          {
+            "label": "dataFeedWeth",
+            "offset": 0,
+            "slot": "323",
+            "type": "t_contract(AggregatorV3Interface)45",
+            "contract": "HYAXLocalUpgradeable",
+            "src": "contracts\\HYAXLocalUpgradeable.sol:276"
+          },
+          {
+            "label": "wethToken",
+            "offset": 0,
+            "slot": "324",
+            "type": "t_contract(ERC20TokenInterface)4628",
+            "contract": "HYAXLocalUpgradeable",
+            "src": "contracts\\HYAXLocalUpgradeable.sol:281"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)45_storage": {
+            "label": "uint256[45]",
+            "numberOfBytes": "1440"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]",
+            "numberOfBytes": "1568"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_contract(AggregatorV3Interface)45": {
+            "label": "contract AggregatorV3Interface",
+            "numberOfBytes": "20"
+          },
+          "t_contract(ERC20TokenInterface)4628": {
+            "label": "contract ERC20TokenInterface",
+            "numberOfBytes": "20"
+          },
+          "t_mapping(t_address,t_mapping(t_address,t_uint256))": {
+            "label": "mapping(address => mapping(address => uint256))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_struct(InvestorData)4790_storage)": {
+            "label": "mapping(address => struct HYAXLocalUpgradeable.InvestorData)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_string_storage": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_struct(InvestorData)4790_storage": {
+            "label": "struct HYAXLocalUpgradeable.InvestorData",
+            "members": [
+              {
+                "label": "isWhiteListed",
+                "type": "t_bool",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "isQualifiedInvestor",
+                "type": "t_bool",
+                "offset": 1,
+                "slot": "0"
+              },
+              {
+                "label": "totalHyaxBoughtByInvestor",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "totalUsdDepositedByInvestor",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "2"
+              }
+            ],
+            "numberOfBytes": "96"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        },
+        "namespaces": {}
+      }
+    }
+  }
+}

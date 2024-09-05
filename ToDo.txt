@@ -153,34 +153,44 @@ npx hardhat run --network polygonAmoy scripts/deploy_testnet_HYAX_contract.js
 
 https://amoy.polygonscan.com/address/0x28cd558137b0b02c23100d7311bcbb12a30579a1#writeContract
 
-
-
-CONTINUE HEREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
-
-Use remix to deply it if that's the case
+Use remix to deploy it if that's the case
 
 ---------DEPLOYING TESTNET UPGRADEABLE VERSION--------
 
-
-(IMPLEMENTATION) Stores the logic
-
+npx hardhat run --network polygonAmoy scripts/deploy_testnet_upgradeable_HYAX_contract.js
 
 (PROXY) Stores the variables
+0xF8C247ee795f091846A14A2B37eC11A76da45bAd
 
+(IMPLEMENTATION) Stores the logic
+0x8BED82CDe7862787498d9bF6dB79F0f7496f04b9
 
 (PROXY ADMIN)
-
+0x1121395386eBc2d4AC04BbBfdD0e236918D8b8a7
 
 npm install --save-dev @nomicfoundation/hardhat-verify
 
-npx hardhat verify --network polygonAmoy 
+npx hardhat verify --network polygonAmoy 0xF8C247ee795f091846A14A2B37eC11A76da45bAd
+
+npx hardhat verify --network polygonAmoy 0x8BED82CDe7862787498d9bF6dB79F0f7496f04b9
 
 
+---------DEPLOYING TESTNET UPGRADED V2 VERSION---------
+
+npx hardhat run --network polygonAmoy scripts/upgrade_testnet_upgradeable_HYAX_contractV2.js
+
+(IMPLEMENTATION V2) Stores the updated logic
+0xfa514a251A7430B32aa03E8A65ff30BabeDA7327
+
+npx hardhat verify --network polygonAmoy 0xfa514a251A7430B32aa03E8A65ff30BabeDA7327
+
+---------DEPLOYING TESTNET UPGRADED V3 VERSION---------
+
+npx hardhat run --network polygonAmoy scripts/upgrade_testnet_upgradeable_HYAX_contractV3.js
+
+(IMPLEMENTATION V3) Stores the updated logic
+0x8BED82CDe7862787498d9bF6dB79F0f7496f04b9
 
 
-
-
-
-
-
-
+0x350441F8a82680a785FFA9d3EfEa60BB4cA417f8
+0xc6442dbED945a1cf0B747994510a3bCCB8ECb693
