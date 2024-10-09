@@ -8,7 +8,7 @@ import "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.
 
 /**
  * @dev Implementation based on the ERC-20 standard
- * Developer: Carlos Mario Alba Rodriguez
+ * Developer: Carlos Alba
  */
 
  /**
@@ -74,19 +74,19 @@ contract HYAXLocal is ERC20Pausable, Ownable, ReentrancyGuardUpgradeable {
     event InvestorAddedToWhiteList(address sender, address _investorAddress);
 
     /**
-     * @dev Emitted when an investor is removed from the whitelist.
+     * @dev Emitted when the whitelist status of an investor is updated.
      */
-    event InvestorRemovedFromWhiteList(address sender, address _investorAddress);
+    event WhitelistStatusUpdated(address sender, address _investorAddress, bool _isWhiteListed);
 
     /**
-     * @dev Emitted when an investor is added to the qualified investor list.
+     * @dev Emitted when the blacklist status of an investor is updated.
      */
-    event InvestorAddedToQualifiedInvestorList(address sender, address _QualifiedInvestorAddress);
+    event BlacklistStatusUpdated(address sender, address _investorAddress, bool _isBlacklisted);
 
     /**
-     * @dev Emitted when an investor is removed from the qualified investor list.
+     * @dev Emitted when the qualified investor status of an investor is updated.
      */
-    event InvestorRemovedFromQualifiedInvestorList(address sender, address _QualifiedInvestorAddress);
+    event QualifiedInvestorStatusUpdated(address sender, address _QualifiedInvestorAddress, bool _isQualifiedInvestor);
 
     /**
      * @dev Emitted when the Matic price feed address is updated.
@@ -165,6 +165,7 @@ contract HYAXLocal is ERC20Pausable, Ownable, ReentrancyGuardUpgradeable {
      */
     struct InvestorData {
         bool isWhiteListed; // Whited investors approved after KYC.
+        bool isBlacklisted; // Blacklisted investors.
         bool isQualifiedInvestor; //Track qualified investors.
         uint256 totalHyaxBoughtByInvestor; //Track the total amount of HYAX bought by each investor.
         uint256 totalUsdDepositedByInvestor; //Track the total amount of USD an investor has deposited to buy the HYAX token.
@@ -347,7 +348,7 @@ contract HYAXLocal is ERC20Pausable, Ownable, ReentrancyGuardUpgradeable {
 
         // Implementation of WBTC token interface
         wbtcToken = ERC20TokenInterface(wbtcTokenAddress);
-
+        
         // Address of WETH token on the blockchain
         wethTokenAddress = 0x524a89ED77d5827320E35E12bCA96830C6b7960A;
 
@@ -393,15 +394,16 @@ contract HYAXLocal is ERC20Pausable, Ownable, ReentrancyGuardUpgradeable {
     function addToWhiteList(address _investorAddress) external onlyOwnerOrWhitelister {
 
         // Ensure that the investor address to add is not the zero address
-        require(_investorAddress != address(0), "Investor address to add to the white list cannot be the zero address");
+        require(_investorAddress != address(0), "Investor address to add to the whitelist cannot be the zero address");
         
-        // Ensure that the investor address has not already been added to the white list
-        require(!investorData[_investorAddress].isWhiteListed, "That investor address has already been added to the white list");
+        // Ensure that the investor address has not already been added to the whitelist
+        require(!investorData[_investorAddress].isWhiteListed, "That investor address has already been added to the whitelist");
         
         // Create a new InvestorData struct
         InvestorData memory newInvestorData;
 
         newInvestorData.isWhiteListed = true; // Mark the investor as whitelisted
+        newInvestorData.isBlacklisted = false; // Initially, the investor is not blacklisted
         newInvestorData.isQualifiedInvestor = false; // Initially, the investor is not a qualified investor
         newInvestorData.totalHyaxBoughtByInvestor = 0; // Initialize the total HYAX bought to zero
         newInvestorData.totalUsdDepositedByInvestor = 0; // Initialize the total USD deposited to zero
@@ -411,77 +413,79 @@ contract HYAXLocal is ERC20Pausable, Ownable, ReentrancyGuardUpgradeable {
         
         emit InvestorAddedToWhiteList(msg.sender, _investorAddress);
     }
+    
+    /**
+     * @dev Function to update the whitelist status of an investor.
+     * @param _investorAddress The address of the investor to update the whitelist status.
+     * @param _newStatus The new status to set for the investor.
+     */
+    function updateWhitelistStatus(address _investorAddress, bool _newStatus) external onlyOwnerOrWhitelister {
+
+        // Ensure that the investor address to update is not the zero address
+        require(_investorAddress != address(0), "Investor address to update whitelist status cannot be the zero address");
+
+        //Verify that the investor address is currently in a different status
+        require(investorData[_investorAddress].isWhiteListed != _newStatus, "Investor address has already been updated to that status");
+
+        //Update the whitelist status
+        investorData[_investorAddress].isWhiteListed = _newStatus; 
+      
+        emit WhitelistStatusUpdated(msg.sender, _investorAddress, _newStatus);
+    }
 
     /**
-     * @dev Function to remove an investor's address from the whitelist.
-     * @param _investorAddress The address of the investor to be removed from the whitelist.
+     * @dev Function to update the blacklist status of an investor.
+     * @param _investorAddress The address of the investor to update the blacklist status.
+     * @param _newStatus The new status to set for the investor.
      */
-    function removeFromWhiteList(address _investorAddress) external onlyOwnerOrWhitelister {
+    function updateBlacklistStatus(address _investorAddress, bool _newStatus) external onlyOwnerOrWhitelister {
 
-        // Ensure that the investor address to remove is not the zero address
-        require(_investorAddress != address(0), "Investor address to remove from the white list cannot be the zero address");
+        // Ensure that the investor address to update is not the zero address
+        require(_investorAddress != address(0), "Investor address to update blacklist status cannot be the zero address");
 
-        // Ensure that the investor address is registered on the white list
-        require(investorData[_investorAddress].isWhiteListed, "That investor address is not registered on the white list");
+        //Verify that the investor address is currently in a different status
+        require(investorData[_investorAddress].isBlacklisted != _newStatus, "Investor address has already been updated to that status");
 
-        // Remove the investor address from the white list and emit the event
-        investorData[_investorAddress].isWhiteListed = false;
+        //Update the whitelist status
+        investorData[_investorAddress].isBlacklisted = _newStatus; 
       
-        emit InvestorRemovedFromWhiteList(msg.sender, _investorAddress);
+        emit BlacklistStatusUpdated(msg.sender, _investorAddress, _newStatus);
     }
 
     modifier investorIsOnWhiteList {
 
-        // Ensure that the sender's address is on the white list
-        require(investorData[msg.sender].isWhiteListed, "Investor address has not been added to the white list");
+        // Ensure that the sender's address is on the whitelist
+        require(investorData[msg.sender].isWhiteListed, "Investor address has not been added to the whitelist");
         _;
     }
 
     modifier onlyOwnerOrWhitelister {
-        // Ensure that the sender is the owner or the white lister address
-        require(msg.sender == owner() || msg.sender == whiteListerAddress, "Function reserved only for the white lister address or the owner");
+        // Ensure that the sender is the owner or the whitelister address
+        require(msg.sender == owner() || msg.sender == whiteListerAddress, "Function reserved only for the whitelister address or the owner");
         _;
     }
 
     /**
-     * @dev Function to add an investor's address to the list of qualified investors.
-     * @param _qualifiedInvestorAddress The address of the investor to be added to the qualified investor list.
+     * @dev Function to update the qualified investor status of an investor.
+     * @param _qualifiedInvestorAddress The address of the investor to update the qualified investor status.
+     * @param _newStatus The new status to set for the investor.
      */
-    function addToQualifiedInvestorList(address _qualifiedInvestorAddress) external onlyOwnerOrWhitelister {
+    function updateQualifiedInvestorStatus(address _qualifiedInvestorAddress, bool _newStatus) external onlyOwnerOrWhitelister {
 
-        // Ensure that the investor address to add is not the zero address
-        require(_qualifiedInvestorAddress != address(0), "Investor address to add to the qualified investor list cannot be the zero address");
+        // Ensure that the investor address to update is not the zero address
+        require(_qualifiedInvestorAddress != address(0), "Investor address to update qualified investor status cannot be the zero address");
 
-        // Ensure that the investor address to add is already in the white list of investors
-        require(investorData[_qualifiedInvestorAddress].isWhiteListed, "Investor address must be first added to the investor white list");
+        // Ensure that the investor address to update is already in the whitelist of investors
+        require(investorData[_qualifiedInvestorAddress].isWhiteListed, "Investor address must be first added to the investor whitelist");
    
-        // Ensure that the investor address has not already been added to the qualified investor list
-        require(!investorData[_qualifiedInvestorAddress].isQualifiedInvestor, "That investor address has already been added to the qualified investor list");
+        // Ensure that the investor address has not already been updated to that status
+        require(investorData[_qualifiedInvestorAddress].isQualifiedInvestor != _newStatus, "That investor address has already been updated to that status");
         
-        // Add the investor address to the qualified investor list
-        investorData[_qualifiedInvestorAddress].isQualifiedInvestor = true;
+        // Update the qualified investor status
+        investorData[_qualifiedInvestorAddress].isQualifiedInvestor = _newStatus;
        
-        // Emit the event of investor added to the qualified investor list
-        emit InvestorAddedToQualifiedInvestorList(msg.sender, _qualifiedInvestorAddress);
-    }
-
-    /**
-     * @dev Function to remove an investor's address from the list of qualified investors.
-     * @param _qualifiedInvestorAddress The address of the investor to be removed from the qualified investor list.
-     */
-    function removeFromQualifiedInvestorList(address _qualifiedInvestorAddress) external onlyOwnerOrWhitelister {
-
-        // Ensure that the investor address to remove is not the zero address
-        require(_qualifiedInvestorAddress != address(0), "Investor address to remove from the qualified investor list cannot be the zero address");
-
-        // Ensure that the investor address is registered on the qualified investor list
-        require(investorData[_qualifiedInvestorAddress].isQualifiedInvestor, "That investor address is not registered on the qualified investor list");
-
-        // Remove the investor address from the qualified investor list
-        investorData[_qualifiedInvestorAddress].isQualifiedInvestor = false; 
-        
-        // Emit the event of investor removed from the qualified investor list
-        emit InvestorRemovedFromQualifiedInvestorList(msg.sender, _qualifiedInvestorAddress);
+        // Emit the event of qualified investor status updated
+        emit QualifiedInvestorStatusUpdated(msg.sender, _qualifiedInvestorAddress, _newStatus);
     }
 
     /**
@@ -597,7 +601,7 @@ contract HYAXLocal is ERC20Pausable, Ownable, ReentrancyGuardUpgradeable {
 
         // Transfer the token to the treasury address
         require(token.transfer(payable(treasuryAddress), _amount), "There was an error on sending the token investment to the treasury");
-
+        
         // Transfer HYAX token to the investor wallet
         require(this.transfer(msg.sender, totalHyaxTokenToReturn), "There was an error on sending back the HYAX Token to the investor");
 
@@ -688,10 +692,10 @@ contract HYAXLocal is ERC20Pausable, Ownable, ReentrancyGuardUpgradeable {
     function updateWhiteListerAddress(address _newWhiteListerAddress) external onlyOwner {
 
         // Ensure the new whitelister address is not the zero address
-        require(_newWhiteListerAddress != address(0), "The white lister address cannot be the zero address");
+        require(_newWhiteListerAddress != address(0), "The whitelister address cannot be the zero address");
         
         //Ensure that the update transaction is not repeated for the same parameter, just as a good practice
-        require(_newWhiteListerAddress != whiteListerAddress, "White lister address has already been modified to that value");
+        require(_newWhiteListerAddress != whiteListerAddress, "Whitelister address has already been modified to that value");
 
         // Update the whitelister address
         whiteListerAddress = _newWhiteListerAddress;

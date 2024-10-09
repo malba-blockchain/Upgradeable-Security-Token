@@ -160,19 +160,19 @@ Use remix to deploy it if that's the case
 npx hardhat run --network polygonAmoy scripts/deploy_testnet_upgradeable_HYAX_contract.js
 
 (PROXY) Stores the variables
-0xF8C247ee795f091846A14A2B37eC11A76da45bAd
+0xCd1fA2C8626B023197158aC84C5DF56EDD1F3f0C
 
 (IMPLEMENTATION) Stores the logic
-0x8BED82CDe7862787498d9bF6dB79F0f7496f04b9
+0x378a1DC6b11E1cfD1Bfd7183085dc0C79FCE1a47
 
 (PROXY ADMIN)
-0x1121395386eBc2d4AC04BbBfdD0e236918D8b8a7
+0xE27eB0e9D1f450799b68829Fac93a26367f6d590
 
 npm install --save-dev @nomicfoundation/hardhat-verify
 
-npx hardhat verify --network polygonAmoy 0xF8C247ee795f091846A14A2B37eC11A76da45bAd
+npx hardhat verify --network polygonAmoy 0xCd1fA2C8626B023197158aC84C5DF56EDD1F3f0C
 
-npx hardhat verify --network polygonAmoy 0x8BED82CDe7862787498d9bF6dB79F0f7496f04b9
+npx hardhat verify --network polygonAmoy 0x378a1DC6b11E1cfD1Bfd7183085dc0C79FCE1a47
 
 
 ---------DEPLOYING TESTNET UPGRADED V2 VERSION---------
@@ -194,3 +194,22 @@ npx hardhat run --network polygonAmoy scripts/upgrade_testnet_upgradeable_HYAX_c
 
 0x350441F8a82680a785FFA9d3EfEa60BB4cA417f8
 0xc6442dbED945a1cf0B747994510a3bCCB8ECb693
+
+
+UPDATED REQUIREMENTS
+1. Add Blacklist also for the token smart contract. DONE
+-Update add to qualified investor solidity DONE
+-Update add to qualified investor tests DONE
+
+2. Migrate to use only the upgradeable version DONE
+
+3. Add the blocking for blacklisted and non whitelisted
+investFromMatic
+investFromCryptoToken
+
+
+4. Fix the errors of the testing due to the upgradeable libraries
+
+5. Optimize the code
+
+6. Launch upgradeable version on testnet (arbitrum?)
