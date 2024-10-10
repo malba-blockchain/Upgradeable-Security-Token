@@ -294,7 +294,7 @@ contract HYAXUpgradeable is ERC20PausableUpgradeable, OwnableUpgradeable, Reentr
         __Ownable_init();
         __ReentrancyGuard_init();
         __Pausable_init();
-
+        
         // Minting 500,000,000 HYAX tokens to the contract deployer
         _mint(msg.sender, 500000000 * 10 ** decimals());
 
