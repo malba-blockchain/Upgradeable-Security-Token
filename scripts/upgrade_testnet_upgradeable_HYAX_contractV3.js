@@ -10,7 +10,7 @@ async function main() {
 
     const smartContractToUpgradeWith = 'HYAXUpgradeable'; // Define the new version of the smart contract to upgrade with
 
-    const proxySmartContractAddress = '0x289F70Ab95274E26238c0eb8a4a06F4990B5b95f'; // Define the address of the proxy smart contract
+    const proxySmartContractAddress = '0x55a0E75dA1Ea313b5e051be15d884D26C5332EaD'; // Define the address of the proxy smart contract
 
     // Connect to the custom JsonRpcProvider for PolygonAmoy using Alchemy API
     const provider = new ethers.JsonRpcProvider(`https://polygon-amoy.g.alchemy.com/v2/${process.env.REACT_APP_ALCHEMY_API_KEY}`);

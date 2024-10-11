@@ -215,12 +215,16 @@ investFromCryptoToken DONE
 CONTINUE HEREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
 FIND OUT WHY IT'S NOT INVESTING FROM CRYPTO TOKEN WBTC
 
-7. Launch upgradeable version on testnet (arbitrum?) 
+7. Launch upgradeable version on amoy testnet
 
 
 ---------DEPLOYING TESTNET UPGRADEABLE VERSION--------
 
+npm install --save-dev alchemy-sdk
+
 npx hardhat run --network polygonAmoy scripts/deploy_testnet_upgradeable_HYAX_contract.js
+
+
 
 (PROXY) Stores the variables
 0x55a0E75dA1Ea313b5e051be15d884D26C5332EaD
@@ -234,6 +238,8 @@ npx hardhat run --network polygonAmoy scripts/deploy_testnet_upgradeable_HYAX_co
 npx hardhat verify --network polygonAmoy 0x55a0E75dA1Ea313b5e051be15d884D26C5332EaD
 
 ------------------------------------------------------------------------------
+Owner: 0xc6442dbED945a1cf0B747994510a3bCCB8ECb693
+Smart contract: 0x55a0E75dA1Ea313b5e051be15d884D26C5332EaD
 
 0x6Fbc023ACCBA56c1b32bDaFA2F27D4cd58145AB1 100 WBTC Approved 1 WBTC Transfered
 0x9a4B007a10E1d1EC63157c8D69eBa76F30B4a2B4 100 WBTC Approved 3 WBTC Transfered
@@ -243,6 +249,30 @@ npx hardhat verify --network polygonAmoy 0x55a0E75dA1Ea313b5e051be15d884D26C5332
 
 ---
 Team wallets
-0x350441F8a82680a785FFA9d3EfEa60BB4cA417f8 3000000000000000000000000 3M HYAX 100 WBTC
+0x350441F8a82680a785FFA9d3EfEa60BB4cA417f8 3000000000000000000000000 3M HYAX
 0x01c2f012de19e6436744c3F81f56E9e70C93a8C3 2000000000000000000000000 2M HYAX
 0x7dE9a234E67b9Ac172c803555f5aA7fFf3DB5581 5000000000000000000000000 5M HYAX
+
+---
+
+100 WBTC
+100000000000000000000
+1 WBTC
+1000000000000000000
+---
+
+VERSION 2
+npx hardhat run --network polygonAmoy scripts/upgrade_testnet_upgradeable_HYAX_contractV2.js
+
+(IMPLEMENTATION V2) Stores the logic
+0x7084554aF90Ac6C0A4D404EdF77789b62bdee1a0
+npx hardhat verify --network polygonAmoy 0x7084554aF90Ac6C0A4D404EdF77789b62bdee1a0
+
+---
+VERSION 3
+npx hardhat run --network polygonAmoy scripts/upgrade_testnet_upgradeable_HYAX_contractV3.js
+
+(IMPLEMENTATION V3) Stores the logic
+0x1Cb720D712776F8F1f4CC6Baf58FAD3931F8df94
+npx hardhat verify --network polygonAmoy 0x1Cb720D712776F8F1f4CC6Baf58FAD3931F8df94
+

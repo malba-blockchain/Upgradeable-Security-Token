@@ -1099,7 +1099,7 @@ describe("Test case #15. Invest from MATIC", function () {
 
     //Add investor address to the whitelist
     await hyax.connect(addr1).addToWhiteList(addr2.address);
-
+    
     //Investing 9500 MATIC tokens at a price of $0.411374 per token equals $3,908
     //Sending 9500 because you need to also account for the gas
     await hyax.connect(addr2).investFromMatic({ value: ethers.parseEther("9500") });

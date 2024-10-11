@@ -5,7 +5,7 @@ require('dotenv').config(); // Load environment variables from a .env file
 
 async function main() {
 
-    const smartContractToDeploy = 'HYAXLocal'; // Define the name of the smart contract to deploy
+    const smartContractToDeploy = 'HYAXUpgradeable'; // Define the name of the smart contract to deploy
 
     // Connect to the custom JsonRpcProvider for PolygonAmoy using Alchemy API
     const provider = new ethers.JsonRpcProvider(`https://polygon-amoy.g.alchemy.com/v2/${process.env.REACT_APP_ALCHEMY_API_KEY}`);
@@ -28,10 +28,10 @@ async function main() {
 
     txSmartContractDeployment.to = null; // Ensure the transaction is for deploying a contract, not sending to an address
     txSmartContractDeployment.value = ethers.parseEther("0"); // Set the transaction value to 0 Ether
-    txSmartContractDeployment.gasLimit = 5000000; // Set the gas limit for the deployment
-    txSmartContractDeployment.maxPriorityFeePerGas = ethers.parseUnits("20", "gwei"); // Set the maximum priority fee per gas
-    txSmartContractDeployment.maxFeePerGas = ethers.parseUnits("25", "gwei"); // Set the maximum fee per gas
-    txSmartContractDeployment.nonce = await provider.getTransactionCount(deployerWallet.address, "latest"), // Set the nonce for the transaction
+    //txSmartContractDeployment.gasLimit = 5000000; // Set the gas limit for the deployment
+    //txSmartContractDeployment.maxPriorityFeePerGas = ethers.parseUnits("25", "gwei"); // Set the maximum priority fee per gas
+    //txSmartContractDeployment.maxFeePerGas = ethers.parseUnits("25", "gwei"); // Set the maximum fee per gas
+    //txSmartContractDeployment.nonce = await provider.getTransactionCount(deployerWallet.address, "latest"), // Set the nonce for the transaction
     txSmartContractDeployment.type = 2; // Set the transaction type to EIP-1559 (type 2)
     txSmartContractDeployment.chainId = 80002; // Set the chain ID to 80002 (PolygonAmoy testnet)
 
@@ -56,7 +56,7 @@ async function main() {
     const smartContractAbi = smartContractFactory.interface.formatJson();
 
     console.log("smartContractAbi", smartContractAbi); // Log the ABI of the smart contract
-
+    
     // Create a contract instance with the deployed contract address, ABI, and deployer wallet
     const smartContractInstance = await new ethers.Contract(transactionReceipt.contractAddress, smartContractAbi, deployerWallet);
 
