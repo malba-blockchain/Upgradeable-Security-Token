@@ -15,7 +15,7 @@ async function main() {
     const deployerWallet = wallet.connect(provider); // Connect the wallet to the provider
 
     console.log("\nDeployer wallet address: ", deployerWallet.address); // Log the deployer wallet's address
-
+    
     console.log("\nDeployer wallet balance: ", await provider.getBalance(deployerWallet.address)); // Log the deployer wallet's balance
 
     console.log("\nCreating deployment transaction..."); // Log that the deployment transaction is being created

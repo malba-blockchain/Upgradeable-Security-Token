@@ -509,8 +509,8 @@
       ]
     },
     "D:\\USER\\Downloads\\ATLAS\\Projects\\HYAX-Upgradeable-Token\\contracts\\WethToken.sol": {
-      "lastModificationDate": 1724026650743,
-      "contentHash": "ade994618cf3e5afff02aebe087d6d68",
+      "lastModificationDate": 1729530449704,
+      "contentHash": "1401d7cfd2abcbc81d5d63a227e019dd",
       "sourceName": "contracts/WethToken.sol",
       "solcConfig": {
         "version": "0.8.20",
@@ -587,8 +587,8 @@
       ]
     },
     "D:\\USER\\Downloads\\ATLAS\\Projects\\HYAX-Upgradeable-Token\\contracts\\WbtcToken.sol": {
-      "lastModificationDate": 1724026650653,
-      "contentHash": "fb7961fe7de06a084e70f314146a85c0",
+      "lastModificationDate": 1729530445103,
+      "contentHash": "6bc57d540953e1270a65b7029c551d92",
       "sourceName": "contracts/WbtcToken.sol",
       "solcConfig": {
         "version": "0.8.20",
@@ -665,8 +665,8 @@
       ]
     },
     "D:\\USER\\Downloads\\ATLAS\\Projects\\HYAX-Upgradeable-Token\\contracts\\UsdtToken.sol": {
-      "lastModificationDate": 1724026650553,
-      "contentHash": "df9fe54f40511df3a789acadcf8d5125",
+      "lastModificationDate": 1729530440514,
+      "contentHash": "08bf8cd30bc40c46fe0b18ee91a77387",
       "sourceName": "contracts/UsdtToken.sol",
       "solcConfig": {
         "version": "0.8.20",
@@ -743,8 +743,8 @@
       ]
     },
     "D:\\USER\\Downloads\\ATLAS\\Projects\\HYAX-Upgradeable-Token\\contracts\\UsdcToken.sol": {
-      "lastModificationDate": 1724026650502,
-      "contentHash": "a6a73679159c87816394530c7dbf0fac",
+      "lastModificationDate": 1729530434457,
+      "contentHash": "d098fd521192bca32fd68cc147dd488f",
       "sourceName": "contracts/UsdcToken.sol",
       "solcConfig": {
         "version": "0.8.20",

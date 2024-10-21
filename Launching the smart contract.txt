@@ -1,0 +1,6 @@
+1. Do the launch
+2. Validate the proxy and implementation
+3. Send tokens from owner wallet to the smart contract
+4. Add investor wallets to whitelist and qualified investor list
+5. Approve transaction from native token to the smart contract
+6. Use the smart contract to buy the tokens for each address

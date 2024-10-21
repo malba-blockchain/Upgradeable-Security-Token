@@ -40,7 +40,7 @@ async function main() {
     // The function likely takes the contract factory, an array of constructor arguments (`[42]` in this case),
     // and an optional object with deployment configuration (`{ initializer: "store" }`).
     const txSmartContractDeployment = await upgrades.deployProxy(smartContractFactory, { initializer: 'initialize' });
-
+    
     console.log("\nUpgradeable smart contract deployed: ", smartContractToDeploy);
 
     // This line logs the address of the deployed upgradeable contract proxy to the console.

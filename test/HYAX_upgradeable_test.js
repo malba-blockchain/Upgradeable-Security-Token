@@ -1058,7 +1058,6 @@ describe("Test case #15. Invest from MATIC", function () {
     //Update the address of the MATIC price data feed mock
     await hyax.connect(owner).updatePriceFeedAddress(0, maticPriceDataFeedMock.target);
 
-
     //Update the whitelister address
     await hyax.connect(owner).updateWhiteListerAddress(addr1.address);
 
@@ -1609,7 +1608,7 @@ describe("Test case #19. Invest from crypto token WETH", function () {
     //Update the address of the WETH price data feed mock
     await hyax.connect(owner).updatePriceFeedAddress(4, wethPriceDataFeedMock.target);
 
-
+    
     //Deploy the WETH token mock
     const WethToken = await ethers.getContractFactory('WethToken');
 

@@ -1,0 +1,5 @@
+1. Investor wallet gets funds in crypto tokens MATIC | USDC | USDT | WBTC | WETH
+2. Investor wallet approves transaction in the crypto token to invest
+3. Add the wallet to whitelist as whitelister
+4. Add the wallet to qualified investors
+5. Invest from crypto token
