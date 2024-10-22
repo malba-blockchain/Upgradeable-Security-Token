@@ -74,7 +74,7 @@ describe("Test case #1. Deployment of HYAX smart contract", function () {
     await hyax.transfer(hyax.target, totalSupplyHex.toString());  //Line to transfer the HYAX tokens from the deployer to the smart contract
 
     //The smart contract HYAX balance must be of 500 M HYAX
-    expect(await hyax.balanceOf(hyax.target)).to.equal(ethers.parseUnits("500000000", 18));
+    expect(await hyax.s(hyax.target)).to.equal(ethers.parseUnits("500000000", 18));
   });
 
   it("1.9. Smart contract owner should be the new admin address", async function () {
