@@ -1,0 +1,109 @@
+Line: 515
+
+    Impact: Critical
+    Detail: Possible re-entrancy vulnerability in investFromMatic(). The contract transfers MATIC to treasuryAddress without checking its effect before transferring HYAX tokens to msg.sender. This allows an attacker to re-enter by calling back the function before completing all updates, enabling potential fund draining.
+
+Line: 573
+
+    Impact: Medium
+    Detail: Unchecked call return value for token.transferFrom(). Failure of token transfer might go undetected, allowing the function to proceed even if tokens are not received by the contract. This can lead to incorrect balances and expose the contract to unexpected behavior.
+
+Line: 616
+
+    Impact: High
+    Detail: Integer overflow risk in _amount parameter of tokenIssuance. Although Solidity 0.8+ includes overflow protection, confirming this could prevent excessive minting by owner if future versions or inherited contracts bypass overflow checks.
+
+Line: 655
+
+    Impact: Medium
+    Detail: Lack of front-running protection in validateMaximumInvestedAmountAndInvestorLimit(). This validation function is vulnerable to front-running as any transaction setting totalInvestmentInUsd can be delayed or front-run by another, causing undesired states for maximumInvestmentAllowedInUSD.
+
+Line: 784
+
+    Impact: Medium
+    Detail: Short address attack vulnerability. Lack of explicit length checking for _investorAddress and newPriceFeedAddress parameters may expose functions to short address attacks, particularly in updatePriceFeedAddress().
+
+Line: 521
+
+    Impact: High
+    Detail: Lack of Insecure Access Control for treasury updates in updateTreasuryAddress. Only onlyOwner is used, potentially leaving the contract vulnerable if the owner's private key is compromised or mismanaged.
+
+Line: 745
+
+    Impact: Critical
+    Detail: Delegatecall injection vulnerability in getCurrentTokenPrice(). dataFeed.latestRoundData() is directly called on external oracles, without rigorous verification of response data. This makes the contract vulnerable to malicious or malfunctioning oracles.
+
+Line: 805
+
+    Impact: Low
+    Detail: Timestamp dependence in getCurrentTokenPrice(). The function retrieves token prices based on latest data but does not include logic to verify price freshness.
+
+Line: 656
+
+    Impact: Critical
+    Detail: Unrestricted Ether Withdrawal vulnerability in investFromMatic(). ETH (MATIC) is sent to treasuryAddress without ensuring that it cannot be redirected or withdrawn maliciously. An attacker could target the treasuryAddress, resulting in loss of ETH.
+
+Line: 745
+
+    Impact: High
+    Detail: Oracle Manipulation in getCurrentTokenPrice(). The function depends on external oracles, which could be manipulated. Price feeds are not validated thoroughly, making the contract susceptible to oracle price manipulation, affecting token pricing.
+
+Line: 516
+
+    Impact: Medium
+    Detail: Unchecked External Calls. The contract uses payable(treasuryAddress).send(msg.value) to send MATIC, but no checks ensure successful completion. A failed transfer would leave the contract in an inconsistent state.
+
+Line: 578
+
+    Impact: Medium
+    Detail: Unchecked Return Data from external call token.transferFrom. Failure of this token transfer could cause an unexpected balance discrepancy, leading to possible incorrect fund transfers or state inconsistencies.
+
+Line: 803
+
+    Impact: Medium
+    Detail: Insufficient Gas Griefing in the getCurrentTokenPrice() function. This function's reliance on external oracles may lead to potential issues if oracle updates consume excessive gas, impacting transaction completion.
+
+Line: 655
+
+    Impact: High
+    Detail: Race Condition risk in validateMaximumInvestedAmountAndInvestorLimit(). This function's reliance on totalInvestmentInUsd can be manipulated if transactions are reordered or delayed, creating inconsistencies in maximum investment tracking.
+
+Line: 705
+
+    Impact: Medium
+    Detail: Logic Error in updateMaximumInvestmentAllowedInUSD(). If maximumInvestmentAllowedInUSD is set incorrectly due to transaction race conditions or improper input validation, investment limits could be unintentionally exceeded or restricted, affecting investor access.
+
+Line: 656
+
+    Impact: Critical
+    Detail: Reentrancy Guard Bypass in investFromMatic(). Although nonReentrant is applied, transferring MATIC before completing all state updates could allow an attacker to re-enter the contract by manipulating the fallback function, potentially bypassing the reentrancy guard and draining funds.
+
+Line: 734
+
+    Impact: High
+    Detail: Storage Collision risk in investorData mapping. As the contract includes multiple struct mappings, there’s a potential storage collision in the investorData mapping if additional storage is introduced, risking data overwrites and undefined behavior.
+
+Line: 672
+
+    Impact: Medium
+    Detail: Improper Error Handling in getCurrentTokenPrice(). If an oracle’s latestRoundData() function returns an error, the contract may revert unexpectedly. Without catching and handling these errors more gracefully, any disruption in the oracle could disrupt the contract.
+
+Line: 712
+
+    Impact: Medium
+    Detail: Approval Vulnerabilities in tokenIssuance(). The function allows unrestricted token issuance by the owner, which could lead to potential abuse if the owner’s account is compromised. Adding specific limits or multi-signature requirements would mitigate this risk.
+
+Line: 819
+
+    Impact: High
+    Detail: Unchecked Low-Level Calls in updatePriceFeedAddress(). The function depends on oracle description matching, but using try/catch without additional validation can lead to unexpected states if the call fails silently, potentially misconfiguring the contract's oracle feeds.
+
+Line: 588
+
+    Impact: Medium
+    Detail: Ambiguous Evaluation Order in validateMaximumInvestedAmountAndInvestorLimit(). Adding _totalInvestmentInUsd and investorData[_investorAddress].totalUsdDepositedByInvestor without confirming consistent ordering can lead to race conditions, potentially skewing investment limits.
+
+Line: 670
+
+    Impact: High
+    Detail: Unexpected Ether Transfers (Force Feeding). As the contract can receive MATIC, it is susceptible to forced MATIC transfers. This may result in unaccounted balances, complicating fund management.

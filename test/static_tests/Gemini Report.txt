@@ -1,0 +1,121 @@
+Vulnerability 1: Potential Reentrancy in investFromMatic
+
+Line: 1135-1144
+Impact: High
+Detail:
+The investFromMatic function transfers MATIC to the treasury address and then transfers HYAX tokens to the investor. If the treasury contract is malicious or vulnerable to reentrancy, it could potentially re-enter the investFromMatic function before the state is fully updated, leading to incorrect token balances and potential loss of funds.
+
+Mitigation:
+
+    Use a ReentrancyGuard: Implement a reentrancy guard pattern to prevent reentrant calls.
+    Atomic Operations: Consider using a library like OpenZeppelin's SafeERC20 to ensure atomic token transfers and state updates.
+
+Vulnerability 2: Unchecked Return Values in investFromCryptoToken
+
+Line: 1174-1175, 1179-1180, 1184-1185
+Impact: Medium
+
+    Detail: The investFromCryptoToken function transfers tokens using the transferFrom function without checking the return value. If the transfer fails, the contract's state might be inconsistent, leading to potential loss of funds.
+
+Mitigation:
+
+    Check Return Values: Always check the return values of external calls to ensure that operations are successful.
+
+Vulnerability 3: Potential Integer Overflow/Underflow
+
+Line: Various arithmetic operations
+Impact: High
+
+    Detail: Integer overflow and underflow vulnerabilities can occur in various arithmetic operations, especially when dealing with large numbers or unexpected inputs. This can lead to incorrect calculations, unexpected behavior, and potential loss of funds.
+
+Mitigation:
+
+    Use SafeMath Library: Use a SafeMath library to perform safe arithmetic operations.
+    Input Validation: Validate input values to prevent invalid inputs that could lead to overflow or underflow.
+
+Vulnerability 4: Access Control Weaknesses
+
+Line: Various access control modifiers
+Impact: Medium
+
+    Detail: While the onlyOwnerOrWhitelister modifier is used to restrict access to sensitive functions, it's important to ensure that the whitelister role is granted to trusted addresses. Weak access control can lead to unauthorized actions and potential loss of funds.
+
+Vulnerability 2: Potential Race Conditions in Investment Functions
+
+Line: 1135-1144, 1174-1185
+Impact: Medium
+Detail:
+Race conditions can occur in the investFromMatic and investFromCryptoToken functions if multiple transactions are processed simultaneously. This could lead to incorrect token balances and potential loss of funds.
+
+Mitigation:
+
+    Atomic Operations: Use atomic operations to ensure that state changes are executed as a single, indivisible unit.
+    Careful State Updates: Update the contract's state before making external calls to prevent reentrancy attacks and race conditions.
+
+Vulnerability 3: Oracle Manipulation
+
+Line: 1292-1310
+Impact: High
+
+    Detail: The contract relies on external price feeds to determine the value of different tokens. If the price feeds are manipulated or compromised, it could lead to incorrect calculations and potential loss of funds.
+
+Mitigation:
+
+    Multiple Oracle Sources: Consider using multiple oracle sources to reduce the risk of manipulation.
+    Oracle Reputation: Use reputable and well-established oracle providers.
+    Price Verification: Implement mechanisms to verify the accuracy of the prices provided by the oracle.
+
+Vulnerability 4: Logic Errors
+
+Line: Various
+Impact: Varies
+
+    Detail: Logic errors can arise from incorrect assumptions, unintended side effects, or faulty algorithms. These errors can lead to unexpected behavior, security vulnerabilities, and financial losses.
+
+Mitigation:
+
+    Thorough Code Review: Conduct a thorough code review to identify and fix logic errors.
+    Unit Testing: Write comprehensive unit tests to cover all code paths and edge cases.
+    Formal Verification: Consider using formal verification techniques to prove the correctness of the contract's logic.
+
+
+Vulnerability 2: Unchecked Return Values in investFromCryptoToken
+
+Lines: 1174-1175, 1179-1180, 1184-1185
+Impact: Medium
+Detail:
+The investFromCryptoToken function transfers tokens using the transferFrom function without checking the return value. If the transfer fails, the contract's state might be inconsistent, leading to potential loss of funds.
+
+Mitigation:
+
+    Check Return Values: Always check the return values of external calls to ensure that operations are successful.
+
+Vulnerability 3: Potential Integer Overflow/Underflow
+
+Impact: High
+Detail:
+Integer overflow and underflow vulnerabilities can occur in various arithmetic operations, especially when dealing with large numbers or unexpected inputs. This can lead to incorrect calculations, unexpected behavior, and potential loss of funds.
+
+Mitigation:
+
+    Use SafeMath Library: Use a SafeMath library to perform safe arithmetic operations.
+    Input Validation: Validate input values to prevent invalid inputs that could lead to overflow or underflow.
+
+Vulnerability 4: Oracle Manipulation
+
+Lines: 1292-1310
+Impact: High
+Detail:
+The contract relies on external price feeds to determine the value of different tokens. If the price feeds are manipulated or compromised, it could lead to incorrect calculations and potential loss of funds.
+
+Mitigation:
+
+    Multiple Oracle Sources: Consider using multiple oracle sources to reduce the risk of manipulation.
+    Oracle Reputation: Use reputable and well-established oracle providers.
+    Price Verification: Implement mechanisms to verify the accuracy of the prices provided by the oracle.
+
+Vulnerability 5: Access Control Weaknesses
+
+Impact: Medium
+Detail:
+While the onlyOwnerOrWhitelister modifier is used to restrict access to sensitive functions, it's important to ensure that the whitelister role is granted to trusted addresses. Weak access control can lead to unauthorized actions and potential loss of funds.

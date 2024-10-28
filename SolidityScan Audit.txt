@@ -1,0 +1,66 @@
+----------CRITICAL----------
+
+INCORRECT ACCESS CONTROL 451-467 (addToWhiteList): REMEDIATION: Created and added modifier onlyOwnerOrWhitelister instead of the repeating the same access control line
+
+INCORRECT ACCESS CONTROL 473-489 (removeFromWhiteList): REMEDIATION: Created and added modifier onlyOwnerOrWhitelister instead of the repeating the same access control line
+
+INCORRECT ACCESS CONTROL 501-520 (addToQualifiedInvestorList): REMEDIATION: Created and added modifier onlyOwnerOrWhitelister instead of the repeating the same access control line
+
+INCORRECT ACCESS CONTROL 526-542 (removeFromQualifiedInvestorList): REMEDIATION: Created and added modifier onlyOwnerOrWhitelister instead of the repeating the same access control line
+
+INCORRECT ACCESS CONTROL 591-619 (investFromMatic): ANSWER: False positive the access control is ensured not by onlyOwner modifier but by the investorIsOnWhiteList modifier
+
+INCORRECT ACCESS CONTROL 626-656 (investFromUsdc): ANSWER: False positive the access control is ensured not by onlyOwner modifier but by the investorIsOnWhiteList modifier
+
+INCORRECT ACCESS CONTROL 663-693 (investFromUsdt): ANSWER: False positive the access control is ensured not by onlyOwner modifier but by the investorIsOnWhiteList modifier
+
+INCORRECT ACCESS CONTROL 700-730 (investFromWbtc): ANSWER: False positive the access control is ensured not by onlyOwner modifier but by the investorIsOnWhiteList modifier
+
+INCORRECT ACCESS CONTROL 737-767 (investFromWeth): ANSWER: False positive the access control is ensured not by onlyOwner modifier but by the investorIsOnWhiteList modifier
+
+
+----------HIGH----------
+UNCHECKED TRANSFER 635-635 (investFromUsdc): ANSWER: False positive, the check for false return is literally made in a require statement right below that code line
+
+UNCHECKED TRANSFER 672-672 (investFromUsdt): ANSWER: False positive, the check for false return is literally made in a require statement right below that code line
+
+UNCHECKED TRANSFER 709-709 (investFromWbtc): ANSWER: False positive, the check for false return is literally made in a require statement right below that code line
+
+UNCHECKED TRANSFER 746-746 (investFromWeth): ANSWER: False positive, the check for false return is literally made in a require statement right below that code line
+
+
+----------LOW----------
+
+FUNCTION RETURNS TYPE AND NO RETURN 1180-1196 (getCurrentMaticPrice): ANSWER: False positive, there is a return inside of the try catch of the function. In case there is an error is better to revert the transaction with the error message rather than returning a default value.
+
+FUNCTION RETURNS TYPE AND NO RETURN 1202-1217 (getCurrentUsdcPrice): ANSWER: False positive, there is a return inside of the try catch of the function. In case there is an error is better to revert the transaction with the error message rather than returning a default value.
+
+FUNCTION RETURNS TYPE AND NO RETURN 1223-1238 (getCurrentUsdtPrice): ANSWER: False positive, there is a return inside of the try catch of the function. In case there is an error is better to revert the transaction with the error message rather than returning a default value.
+
+FUNCTION RETURNS TYPE AND NO RETURN 1244-1259 (getCurrentWbtcPrice): ANSWER: False positive, there is a return inside of the try catch of the function. In case there is an error is better to revert the transaction with the error message rather than returning a default value.
+
+FUNCTION RETURNS TYPE AND NO RETURN 1265-1280 (getCurrentWethPrice): ANSWER: False positive, there is a return inside of the try catch of the function. In case there is an error is better to revert the transaction with the error message rather than returning a default value.
+
+OUTDATED COMPILER VERSION 2-2: REMEDIATION: Updated to solidity version v0.8.22
+
+USE OF FLOATING PRAGMA 2-2: REMEDIATION: Updated to solidity version v0.8.22
+
+LONG NUMBER LITERALS 346-346 (constructor): ANSWER: I prefer to use the current notation for readability purposes
+
+LONG NUMBER LITERALS 349-349 (constructor): ANSWER: I prefer to use the current notation for readability purposes
+
+LONG NUMBER LITERALS 554-554 (tokenIssuance): ANSWER: I prefer to use the current notation for readability purposes
+
+LONG NUMBER LITERALS 559-559 (tokenIssuance): ANSWER: I prefer to use the current notation for readability purposes
+
+LONG NUMBER LITERALS 781-781 (updateHyaxPrice): ANSWER: I prefer to use the current notation for readability purposes
+
+LONG NUMBER LITERALS 784-784 (updateHyaxPrice): ANSWER: I prefer to use the current notation for readability purposes
+
+MISSING EVENTS 1288-1290 (pause): ANSWER: That function has native events encoded and they execute based on their imported library
+
+MISSING EVENTS 1296-1298 (unpause): ANSWER: That function has native events encoded and they execute based on their imported library
+
+MISSING EVENTS 1305-1314 (transferOwnership): ANSWER: That function has native events encoded and they execute based on their imported library
+
+OWNABLE2STEP 62-1322 (Contract Declaration): ANSWER: Not required for this case. The transfer of ownership and execution of other functions will be given based on the approval of the multisig wallet who will manage the smart contract.

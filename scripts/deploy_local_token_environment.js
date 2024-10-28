@@ -3,6 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const { ethers, upgrades } = require('hardhat');
+const { mine } = require("@nomicfoundation/hardhat-network-helpers");
 
 
 // Function to update the LOCAL_TOKEN_SMART_CONTRACT_ADDRESS in addresses.ts

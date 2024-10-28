@@ -1,0 +1,238 @@
+D:&cd D:\USER\Downloads\ATLAS\Projects\HYAXToken
+D:&cd D:\USER\Downloads\ATLAS\Projects\HYAXToken\packages\hardhat
+
+--------------DONE--------------
+
+1. Update api_keys on environment
+
+2. Send gas tokens to Deployer address
+Deployer address 0x01eE4E5BB23B904025631953c5dD1dd0eb95671b
+
+
+--------------ToDo--------------
+
+
+3. Get price oracles addresses
+
+dataFeedMatic
+0x001382149eBa3441043c1c66972b4772963f5D43
+
+dataFeedUsdc
+0x1b8739bB4CdF0089d07097A9Ae5Bd274b29C6F16
+
+dataFeedUsdt
+0x3aC23DcB4eCfcBd24579e1f34542524d0E4eDeA8
+
+dataFeedWbtc
+0xe7656e23fE8077D438aEfbec2fAbDf2D8e070C4f
+
+dataFeedWeth
+0xF0d50568e3A7e8259E16663972b11910F89BD8e7
+
+
+4. Launch mockup token payment smart contracts and fund your wallet with those tokens
+
+yarn chain
+
+yarn hardhat clean
+
+yarn compile --force
+
+yarn deploy --network polygonAmoy
+
+yarn verify --network polygonAmoy
+
+
+yarn verify --network polygonAmoy --api-url https://polygon-amoy.network.rpc.url
+
+yarn verify --network polygonAmoy --api-url https://rpc-amoy.polygon.technology/
+
+
+yarn verify --network polygonAmoy 0x256452E79137B1D8f3c7eb3Ed10d9eb782F43BE1
+
+npx hardhat verify --network polygonAmoy --api-url https://api.polygonscan.com/api
+
+npx hardhat verify --network polygonAmoy 0x256452E79137B1D8f3c7eb3Ed10d9eb782F43BE1 
+
+npx hardhat verify --network polygonAmoy 0x256452E79137B1D8f3c7eb3Ed10d9eb782F43BE1 --api-url https://api.polygonscan.com/api
+
+
+---------
+FIND OUT HOW TO VERIFY THAT FUCKING SHIT
+
+npx hardhat verify --network polygonAmoy 0x256452E79137B1D8f3c7eb3Ed10d9eb782F43BE1 
+
+npx hardhat verify --network polygonAmoy 0x256452E79137B1D8f3c7eb3Ed10d9eb782F43BE1 --contract contracts/UsdcToken.sol:UsdcToken
+
+npx hardhat verify --contract contracts/UsdcToken.sol:UsdcToken --network polygonAmoy 0x256452E79137B1D8f3c7eb3Ed10d9eb782F43BE1
+
+npx hardhat verify --contract contracts/UsdcToken.sol:UsdcToken 0x256452E79137B1D8f3c7eb3Ed10d9eb782F43BE1 --network polygonAmoy 
+
+npx hardhat verify --network polygonAmoy --contract contracts/UsdcToken.sol:UsdcToken 0x256452E79137B1D8f3c7eb3Ed10d9eb782F43BE1 --show-stack-traces
+
+yarn verify --network polygonAmoy --contract contracts/UsdcToken.sol:UsdcToken 0x256452E79137B1D8f3c7eb3Ed10d9eb782F43BE1 --constructor-args scripts/arguments_usdc.js
+
+npx hardhat-verify --network polygonAmoy --contract contracts/UsdcToken.sol:UsdcToken 0x256452E79137B1D8f3c7eb3Ed10d9eb782F43BE1 --constructor-args scripts\arguments_usdc.js
+
+yarn hardhat flatten packages\hardhat\contracts\UsdcToken.sol> flattened/UsdcToken.sol
+
+npx hardhat flatten contracts\UsdcToken.sol> flattened/UsdcToken.sol
+
+yarn hardhat clean
+
+yarn compile --force
+
+npx hardhat flatten contracts\HYAXP.sol> flattened/HYAXP.sol
+
+yarn deploy --network polygonAmoy
+
+yarn verify --network polygonAmoy
+
+I endedup deploying them using Remix and the remix flatenning function by right click.
+
+
+usdcTokenAddress
+0xF68054bFe5D45432ffCA28fFA1F3D685d0456Ddc
+
+usdtTokenAddress
+0x70e02Fb82B6BC04F64099689B0599e14B44D4fBb
+
+wbtcTokenAddress
+0x3C8df3C48B3884DA2ff25e17524282d60F9C3b93
+
+wethTokenAddress
+0x524a89ED77d5827320E35E12bCA96830C6b7960A
+
+------------------------------------------
+
+dataFeedMatic
+0x001382149eBa3441043c1c66972b4772963f5D43
+
+dataFeedUsdc
+0x1b8739bB4CdF0089d07097A9Ae5Bd274b29C6F16
+
+dataFeedUsdt
+0x3aC23DcB4eCfcBd24579e1f34542524d0E4eDeA8
+
+dataFeedWbtc
+0xe7656e23fE8077D438aEfbec2fAbDf2D8e070C4f
+
+dataFeedWeth
+0xF0d50568e3A7e8259E16663972b11910F89BD8e7
+
+
+
+5. Set up variables in smart contract
+
+Matic Token Interface
+UsdcTokenInterface
+UsdtTokenInterface
+WbtcTokenInterface
+WethTokenInterface
+
+hyaxPrice 0.006
+
+minimumInvestmentAllowedInUSD 1 USD
+
+maximumInvestmentAllowedInUSD 100000 USD
+
+whiteListerAddress 0x01c2f012de19e6436744c3F81f56E9e70C93a8C3
+
+treasuryAddress 0x350441F8a82680a785FFA9d3EfEa60BB4cA417f8
+
+investorsWhiteList - Añadir las del equipo
+
+HYAX SMART CONTRACT
+
+0xfd070C28BD649624080637A16F994161B6Fb84e1 test 1
+
+0xE44d0B3590eEf44F939F4C537232Ff182F17Be44 test2
+
+0x2157E2E227A79b6039cB8823144986F7ca12221f test3
+
+
+6. Launch on network DONE
+
+DEPLOYED TOKEN
+0x37db03be6e7e967e7925d508ebd57bdfee392d62
+
+7. Send tokens to team
+
+DIRECCIÓN DE NUEVO SMART CONTRACT EN RED DE AMOY
+
+
+GN GN mi gente! Varias noticias:
+
+1. Tenemos nueva dirección de contrato en la red de Amoy testnet
+https://amoy.polygonscan.com/address/0x37db03be6e7e967e7925d508ebd57bdfee392d62#code
+
+2. He enviado 10.000 de cada token USDC, USDT, WBTC y WETH a cada una de estas direcciones, es más que suficiente para que repartan entre  los otros miembros del equipo:
+
+OWNER 0x498C47066AdeB22Ba23953d890eD6b540411e350
+MONEY WALLET 0x350441F8a82680a785FFA9d3EfEa60BB4cA417f8
+ISAAC   0x8A6A88F219DA77EE7d449E8CeAf4C45EEA39B456
+DIARIELA 0xfC74475781029a3cbF236cA99FcC0CC3ebaF86FA
+
+3. Estas son las direcciones de los tokens para que los añadan a sus wallets y hagan pruebas de compra. No olviden que es sobre la red de Amoy, la nueva testnet de Polygon/Matic
+USDC https://amoy.polygonscan.com/address/0xF68054bFe5D45432ffCA28fFA1F3D685d0456Ddc
+USDT https://amoy.polygonscan.com/address/0x70e02Fb82B6BC04F64099689B0599e14B44D4fBb
+WBTC https://amoy.polygonscan.com/address/0x3C8df3C48B3884DA2ff25e17524282d60F9C3b93
+WETH https://amoy.polygonscan.com/address/0x524a89ED77d5827320E35E12bCA96830C6b7960A
+
+4. Tampoco olviden que antes de intentar comprar HYAX con esos tokens de prueba deben ejecutar la función de "approve" en la pestaña "write contract" de cada uno de los respectivos tokens de prueba.
+
+5. Como añadir Amoy Testnet a Metamask
+https://docs.polygon.technology/tools/wallets/metamask/add-polygon-network/
+
+6. Recuerden que si quieren hacer pruebas con MATIC tienen que recargar del faucet MATIC en Amoy Tesnet 
+https://faucet.polygon.technology/
+https://www.alchemy.com/faucets/polygon-amoy
+
+7. La dirección del whitelister se conserva Mr. Isaac tiene desde hace meses la private key de esa cuenta
+whiteListerAddress 0x01c2f012de19e6436744c3F81f56E9e70C93a8C3
+
+8. Las wallets de treasuryAddress y owner actualmente son las mías. Si quieren que transfiera esos permisos me pasan las wallets que quieran que tengan esos permisos y las transfiero.
+
+
+
+MATIC
+0.411374
+
+WBTC
+58,442.29670000
+
+WETH
+2,614.84866809
+
+
+0x2157E2E227A79b6039cB8823144986F7ca12221f
+500000000000000000000000000
+
+42.919326000000000000 USD
+7153.221000000000000000
+10 USD
+10000000000000000000
+
+100 USD
+100000000000000000000
+
+1000 USD
+1000000000000000000000
+
+10000 USD
+10000000000000000000000
+
+100000 USD
+100000000000000000000000
+
+Minimum investment
+1000000000000000000
+
+Maximum investment
+100000000000000000000000 
+
+500000000000000000000000000
+
+Send HYAX tokens to the smart contract to make it work DONE
+Finish the tests on local DONE
+Deploy new contract DOONE
