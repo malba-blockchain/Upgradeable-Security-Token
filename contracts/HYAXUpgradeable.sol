@@ -132,7 +132,7 @@ contract HYAXUpgradeable is ERC20PausableUpgradeable, OwnableUpgradeable, Reentr
      * @dev Emitted when the WETH price feed address is updated.
      */
     event UpdatedWethPriceFeedAddress(address _newWethPriceFeedAddress);
-
+    
     ////////////////// SMART CONTRACT VARIABLES //////////////////
 
     /**

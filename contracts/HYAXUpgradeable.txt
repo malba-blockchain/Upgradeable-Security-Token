@@ -395,6 +395,8 @@ contract HYAXUpgradeable is ERC20PausableUpgradeable, OwnableUpgradeable, Reentr
         return (totalInvestmentInUsd, totalHyaxTokenToReturn);
     }
 
+////SPLIT HERE 2
+
     /**
      * @dev Function to add an investor's address to the whitelist.
      * @param _investorAddress The address of the investor to be added to the whitelist.
@@ -521,6 +523,8 @@ contract HYAXUpgradeable is ERC20PausableUpgradeable, OwnableUpgradeable, Reentr
         // Emit the event of token issuance
         emit TokenIssuance(msg.sender, _amount);
     }
+
+////SPLIT HERE 3
 
     /**
      * @dev Function to validate the maximum invested amount of an investor and the limit if it's not a qualified investor.
@@ -653,7 +657,7 @@ contract HYAXUpgradeable is ERC20PausableUpgradeable, OwnableUpgradeable, Reentr
         emit UpdatedHyaxPrice(_newHyaxPrice);
     }
 
-////SPLIT HERE 2
+
 
     /**
      * @dev Function to update the minimum investment allowed for an investor to make in USD.
@@ -698,6 +702,8 @@ contract HYAXUpgradeable is ERC20PausableUpgradeable, OwnableUpgradeable, Reentr
         // Emit an event to signal the updated maximum investment allowed in USD
         emit UpdatedMaximumInvestmentAllowedInUSD(_newMaximumInvestmentAllowedInUSD);
     }
+
+////SPLIT HERE 4
 
     /**
      * @dev Function to update the address of the whitelister.
@@ -839,6 +845,8 @@ contract HYAXUpgradeable is ERC20PausableUpgradeable, OwnableUpgradeable, Reentr
             emit UpdatedWethPriceFeedAddress(newPriceFeedAddress);
         }
     }
+
+////SPLIT HERE 5
 
     /////////////ORACLE PRICE FEED FUNCTIONS//////////
     /**

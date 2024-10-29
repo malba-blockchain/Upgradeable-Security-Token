@@ -213,7 +213,6 @@ investFromCryptoToken DONE
 6. Add upgradeable testing 11:00 DONE
 
 CONTINUE HEREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
-FIND OUT WHY IT'S NOT INVESTING FROM CRYPTO TOKEN WBTC
 
 7. Launch upgradeable version on amoy testnet
 
