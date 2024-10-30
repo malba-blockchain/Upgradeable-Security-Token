@@ -107,16 +107,23 @@ describe("Test case #15. Invest from MATIC", function () {
 
     await hyax.connect(addr2).investFromMatic({ value: ethers.parseEther("9000") });
 
-    await addr3.sendTransaction({
-      to: addr2.address,
-      value: ethers.parseEther("5000"),
-    });
+    var firstBalanceOfInvestor = await hyax.connect(addr2).balanceOf(addr2.address);
+
+    console.log("\n   [Log]: firstBalanceOfInvestor", firstBalanceOfInvestor);
 
     await hyax.connect(addr1).updateQualifiedInvestorStatus(addr2.address, true);
 
-    var booleanAnswerFromTransaction = await hyax.connect(addr2).investFromMatic.staticCall({ value: ethers.parseEther("3000") });
+    // Calculate the total HYAX to return in the MATIC investment
+    var [totalInvestmentInUsd, totalHyaxTokenToReturn] = await hyax.calculateTotalHyaxTokenToReturn(ethers.parseEther("3000"), await hyax.getCurrentTokenPrice(0));
 
-    expect(await booleanAnswerFromTransaction).to.equal(true);
+    //console.log("\n   [Log]: totalHyaxTokenToReturn", totalHyaxTokenToReturn);
+
+    await hyax.connect(addr2).investFromMatic({ value: ethers.parseEther("3000") });
+
+    var secondBalanceOfInvestor = await hyax.connect(addr2).balanceOf(addr2.address);
+    //console.log("\n   [Log]: secondBalanceOfInvestor", secondBalanceOfInvestor);
+
+    expect(secondBalanceOfInvestor).to.equal(firstBalanceOfInvestor+totalHyaxTokenToReturn);
   });
 
 
@@ -136,11 +143,11 @@ describe("Test case #15. Invest from MATIC", function () {
 
     // Convert 1000 to BigInt and calculate the gas fee in Wei
     const gasFeeInWei = gasPrice * gasEstimation * 1000n;
-    console.log("\n   [Log]: gasFeeInWei", gasFeeInWei.toString());
+    //console.log("\n   [Log]: gasFeeInWei", gasFeeInWei.toString());
 
     // Calculate the actual value to invest, subtracting the gas fee from the total that the account has
     const valueToInvest = ethers.parseEther("10000") - gasFeeInWei;
-    console.log("\n   [Log]: valueToInvest", valueToInvest.toString());
+    //console.log("\n   [Log]: valueToInvest", valueToInvest.toString());
 
     // Calculate the total HYAX to return in the MATIC investment
     var [totalInvestmentInUsd, totalHyaxTokenToReturn] = await hyax.calculateTotalHyaxTokenToReturn(valueToInvest, await hyax.getCurrentTokenPrice(0));
@@ -148,6 +155,10 @@ describe("Test case #15. Invest from MATIC", function () {
     // Send the investment in MATIC to the smart contract to receive HYAX tokens in return
     await hyax.connect(addr2).investFromMatic({ value: valueToInvest });
 
-    expect(await hyax.balanceOf(addr2.address)).to.equal(totalHyaxTokenToReturn);
+    var balanceOfInvestor = await hyax.connect(addr2).balanceOf(addr2.address);
+
+    console.log("\n   [Log]: balanceOfInvestor", balanceOfInvestor);
+
+    expect(balanceOfInvestor).to.equal(totalHyaxTokenToReturn);
   });
 });

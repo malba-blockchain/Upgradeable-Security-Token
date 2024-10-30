@@ -12,10 +12,10 @@ import "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.
  */
 
  /**
- * @title ERC20TokenInterface
+ * @title IERC20
  * @dev Interface for interacting with the different tokens: USDC, USDT, WBTC and WETH
  */
-interface ERC20TokenInterface {
+interface IERC20 {
     function transfer(address dst, uint wad) external returns (bool);
     function transferFrom(address src, address dst, uint wad) external returns (bool);
     function balanceOf(address guy) external view returns (uint);
@@ -214,7 +214,7 @@ contract HYAXUpgradeableV2 is ERC20PausableUpgradeable, OwnableUpgradeable, Reen
     /**
      * @dev Declaration of USDC token interface.
      */
-    ERC20TokenInterface public usdcToken;
+    IERC20 public usdcToken;
 
     /////////////USDT VARIABLES//////////
 
@@ -236,7 +236,7 @@ contract HYAXUpgradeableV2 is ERC20PausableUpgradeable, OwnableUpgradeable, Reen
     /**
      * @dev Declaration of USDT token interface.
      */
-    ERC20TokenInterface public usdtToken;
+    IERC20 public usdtToken;
 
     /////////////WBTC VARIABLES//////////
 
@@ -258,7 +258,7 @@ contract HYAXUpgradeableV2 is ERC20PausableUpgradeable, OwnableUpgradeable, Reen
     /**
      * @dev Declaration of WBTC token interface.
      */
-    ERC20TokenInterface public wbtcToken;
+    IERC20 public wbtcToken;
 
     /////////////WETH VARIABLES//////////
 
@@ -280,7 +280,7 @@ contract HYAXUpgradeableV2 is ERC20PausableUpgradeable, OwnableUpgradeable, Reen
     /**
      * @dev Declaration of WETH token interface.
      */
-    ERC20TokenInterface public wethToken;
+    IERC20 public wethToken;
 
 
     ////////////////// SMART CONTRACT CONSTRUCTOR /////////////////
@@ -330,7 +330,7 @@ contract HYAXUpgradeableV2 is ERC20PausableUpgradeable, OwnableUpgradeable, Reen
         dataFeedUsdc = AggregatorV3Interface(usdcPriceFeedAddress);
 
         // Implementation of USDC token interface
-        usdcToken = ERC20TokenInterface(usdcTokenAddress);
+        usdcToken = IERC20(usdcTokenAddress);
 
         // Address of USDT token on the blockchain
         usdtTokenAddress = 0x70e02Fb82B6BC04F64099689B0599e14B44D4fBb;
@@ -342,7 +342,7 @@ contract HYAXUpgradeableV2 is ERC20PausableUpgradeable, OwnableUpgradeable, Reen
         dataFeedUsdt = AggregatorV3Interface(usdtPriceFeedAddress);
 
         // Implementation of USDT token interface
-        usdtToken = ERC20TokenInterface(usdtTokenAddress);
+        usdtToken = IERC20(usdtTokenAddress);
 
         // Address of WBTC token on the blockchain
         wbtcTokenAddress = 0x3C8df3C48B3884DA2ff25e17524282d60F9C3b93;
@@ -354,7 +354,7 @@ contract HYAXUpgradeableV2 is ERC20PausableUpgradeable, OwnableUpgradeable, Reen
         dataFeedWbtc = AggregatorV3Interface(wbtcPriceFeedAddress);
 
         // Implementation of WBTC token interface
-        wbtcToken = ERC20TokenInterface(wbtcTokenAddress);
+        wbtcToken = IERC20(wbtcTokenAddress);
 
         // Address of WETH token on the blockchain
         wethTokenAddress = 0x524a89ED77d5827320E35E12bCA96830C6b7960A;
@@ -366,7 +366,7 @@ contract HYAXUpgradeableV2 is ERC20PausableUpgradeable, OwnableUpgradeable, Reen
         dataFeedWeth = AggregatorV3Interface(wethPriceFeedAddress);
 
         // Implementation of WETH token interface
-        wethToken = ERC20TokenInterface(wethTokenAddress);
+        wethToken = IERC20(wethTokenAddress);
     }
     
     ////////////////// SMART CONTRACT FUNCTIONS //////////////////
@@ -582,7 +582,7 @@ contract HYAXUpgradeableV2 is ERC20PausableUpgradeable, OwnableUpgradeable, Reen
     */
     function investFromCryptoToken(TokenType tokenType, uint256 _amount) external investorWhitelistAndBlacklistCheck nonReentrant returns (bool) {
         // Get the token contract and price function based on the token type
-        ERC20TokenInterface token;
+        IERC20 token;
         uint256 currentTokenPrice;
 
         if (tokenType == TokenType.USDC) {
@@ -734,22 +734,22 @@ contract HYAXUpgradeableV2 is ERC20PausableUpgradeable, OwnableUpgradeable, Reen
         if (tokenType == TokenType.USDC) {
             require(newTokenAddress != usdcTokenAddress, "USDC token address has already been modified to that value");
             usdcTokenAddress = newTokenAddress;
-            usdcToken = ERC20TokenInterface(newTokenAddress);
+            usdcToken = IERC20(newTokenAddress);
             emit UpdatedUsdcTokenAddress(newTokenAddress);
         } else if (tokenType == TokenType.USDT) {
             require(newTokenAddress != usdtTokenAddress, "USDT token address has already been modified to that value");
             usdtTokenAddress = newTokenAddress;
-            usdtToken = ERC20TokenInterface(newTokenAddress);
+            usdtToken = IERC20(newTokenAddress);
             emit UpdatedUsdtTokenAddress(newTokenAddress);
         } else if (tokenType == TokenType.WBTC) {
             require(newTokenAddress != wbtcTokenAddress, "WBTC token address has already been modified to that value");
             wbtcTokenAddress = newTokenAddress;
-            wbtcToken = ERC20TokenInterface(newTokenAddress);
+            wbtcToken = IERC20(newTokenAddress);
             emit UpdatedWbtcTokenAddress(newTokenAddress);
         } else if (tokenType == TokenType.WETH) {
             require(newTokenAddress != wethTokenAddress, "WETH token address has already been modified to that value");
             wethTokenAddress = newTokenAddress;
-            wethToken = ERC20TokenInterface(newTokenAddress);
+            wethToken = IERC20(newTokenAddress);
             emit UpdatedWethTokenAddress(newTokenAddress);
         } else {
             revert("Invalid token type");

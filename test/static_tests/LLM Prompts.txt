@@ -4,7 +4,7 @@ Based on the code I just shared with you:
 
 Take as much time as you need to analyze in depth and extremely fine detail the following smart contract solidity code.
 
-Your duty is to identify as many of the following vulnerabilities as you can. You are competing with other LLMs for this task is the one that performs the best will be chosen for a multibillion dollar contract for several years.
+Your duty is to identify as many of the following improvement points as you can. You are competing with other LLMs for this task is the one that performs the best will be chosen for a multibillion dollar contract for several years.
 
 Explanations don’t need to be very lengthy, only on point. For example:
 
@@ -17,17 +17,9 @@ Impact: Critical
 Detail: There is a re-entrancy attack due to the sending ETH to a user controllable address. Someone could drain the whole contract of the ETH funds by calling the withdraw function multiple times in the fallback function making the bug Critical in nature.
 
 
-THESE ARE THE VULNERABILITIES YOU WILL BE LOOKING FOR:
-24.4.21. Storage Collision
-24.4.22. Reentrancy Guard Bypass
-24.4.23. Improper Error Handling
-24.4.24. Ambiguous Evaluation Order
-24.4.25. ABI Hash Collisions
-24.4.26. Approval Vulnerabilities
-24.4.27. Exposed Data
-24.4.28. Incorrect Parameter Order
-24.4.29. Unexpected Ether Transfers (Force Feeding)
-24.4.30. Unchecked Low-Level Calls
+THESE ARE THE IMPROVEMENT POINTS YOU WILL BE LOOKING FOR:
+1. Gas optimization
+2. Suggestions for best practices
 
 
 MAKE SURE TO FOLLOW THE FORMAT I JUST GAVE YOU

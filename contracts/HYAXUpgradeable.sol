@@ -5,27 +5,20 @@ import "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20Pausable
 import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 import "@chainlink/contracts/src/v0.8/shared/interfaces/AggregatorV3Interface.sol";
 import "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol";
+import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
 /**
  * @dev Implementation based on the ERC-20 standard
  * Developer: Carlos Alba
  */
 
- /**
- * @title ERC20TokenInterface
- * @dev Interface for interacting with the different tokens: USDC, USDT, WBTC and WETH
- */
-interface ERC20TokenInterface {
-    function transfer(address dst, uint wad) external returns (bool);
-    function transferFrom(address src, address dst, uint wad) external returns (bool);
-    function balanceOf(address guy) external view returns (uint);
-}
-
 /**
  * @title HYAX token over the Mumbai Network
  * @dev ERC20Pausable token with additional functionality.
  */
 contract HYAXUpgradeable is ERC20PausableUpgradeable, OwnableUpgradeable, ReentrancyGuardUpgradeable {
+
+    using SafeERC20 for IERC20;
 
     ////////////////// SMART CONTRACT EVENTS //////////////////
     /**
@@ -213,7 +206,7 @@ contract HYAXUpgradeable is ERC20PausableUpgradeable, OwnableUpgradeable, Reentr
     /**
      * @dev Declaration of USDC token interface.
      */
-    ERC20TokenInterface public usdcToken;
+    IERC20 public usdcToken;
 
     /////////////USDT VARIABLES//////////
 
@@ -235,7 +228,7 @@ contract HYAXUpgradeable is ERC20PausableUpgradeable, OwnableUpgradeable, Reentr
     /**
      * @dev Declaration of USDT token interface.
      */
-    ERC20TokenInterface public usdtToken;
+    IERC20 public usdtToken;
 
     /////////////WBTC VARIABLES//////////
 
@@ -257,7 +250,7 @@ contract HYAXUpgradeable is ERC20PausableUpgradeable, OwnableUpgradeable, Reentr
     /**
      * @dev Declaration of WBTC token interface.
      */
-    ERC20TokenInterface public wbtcToken;
+    IERC20 public wbtcToken;
 
     /////////////WETH VARIABLES//////////
 
@@ -279,7 +272,12 @@ contract HYAXUpgradeable is ERC20PausableUpgradeable, OwnableUpgradeable, Reentr
     /**
      * @dev Declaration of WETH token interface.
      */
-    ERC20TokenInterface public wethToken;
+    IERC20 public wethToken;
+
+    /**
+     * @dev Maximum age of price data in seconds.
+     */
+    uint256 public constant MAX_PRICE_AGE = 1 hours;
 
 
     ////////////////// SMART CONTRACT CONSTRUCTOR /////////////////
@@ -329,7 +327,7 @@ contract HYAXUpgradeable is ERC20PausableUpgradeable, OwnableUpgradeable, Reentr
         dataFeedUsdc = AggregatorV3Interface(usdcPriceFeedAddress);
 
         // Implementation of USDC token interface
-        usdcToken = ERC20TokenInterface(usdcTokenAddress);
+        usdcToken = IERC20(usdcTokenAddress);
 
         // Address of USDT token on the blockchain
         usdtTokenAddress = 0x70e02Fb82B6BC04F64099689B0599e14B44D4fBb;
@@ -341,7 +339,7 @@ contract HYAXUpgradeable is ERC20PausableUpgradeable, OwnableUpgradeable, Reentr
         dataFeedUsdt = AggregatorV3Interface(usdtPriceFeedAddress);
 
         // Implementation of USDT token interface
-        usdtToken = ERC20TokenInterface(usdtTokenAddress);
+        usdtToken = IERC20(usdtTokenAddress);
 
         // Address of WBTC token on the blockchain
         wbtcTokenAddress = 0x3C8df3C48B3884DA2ff25e17524282d60F9C3b93;
@@ -353,7 +351,7 @@ contract HYAXUpgradeable is ERC20PausableUpgradeable, OwnableUpgradeable, Reentr
         dataFeedWbtc = AggregatorV3Interface(wbtcPriceFeedAddress);
 
         // Implementation of WBTC token interface
-        wbtcToken = ERC20TokenInterface(wbtcTokenAddress);
+        wbtcToken = IERC20(wbtcTokenAddress);
 
         // Address of WETH token on the blockchain
         wethTokenAddress = 0x524a89ED77d5827320E35E12bCA96830C6b7960A;
@@ -365,7 +363,7 @@ contract HYAXUpgradeable is ERC20PausableUpgradeable, OwnableUpgradeable, Reentr
         dataFeedWeth = AggregatorV3Interface(wethPriceFeedAddress);
 
         // Implementation of WETH token interface
-        wethToken = ERC20TokenInterface(wethTokenAddress);
+        wethToken = IERC20(wethTokenAddress);
     }
     
     ////////////////// SMART CONTRACT FUNCTIONS //////////////////
@@ -532,7 +530,7 @@ contract HYAXUpgradeable is ERC20PausableUpgradeable, OwnableUpgradeable, Reentr
        
         // If the amount to buy in USD is greater than the maximum established, then validate if the investor is qualified
         if (newTotalAmountInvestedInUSD > maximumInvestmentAllowedInUSD) {
-
+            
             require(investorData[_investorAddress].isQualifiedInvestor, "To buy that amount of HYAX its required to be a qualified investor");
         }
     }
@@ -553,9 +551,10 @@ contract HYAXUpgradeable is ERC20PausableUpgradeable, OwnableUpgradeable, Reentr
 
         // If the amount of HYAX to buy is greater than the maximum established, then validate if the investor is qualified
         validateMaximumInvestedAmountAndInvestorLimit(totalInvestmentInUsd, msg.sender);
-
+    
         // Transfer MATIC to the treasury address
-        require(payable(treasuryAddress).send(msg.value), "There was an error on sending the MATIC investment to the treasury");
+        (bool success, ) = payable(treasuryAddress).call{value: msg.value}("");
+        require(success, "There was an error on sending the MATIC investment to the treasury");
 
         // Transfer HYAX token to the investor wallet
         require(this.transfer(msg.sender, totalHyaxTokenToReturn), "There was an error on sending back the HYAX Token to the investor");
@@ -581,7 +580,7 @@ contract HYAXUpgradeable is ERC20PausableUpgradeable, OwnableUpgradeable, Reentr
     */
     function investFromCryptoToken(TokenType tokenType, uint256 _amount) external investorWhitelistAndBlacklistCheck nonReentrant returns (bool) {
         // Get the token contract and price function based on the token type
-        ERC20TokenInterface token;
+        IERC20 token;
         uint256 currentTokenPrice;
 
         if (tokenType == TokenType.USDC) {
@@ -605,11 +604,11 @@ contract HYAXUpgradeable is ERC20PausableUpgradeable, OwnableUpgradeable, Reentr
 
         // If the amount of HYAX to buy is greater than the maximum established, then validate if the investor is qualified
         validateMaximumInvestedAmountAndInvestorLimit(totalInvestmentInUsd, msg.sender);
-
-        // Transfer the specified token to this contract
+        
+        // Transfer the specified token to this contract 
         require(token.transferFrom(msg.sender, address(this), _amount), "There was an error on receiving the token investment");
-
-        // Transfer the token to the treasury address
+        
+        // Transfer the token to the treasury address 
         require(token.transfer(payable(treasuryAddress), _amount), "There was an error on sending the token investment to the treasury");
 
         // Transfer HYAX token to the investor wallet
@@ -745,22 +744,22 @@ contract HYAXUpgradeable is ERC20PausableUpgradeable, OwnableUpgradeable, Reentr
         if (tokenType == TokenType.USDC) {
             require(newTokenAddress != usdcTokenAddress, "USDC token address has already been modified to that value");
             usdcTokenAddress = newTokenAddress;
-            usdcToken = ERC20TokenInterface(newTokenAddress);
+            usdcToken = IERC20(newTokenAddress);
             emit UpdatedUsdcTokenAddress(newTokenAddress);
         } else if (tokenType == TokenType.USDT) {
             require(newTokenAddress != usdtTokenAddress, "USDT token address has already been modified to that value");
             usdtTokenAddress = newTokenAddress;
-            usdtToken = ERC20TokenInterface(newTokenAddress);
+            usdtToken = IERC20(newTokenAddress);
             emit UpdatedUsdtTokenAddress(newTokenAddress);
         } else if (tokenType == TokenType.WBTC) {
             require(newTokenAddress != wbtcTokenAddress, "WBTC token address has already been modified to that value");
             wbtcTokenAddress = newTokenAddress;
-            wbtcToken = ERC20TokenInterface(newTokenAddress);
+            wbtcToken = IERC20(newTokenAddress);
             emit UpdatedWbtcTokenAddress(newTokenAddress);
         } else if (tokenType == TokenType.WETH) {
             require(newTokenAddress != wethTokenAddress, "WETH token address has already been modified to that value");
             wethTokenAddress = newTokenAddress;
-            wethToken = ERC20TokenInterface(newTokenAddress);
+            wethToken = IERC20(newTokenAddress);
             emit UpdatedWethTokenAddress(newTokenAddress);
         } else {
             revert("Invalid token type");
@@ -860,12 +859,19 @@ contract HYAXUpgradeable is ERC20PausableUpgradeable, OwnableUpgradeable, Reentr
         }
 
         try dataFeed.latestRoundData() returns (
-            uint80 /*roundID*/,
+
+            uint80 roundID,
             int256 answer,
             uint /*startedAt*/,
-            uint /*timeStamp*/,
-            uint80 /*answeredInRound*/
+            uint timeStamp,
+            uint80 answeredInRound
         ) {
+            // Check if the oracle response is valid
+            require(answer > 0, "Invalid price data from oracle");           // Ensure price is positive
+            require(timeStamp > 0 && timeStamp <= block.timestamp, "Stale price data");  // Ensure timestamp is valid
+            require(answeredInRound >= roundID, "Incomplete round data");    // Check if round data is complete
+            //require(block.timestamp - timeStamp <= MAX_PRICE_AGE, "Price data too old"); // Ensure price data freshness
+
             return uint256(answer);
         } catch {
             revert("There was an error obtaining the price from the oracle");

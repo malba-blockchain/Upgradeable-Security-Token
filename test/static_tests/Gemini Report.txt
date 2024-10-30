@@ -119,3 +119,55 @@ Vulnerability 5: Access Control Weaknesses
 Impact: Medium
 Detail:
 While the onlyOwnerOrWhitelister modifier is used to restrict access to sensitive functions, it's important to ensure that the whitelister role is granted to trusted addresses. Weak access control can lead to unauthorized actions and potential loss of funds.
+
+Improvement Point 1: Gas Optimization in 
+
+investFromMatic and investFromCryptoToken
+
+Lines: 1135-1144, 1174-1185
+Impact: Medium
+Detail:
+The investFromMatic and investFromCryptoToken functions can be optimized by reducing the number of external calls and state updates. Consider combining multiple operations into a single transaction to save gas.
+
+Improvement:
+
+    Batch Transfers: Use batch transfer functions provided by token contracts (if available) to transfer multiple tokens in a single transaction.
+    Optimize State Updates: Combine multiple state updates into a single operation to reduce gas costs.
+
+Improvement Point 2: Consider Using a Library for Token Interactions
+
+Impact: Medium
+Detail:
+Using a library like OpenZeppelin's SafeERC20 can simplify token interactions and improve code readability and security.
+
+Improvement:
+
+    Integrate SafeERC20: Incorporate the SafeERC20 library to handle token transfers and approvals safely and efficiently.
+
+Improvement Point 3: Improve Error Handling and Logging
+
+Impact: Medium
+Detail:
+Enhance error handling and logging to provide more informative error messages and debugging information.
+
+Improvement:
+
+    Custom Error Messages: Define custom error messages to provide more specific information about errors.
+    Detailed Logging: Log important events and errors to facilitate debugging and troubleshooting.
+
+Improvement Point 4: Consider Using a Decentralized Oracle Network
+
+Impact: High
+Detail:
+Relying on a single centralized oracle can introduce a single point of failure. Consider using a decentralized oracle network to improve the reliability and security of price feeds.
+
+Improvement:
+
+    Integrate Decentralized Oracle Network: Explore integrating a decentralized oracle network like Chainlink to obtain reliable and tamper-resistant price feeds.
+
+Improvement Point 5: Security Best Practices
+
+    Regular Security Audits: Conduct regular security audits to identify and address potential vulnerabilities.
+    Formal Verification: Consider using formal verification techniques to prove the correctness of the contract's logic.
+    Stay Updated with Security Best Practices: Keep up-to-date with the latest security best practices and vulnerabilities in the Solidity ecosystem.
+    Consider Using a Security-Focused Framework: Use a security-focused framework like OpenZeppelin to leverage battle-tested security patterns and libraries.

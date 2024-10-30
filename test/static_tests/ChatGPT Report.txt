@@ -2,66 +2,84 @@ Line: 515
 
     Impact: Critical
     Detail: Possible re-entrancy vulnerability in investFromMatic(). The contract transfers MATIC to treasuryAddress without checking its effect before transferring HYAX tokens to msg.sender. This allows an attacker to re-enter by calling back the function before completing all updates, enabling potential fund draining.
+ANSWER: False positive. It's checked using a require() statement.
 
 Line: 573
 
     Impact: Medium
     Detail: Unchecked call return value for token.transferFrom(). Failure of token transfer might go undetected, allowing the function to proceed even if tokens are not received by the contract. This can lead to incorrect balances and expose the contract to unexpected behavior.
+ANSWER: False positive. It's checked using a require() statement.
 
 Line: 616
 
     Impact: High
     Detail: Integer overflow risk in _amount parameter of tokenIssuance. Although Solidity 0.8+ includes overflow protection, confirming this could prevent excessive minting by owner if future versions or inherited contracts bypass overflow checks.
+ANSWER: False positive. The parameter is uint256 and it has double check of the parameter value in the function
+
 
 Line: 655
 
     Impact: Medium
     Detail: Lack of front-running protection in validateMaximumInvestedAmountAndInvestorLimit(). This validation function is vulnerable to front-running as any transaction setting totalInvestmentInUsd can be delayed or front-run by another, causing undesired states for maximumInvestmentAllowedInUSD.
+ANSWER: False positive. Validating the maximum invested amount doesn't pose any front run risk.
 
 Line: 784
 
     Impact: Medium
     Detail: Short address attack vulnerability. Lack of explicit length checking for _investorAddress and newPriceFeedAddress parameters may expose functions to short address attacks, particularly in updatePriceFeedAddress().
+ANSWER: False positive. This can only be executed by the owner AND the function does and extended validation to verify the nature of the address.
 
 Line: 521
 
     Impact: High
     Detail: Lack of Insecure Access Control for treasury updates in updateTreasuryAddress. Only onlyOwner is used, potentially leaving the contract vulnerable if the owner's private key is compromised or mismanaged.
+ANSWER: False positive. It's true, that it has the onlyOwner requirement, but the owner is implemented as a multisig before the smart contract officially receives money.
 
 Line: 745
 
     Impact: Critical
     Detail: Delegatecall injection vulnerability in getCurrentTokenPrice(). dataFeed.latestRoundData() is directly called on external oracles, without rigorous verification of response data. This makes the contract vulnerable to malicious or malfunctioning oracles.
+ANSWER: Valid vulnerability. Just added validations to ensure its the right oracle.
 
 Line: 805
 
     Impact: Low
     Detail: Timestamp dependence in getCurrentTokenPrice(). The function retrieves token prices based on latest data but does not include logic to verify price freshness.
+ANSWER: Valid vulnerability. Just added validations to ensure the price freshness. But commented them because there is need to deploy local tests with frozen prices. Will enable it before testnet deployment.
+
 
 Line: 656
 
     Impact: Critical
     Detail: Unrestricted Ether Withdrawal vulnerability in investFromMatic(). ETH (MATIC) is sent to treasuryAddress without ensuring that it cannot be redirected or withdrawn maliciously. An attacker could target the treasuryAddress, resulting in loss of ETH.
+ANSWER: The treasury address is a multisig wallet, and the address is set up in the contract constructor/initialization. The team decided to directly send the balance to the treasury address directly in order to decrease attack surface.
 
 Line: 745
 
     Impact: High
     Detail: Oracle Manipulation in getCurrentTokenPrice(). The function depends on external oracles, which could be manipulated. Price feeds are not validated thoroughly, making the contract susceptible to oracle price manipulation, affecting token pricing.
+ANSWER: To validate. Adding the price validation could be the right approach but would like to get external opinions because it would increase the code complexity.
 
 Line: 516
 
     Impact: Medium
     Detail: Unchecked External Calls. The contract uses payable(treasuryAddress).send(msg.value) to send MATIC, but no checks ensure successful completion. A failed transfer would leave the contract in an inconsistent state.
+ANSWER: Changed send() to transfer(), having into account that the treasury address is a gnosis multisig wallet.
+
 
 Line: 578
 
     Impact: Medium
     Detail: Unchecked Return Data from external call token.transferFrom. Failure of this token transfer could cause an unexpected balance discrepancy, leading to possible incorrect fund transfers or state inconsistencies.
+ANSWER: Added the SafeERC20 library to safely handle the transfer.
 
 Line: 803
 
     Impact: Medium
     Detail: Insufficient Gas Griefing in the getCurrentTokenPrice() function. This function's reliance on external oracles may lead to potential issues if oracle updates consume excessive gas, impacting transaction completion.
+Answer: False positive. The only function that consults the oracle: latestRoundData, is a read function, therefore there is not gas consumption at all.
+
+CONTINUE HEREEEEEEEEEEEEE
 
 Line: 655
 
@@ -107,3 +125,39 @@ Line: 670
 
     Impact: High
     Detail: Unexpected Ether Transfers (Force Feeding). As the contract can receive MATIC, it is susceptible to forced MATIC transfers. This may result in unaccounted balances, complicating fund management.
+
+
+Line: 164
+
+    Impact: Medium
+    Detail: Gas optimization could be achieved by using calldata instead of memory for the _investorAddress parameter in addToWhiteList. Calldata is more gas efficient for external calls, especially if the function is frequently used.
+
+Line: 289
+
+    Impact: Medium
+    Detail: Suggestion for best practice in tokenIssuance(). Currently, onlyOwner restricts access, but adding a multi-signature requirement could increase security, especially in case the owner’s private key is compromised. This approach is standard in critical token issuance functions.
+
+Line: 515
+
+    Impact: Medium
+    Detail: Gas optimization in investFromMatic(). Instead of calling this.getCurrentTokenPrice(TokenType.MATIC), consider storing the current price once per transaction or regularly updating it in a state variable. This reduces unnecessary function calls and saves gas.
+
+Line: 620
+
+    Impact: Low
+    Detail: Gas optimization by reducing storage reads in validateMaximumInvestedAmountAndInvestorLimit(). Instead of reading investorData[_investorAddress].totalUsdDepositedByInvestor multiple times, store it in a local variable to avoid additional storage reads, optimizing gas usage.
+
+Line: 805
+
+    Impact: High
+    Detail: Suggestion for best practice in getCurrentTokenPrice(). Add a time-staleness check for oracle data to ensure the returned price is fresh. This is crucial for price-sensitive applications to avoid acting on outdated or manipulated price data.
+
+Line: 435
+
+    Impact: Medium
+    Detail: Gas optimization in calculateTotalHyaxTokenToReturn(). Use unchecked {} for the multiplication and division operations on _amount * _currentCryptocurrencyPrice / 10**8 as Solidity 0.8+ already includes overflow checks by default, but these checks can be skipped if the values are controlled, saving gas.
+
+Line: 590
+
+    Impact: Medium
+    Detail: Suggestion for best practice by adding indexed parameters to events such as TokenIssuance, InvestFromMatic, and InvestFromCryptoToken events. This will allow more efficient filtering of these events in off-chain applications, improving log querying and traceability.
