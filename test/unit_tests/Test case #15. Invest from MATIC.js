@@ -151,7 +151,7 @@ describe("Test case #15. Invest from MATIC", function () {
 
     // Calculate the total HYAX to return in the MATIC investment
     var [totalInvestmentInUsd, totalHyaxTokenToReturn] = await hyax.calculateTotalHyaxTokenToReturn(valueToInvest, await hyax.getCurrentTokenPrice(0));
-
+    
     // Send the investment in MATIC to the smart contract to receive HYAX tokens in return
     await hyax.connect(addr2).investFromMatic({ value: valueToInvest });
 

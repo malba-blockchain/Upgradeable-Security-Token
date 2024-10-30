@@ -5,21 +5,12 @@ import "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20Pausable
 import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 import "@chainlink/contracts/src/v0.8/shared/interfaces/AggregatorV3Interface.sol";
 import "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol";
+import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
 /**
  * @dev Implementation based on the ERC-20 standard
  * Developer: Carlos Alba
  */
-
- /**
- * @title IERC20
- * @dev Interface for interacting with the different tokens: USDC, USDT, WBTC and WETH
- */
-interface IERC20 {
-    function transfer(address dst, uint wad) external returns (bool);
-    function transferFrom(address src, address dst, uint wad) external returns (bool);
-    function balanceOf(address guy) external view returns (uint);
-}
 
 /**
  * @title HYAX token over the Mumbai Network
@@ -27,6 +18,8 @@ interface IERC20 {
  * @custom:version v2 Elimination of the minimum and maximum investment allowed in USD.
  */
 contract HYAXUpgradeableV2 is ERC20PausableUpgradeable, OwnableUpgradeable, ReentrancyGuardUpgradeable {
+
+    using SafeERC20 for IERC20;
 
     ////////////////// SMART CONTRACT EVENTS //////////////////
     /**
@@ -281,6 +274,16 @@ contract HYAXUpgradeableV2 is ERC20PausableUpgradeable, OwnableUpgradeable, Reen
      * @dev Declaration of WETH token interface.
      */
     IERC20 public wethToken;
+
+    /**
+     * @dev Maximum age of price data in seconds.
+     */
+    uint256 public constant MAX_PRICE_AGE = 1 hours;
+
+    /**
+     * @dev Array to store unused space for future upgrades.
+     */
+    uint256[50] private __gap;
 
 
     ////////////////// SMART CONTRACT CONSTRUCTOR /////////////////

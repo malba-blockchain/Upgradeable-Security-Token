@@ -85,21 +85,27 @@ Line: 655
 
     Impact: High
     Detail: Race Condition risk in validateMaximumInvestedAmountAndInvestorLimit(). This function's reliance on totalInvestmentInUsd can be manipulated if transactions are reordered or delayed, creating inconsistencies in maximum investment tracking.
+Answer: Turned the function into validateAndTrackInvestment() to validate and update the status of the amount of investments to avoid the manipultation risk.
 
 Line: 705
 
     Impact: Medium
     Detail: Logic Error in updateMaximumInvestmentAllowedInUSD(). If maximumInvestmentAllowedInUSD is set incorrectly due to transaction race conditions or improper input validation, investment limits could be unintentionally exceeded or restricted, affecting investor access.
+Answer: False positive. Due to contract logic this function can only be executed by the owner which is a multisign. Even if breached it doesn't pose a major risk to increase the maximum investment allowed in USD.
 
 Line: 656
 
     Impact: Critical
     Detail: Reentrancy Guard Bypass in investFromMatic(). Although nonReentrant is applied, transferring MATIC before completing all state updates could allow an attacker to re-enter the contract by manipulating the fallback function, potentially bypassing the reentrancy guard and draining funds.
+Answer: False positive. Due to the contract logic: 1. The priority is to guarantee that the funds go to the treasury wallet in a safe way, BEFORE sending any token from the smart contract. 2. The treasury wallet is a multisign property of the team. 
 
 Line: 734
 
     Impact: High
     Detail: Storage Collision risk in investorData mapping. As the contract includes multiple struct mappings, there’s a potential storage collision in the investorData mapping if additional storage is introduced, risking data overwrites and undefined behavior.
+Answer: Added the storage padding uint256[50] private __gap; at the end of the varaibles declaration.
+
+CONTINUE HEREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
 
 Line: 672
 

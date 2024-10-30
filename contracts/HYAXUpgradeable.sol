@@ -163,7 +163,7 @@ contract HYAXUpgradeable is ERC20PausableUpgradeable, OwnableUpgradeable, Reentr
         uint256 totalHyaxBoughtByInvestor; //Track the total amount of HYAX bought by each investor.
         uint256 totalUsdDepositedByInvestor; //Track the total amount of USD an investor has deposited to buy the HYAX token.
     }
-
+    
     // Mapping to store investor data, indexed by their address 
     mapping(address => InvestorData) public investorData;
 
@@ -279,6 +279,10 @@ contract HYAXUpgradeable is ERC20PausableUpgradeable, OwnableUpgradeable, Reentr
      */
     uint256 public constant MAX_PRICE_AGE = 1 hours;
 
+    /**
+     * @dev Array to store unused space for future upgrades.
+     */
+    uint256[50] private __gap;
 
     ////////////////// SMART CONTRACT CONSTRUCTOR /////////////////
 
@@ -518,21 +522,23 @@ contract HYAXUpgradeable is ERC20PausableUpgradeable, OwnableUpgradeable, Reentr
         emit TokenIssuance(msg.sender, _amount);
     }
 
+
     /**
-     * @dev Function to validate the maximum invested amount of an investor and the limit if it's not a qualified investor.
-     * @param _totalInvestmentInUsd The total investment in USD for the current transaction.
+     * @dev Validates and tracks the investment made by an investor in USD.
+     * @param _totalInvestmentInUsd The total amount of the investment in USD.
      * @param _investorAddress The address of the investor making the investment.
      */
-    function validateMaximumInvestedAmountAndInvestorLimit(uint256 _totalInvestmentInUsd, address _investorAddress) public view {
+    function validateAndTrackInvestment(uint256 _totalInvestmentInUsd, address _investorAddress) internal {
+        // Atomically update the total USD deposited by the investor first
+        uint256 newTotalAmountInvestedInUSD = investorData[_investorAddress].totalUsdDepositedByInvestor + _totalInvestmentInUsd;
         
-        // Calculate the new total amount invested in USD by adding the current transaction's investment to the investor's total
-        uint256 newTotalAmountInvestedInUSD = _totalInvestmentInUsd + investorData[_investorAddress].totalUsdDepositedByInvestor;
-       
-        // If the amount to buy in USD is greater than the maximum established, then validate if the investor is qualified
+        // Check if the new total investment exceeds the allowed limit
         if (newTotalAmountInvestedInUSD > maximumInvestmentAllowedInUSD) {
-            
             require(investorData[_investorAddress].isQualifiedInvestor, "To buy that amount of HYAX its required to be a qualified investor");
         }
+
+        // Update the investor's deposited amount
+        investorData[_investorAddress].totalUsdDepositedByInvestor = newTotalAmountInvestedInUSD;
     }
 
     /////////////INVESTING FUNCTIONS//////////
@@ -549,19 +555,16 @@ contract HYAXUpgradeable is ERC20PausableUpgradeable, OwnableUpgradeable, Reentr
         // Calculate total HYAX to return while validating minimum investment and if there are HYAX tokens left to sell
         (uint256 totalInvestmentInUsd, uint256 totalHyaxTokenToReturn) = calculateTotalHyaxTokenToReturn(msg.value, this.getCurrentTokenPrice(TokenType.MATIC));
 
-        // If the amount of HYAX to buy is greater than the maximum established, then validate if the investor is qualified
-        validateMaximumInvestedAmountAndInvestorLimit(totalInvestmentInUsd, msg.sender);
-    
-        // Transfer MATIC to the treasury address
+        // Update and validate the investor's data atomically
+        validateAndTrackInvestment(totalInvestmentInUsd, msg.sender);
+
+        // Transfer MATIC to the treasury address first, as per requirements
         (bool success, ) = payable(treasuryAddress).call{value: msg.value}("");
         require(success, "There was an error on sending the MATIC investment to the treasury");
 
         // Transfer HYAX token to the investor wallet
         require(this.transfer(msg.sender, totalHyaxTokenToReturn), "There was an error on sending back the HYAX Token to the investor");
 
-        // Update the total amount of USD that an investor has deposited
-        investorData[msg.sender].totalUsdDepositedByInvestor += totalInvestmentInUsd;
-        
         // Update the total amount of HYAX that an investor has bought
         investorData[msg.sender].totalHyaxBoughtByInvestor += totalHyaxTokenToReturn;
 
@@ -602,20 +605,17 @@ contract HYAXUpgradeable is ERC20PausableUpgradeable, OwnableUpgradeable, Reentr
         // Calculate total HYAX to return while validating minimum investment and if there are HYAX tokens left to sell
         (uint256 totalInvestmentInUsd, uint256 totalHyaxTokenToReturn) = calculateTotalHyaxTokenToReturn(_amount, currentTokenPrice);
 
-        // If the amount of HYAX to buy is greater than the maximum established, then validate if the investor is qualified
-        validateMaximumInvestedAmountAndInvestorLimit(totalInvestmentInUsd, msg.sender);
-        
+        // Update and validate the investor's data atomically
+        validateAndTrackInvestment(totalInvestmentInUsd, msg.sender);
+
         // Transfer the specified token to this contract 
         require(token.transferFrom(msg.sender, address(this), _amount), "There was an error on receiving the token investment");
         
-        // Transfer the token to the treasury address 
+        // Transfer tokens to the treasury address first, as per requirements
         require(token.transfer(payable(treasuryAddress), _amount), "There was an error on sending the token investment to the treasury");
 
         // Transfer HYAX token to the investor wallet
         require(this.transfer(msg.sender, totalHyaxTokenToReturn), "There was an error on sending back the HYAX Token to the investor");
-
-        // Update the total amount of USD that an investor has deposited
-        investorData[msg.sender].totalUsdDepositedByInvestor += totalInvestmentInUsd;
 
         // Update the total amount of HYAX that an investor has bought
         investorData[msg.sender].totalHyaxBoughtByInvestor += totalHyaxTokenToReturn;
