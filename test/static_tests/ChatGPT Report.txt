@@ -79,7 +79,7 @@ Line: 803
     Detail: Insufficient Gas Griefing in the getCurrentTokenPrice() function. This function's reliance on external oracles may lead to potential issues if oracle updates consume excessive gas, impacting transaction completion.
 Answer: False positive. The only function that consults the oracle: latestRoundData, is a read function, therefore there is not gas consumption at all.
 
-CONTINUE HEREEEEEEEEEEEEE
+
 
 Line: 655
 
@@ -111,59 +111,72 @@ Line: 672
 
     Impact: Medium
     Detail: Improper Error Handling in getCurrentTokenPrice(). If an oracle’s latestRoundData() function returns an error, the contract may revert unexpectedly. Without catching and handling these errors more gracefully, any disruption in the oracle could disrupt the contract.
+Answer: False positive. The goal is to make the contract revert in case the oracle fails.
 
 Line: 712
 
     Impact: Medium
     Detail: Approval Vulnerabilities in tokenIssuance(). The function allows unrestricted token issuance by the owner, which could lead to potential abuse if the owner’s account is compromised. Adding specific limits or multi-signature requirements would mitigate this risk.
+Answer: False positive. The owner is a multisig and there are specific limits, lilke minting only 1B at a time and not allowing the owner to mint more than the 10B tokens initially established.
 
 Line: 819
 
     Impact: High
     Detail: Unchecked Low-Level Calls in updatePriceFeedAddress(). The function depends on oracle description matching, but using try/catch without additional validation can lead to unexpected states if the call fails silently, potentially misconfiguring the contract's oracle feeds.
+Answer: False positive. The function is already validating the description and in case the try/catch fail. There are several points to validate and do a function revert with the specific causes of revertion.
 
 Line: 588
 
     Impact: Medium
     Detail: Ambiguous Evaluation Order in validateMaximumInvestedAmountAndInvestorLimit(). Adding _totalInvestmentInUsd and investorData[_investorAddress].totalUsdDepositedByInvestor without confirming consistent ordering can lead to race conditions, potentially skewing investment limits.
+Answer: Solved with the previous Race Condition false posivite vulnerabilit reported.
 
 Line: 670
 
     Impact: High
     Detail: Unexpected Ether Transfers (Force Feeding). As the contract can receive MATIC, it is susceptible to forced MATIC transfers. This may result in unaccounted balances, complicating fund management.
+Answer: Added event to track the MATIC transfers. Also added the onlyOwner requirement to accept the transfer.
 
 
 Line: 164
 
     Impact: Medium
     Detail: Gas optimization could be achieved by using calldata instead of memory for the _investorAddress parameter in addToWhiteList. Calldata is more gas efficient for external calls, especially if the function is frequently used.
+Answer: False positive. Data location can only be specified for array, struct or mapping types
 
 Line: 289
 
     Impact: Medium
     Detail: Suggestion for best practice in tokenIssuance(). Currently, onlyOwner restricts access, but adding a multi-signature requirement could increase security, especially in case the owner’s private key is compromised. This approach is standard in critical token issuance functions.
+Answer: False positive. The owner is already a multisig wallet.
 
 Line: 515
 
     Impact: Medium
     Detail: Gas optimization in investFromMatic(). Instead of calling this.getCurrentTokenPrice(TokenType.MATIC), consider storing the current price once per transaction or regularly updating it in a state variable. This reduces unnecessary function calls and saves gas.
+Answer: False positive. It's required to consult the current price with the oracle every time a transaction is made.
 
 Line: 620
 
     Impact: Low
     Detail: Gas optimization by reducing storage reads in validateMaximumInvestedAmountAndInvestorLimit(). Instead of reading investorData[_investorAddress].totalUsdDepositedByInvestor multiple times, store it in a local variable to avoid additional storage reads, optimizing gas usage.
+Answer: Code improved. The read of the value is now performed only once in the function. 
 
 Line: 805
 
     Impact: High
     Detail: Suggestion for best practice in getCurrentTokenPrice(). Add a time-staleness check for oracle data to ensure the returned price is fresh. This is crucial for price-sensitive applications to avoid acting on outdated or manipulated price data.
+Answer: Check added as a require() statement at the end of the function.
 
 Line: 435
 
     Impact: Medium
     Detail: Gas optimization in calculateTotalHyaxTokenToReturn(). Use unchecked {} for the multiplication and division operations on _amount * _currentCryptocurrencyPrice / 10**8 as Solidity 0.8+ already includes overflow checks by default, but these checks can be skipped if the values are controlled, saving gas.
+Answer: Not willing to accept this tradeoff between security and gas costs.
 
 Line: 590
 
     Impact: Medium
     Detail: Suggestion for best practice by adding indexed parameters to events such as TokenIssuance, InvestFromMatic, and InvestFromCryptoToken events. This will allow more efficient filtering of these events in off-chain applications, improving log querying and traceability.
+Answer: Added indexed parameters for: TokenIssuance, InvestFromMatic, InvestFromCryptoToken, InvestorAddedToWhiteList.
+

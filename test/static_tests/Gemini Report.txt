@@ -10,6 +10,10 @@ Mitigation:
     Use a ReentrancyGuard: Implement a reentrancy guard pattern to prevent reentrant calls.
     Atomic Operations: Consider using a library like OpenZeppelin's SafeERC20 to ensure atomic token transfers and state updates.
 
+Answer: Kept the transactional order. Implemented reentracy guard and the SafeERC20 library.
+
+
+
 Vulnerability 2: Unchecked Return Values in investFromCryptoToken
 
 Line: 1174-1175, 1179-1180, 1184-1185
@@ -20,6 +24,9 @@ Impact: Medium
 Mitigation:
 
     Check Return Values: Always check the return values of external calls to ensure that operations are successful.
+
+Answer: The return values of the transactions are checked using a require() and the token transfers are made using de SafeERC20 library.
+
 
 Vulnerability 3: Potential Integer Overflow/Underflow
 
@@ -33,12 +40,17 @@ Mitigation:
     Use SafeMath Library: Use a SafeMath library to perform safe arithmetic operations.
     Input Validation: Validate input values to prevent invalid inputs that could lead to overflow or underflow.
 
+Answer: The usage of SafeMath is directly implemented in the solidity versions >0.8.0. This version is 0.8.20
+
+
 Vulnerability 4: Access Control Weaknesses
 
 Line: Various access control modifiers
 Impact: Medium
 
     Detail: While the onlyOwnerOrWhitelister modifier is used to restrict access to sensitive functions, it's important to ensure that the whitelister role is granted to trusted addresses. Weak access control can lead to unauthorized actions and potential loss of funds.
+
+Answer: The storage of whitelister address will be made via secure storage using AWS architecture and the functionalities it can use are restricted to update investor status and data.
 
 Vulnerability 2: Potential Race Conditions in Investment Functions
 
@@ -51,6 +63,10 @@ Mitigation:
 
     Atomic Operations: Use atomic operations to ensure that state changes are executed as a single, indivisible unit.
     Careful State Updates: Update the contract's state before making external calls to prevent reentrancy attacks and race conditions.
+
+Answer: This recommendation is not aligned with the security business requirements of sending the funds to the treasury wallet BEFORE updating the smart contract state or emiting events.
+
+
 
 Vulnerability 3: Oracle Manipulation
 
@@ -65,6 +81,10 @@ Mitigation:
     Oracle Reputation: Use reputable and well-established oracle providers.
     Price Verification: Implement mechanisms to verify the accuracy of the prices provided by the oracle.
 
+Answer: Chainlink price feed oracles are used. Added checks to validate: price answer, timeStamp, answeredInRound, roundID, and price freshness.
+
+
+
 Vulnerability 4: Logic Errors
 
 Line: Various
@@ -78,6 +98,8 @@ Mitigation:
     Unit Testing: Write comprehensive unit tests to cover all code paths and edge cases.
     Formal Verification: Consider using formal verification techniques to prove the correctness of the contract's logic.
 
+Answer: Currently undergoing through this testing.
+
 
 Vulnerability 2: Unchecked Return Values in investFromCryptoToken
 
@@ -90,39 +112,9 @@ Mitigation:
 
     Check Return Values: Always check the return values of external calls to ensure that operations are successful.
 
-Vulnerability 3: Potential Integer Overflow/Underflow
+Answer: False positive. The function uses a require() in order to check those the return value and uses SafeERC20 to execute the transfer.
 
-Impact: High
-Detail:
-Integer overflow and underflow vulnerabilities can occur in various arithmetic operations, especially when dealing with large numbers or unexpected inputs. This can lead to incorrect calculations, unexpected behavior, and potential loss of funds.
-
-Mitigation:
-
-    Use SafeMath Library: Use a SafeMath library to perform safe arithmetic operations.
-    Input Validation: Validate input values to prevent invalid inputs that could lead to overflow or underflow.
-
-Vulnerability 4: Oracle Manipulation
-
-Lines: 1292-1310
-Impact: High
-Detail:
-The contract relies on external price feeds to determine the value of different tokens. If the price feeds are manipulated or compromised, it could lead to incorrect calculations and potential loss of funds.
-
-Mitigation:
-
-    Multiple Oracle Sources: Consider using multiple oracle sources to reduce the risk of manipulation.
-    Oracle Reputation: Use reputable and well-established oracle providers.
-    Price Verification: Implement mechanisms to verify the accuracy of the prices provided by the oracle.
-
-Vulnerability 5: Access Control Weaknesses
-
-Impact: Medium
-Detail:
-While the onlyOwnerOrWhitelister modifier is used to restrict access to sensitive functions, it's important to ensure that the whitelister role is granted to trusted addresses. Weak access control can lead to unauthorized actions and potential loss of funds.
-
-Improvement Point 1: Gas Optimization in 
-
-investFromMatic and investFromCryptoToken
+Improvement Point 1: Gas Optimization in investFromMatic and investFromCryptoToken
 
 Lines: 1135-1144, 1174-1185
 Impact: Medium
@@ -134,6 +126,8 @@ Improvement:
     Batch Transfers: Use batch transfer functions provided by token contracts (if available) to transfer multiple tokens in a single transaction.
     Optimize State Updates: Combine multiple state updates into a single operation to reduce gas costs.
 
+Answer: This recommendation goes against basic security measures to guarantee the right execution of operations. Not implemented.
+
 Improvement Point 2: Consider Using a Library for Token Interactions
 
 Impact: Medium
@@ -143,6 +137,8 @@ Using a library like OpenZeppelin's SafeERC20 can simplify token interactions an
 Improvement:
 
     Integrate SafeERC20: Incorporate the SafeERC20 library to handle token transfers and approvals safely and efficiently.
+
+Answer: SafeERC20 has been implemented.
 
 Improvement Point 3: Improve Error Handling and Logging
 
@@ -155,6 +151,9 @@ Improvement:
     Custom Error Messages: Define custom error messages to provide more specific information about errors.
     Detailed Logging: Log important events and errors to facilitate debugging and troubleshooting.
 
+Answer: Added custom errors in the require() statements and emited events to every function that updates the smart contract state.
+
+
 Improvement Point 4: Consider Using a Decentralized Oracle Network
 
 Impact: High
@@ -165,9 +164,13 @@ Improvement:
 
     Integrate Decentralized Oracle Network: Explore integrating a decentralized oracle network like Chainlink to obtain reliable and tamper-resistant price feeds.
 
+Answer: The chainlink network is used.
+
 Improvement Point 5: Security Best Practices
 
     Regular Security Audits: Conduct regular security audits to identify and address potential vulnerabilities.
     Formal Verification: Consider using formal verification techniques to prove the correctness of the contract's logic.
     Stay Updated with Security Best Practices: Keep up-to-date with the latest security best practices and vulnerabilities in the Solidity ecosystem.
     Consider Using a Security-Focused Framework: Use a security-focused framework like OpenZeppelin to leverage battle-tested security patterns and libraries.
+
+Answer: Currently executing the security audit, using OpenZeppelin frameworks and preparing for a security audit via 3rd party.

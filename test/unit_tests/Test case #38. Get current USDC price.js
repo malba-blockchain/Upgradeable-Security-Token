@@ -45,7 +45,7 @@ describe("Test case #38. Get current USDC price", function () {
     await hyax.connect(owner).updatePriceFeedAddress(1, usdcPriceDataFeedMock.target);
 
     //Return values as fixture for the testing cases
-    return { hyax, deployer, owner, addr1, addr2, addr3 };
+    return { hyax, deployer, owner, addr1, addr2, addr3, usdcPriceDataFeedMock };
   }
 
   it("38.1. Should properly execute the function because it's reading the value parameter of the USDC data price mock", async function () {
@@ -53,6 +53,15 @@ describe("Test case #38. Get current USDC price", function () {
 
     //Current USDC price 99992042 = $0.99992042
     expect(await hyax.getCurrentTokenPrice(1)).to.equal(99992042);
+  });
+   
+  it("38.2. Should throw an error because there is an invalid price", async function () {
+    const { hyax, deployer, owner, addr1, addr2, addr3, usdcPriceDataFeedMock } = await loadFixture(deployContractAndSetVariables);
+
+    //Update the value of the MATIC price data feed mock
+    await usdcPriceDataFeedMock.setLatestRoundDataAnswer(-1);
+
+    await expect(hyax.getCurrentTokenPrice(1)).to.be.revertedWith('Invalid price data from oracle');
   });
 
 });

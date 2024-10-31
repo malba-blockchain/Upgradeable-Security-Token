@@ -46,7 +46,7 @@ describe("Test case #37. Get current MATIC price", function () {
 
 
     //Return values as fixture for the testing cases
-    return { hyax, deployer, owner, addr1, addr2, addr3 };
+    return { hyax, deployer, owner, addr1, addr2, addr3, maticPriceDataFeedMock };
   }
 
   it("37.1. Should properly execute the function because it's reading the value parameter of the MATIC data price mock", async function () {
@@ -54,6 +54,15 @@ describe("Test case #37. Get current MATIC price", function () {
 
     //Current MATIC price 41137400 = $0.41137400
     expect(await hyax.getCurrentTokenPrice(0)).to.equal(41137400);
+  });
+
+  it("37.2. Should throw an error because there is an invalid price", async function () {
+    const { hyax, deployer, owner, addr1, addr2, addr3, maticPriceDataFeedMock } = await loadFixture(deployContractAndSetVariables);
+
+    //Update the value of the MATIC price data feed mock
+    await maticPriceDataFeedMock.setLatestRoundDataAnswer(-1);
+
+    await expect(hyax.getCurrentTokenPrice(0)).to.be.revertedWith('Invalid price data from oracle');
   });
 
 });

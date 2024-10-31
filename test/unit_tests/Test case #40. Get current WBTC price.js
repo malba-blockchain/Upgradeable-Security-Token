@@ -45,13 +45,22 @@ describe("Test case #40. Get current WBTC price", function () {
     await hyax.connect(owner).updatePriceFeedAddress(3, wbtcPriceDataFeedMock.target);
 
     //Return values as fixture for the testing cases
-    return { hyax, deployer, owner, addr1, addr2, addr3 };
+    return { hyax, deployer, owner, addr1, addr2, addr3, wbtcPriceDataFeedMock };
   }
 
   it("40.1. Should properly execute the function because it's reading the value parameter of the WBTC data price mock", async function () {
     const { hyax, deployer, owner, addr1, addr2, addr3 } = await loadFixture(deployContractAndSetVariables);
     //Current Bitcoin price 5844229670000 = $58,442.29670000
     expect(await hyax.getCurrentTokenPrice(3)).to.equal(5844229670000);
+  });
+
+  it("40.2. Should throw an error because there is an invalid price", async function () {
+    const { hyax, deployer, owner, addr1, addr2, addr3, wbtcPriceDataFeedMock } = await loadFixture(deployContractAndSetVariables);
+
+    //Update the value of the MATIC price data feed mock
+    await wbtcPriceDataFeedMock.setLatestRoundDataAnswer(-1);
+
+    await expect(hyax.getCurrentTokenPrice(3)).to.be.revertedWith('Invalid price data from oracle');
   });
 
 });

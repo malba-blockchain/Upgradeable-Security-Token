@@ -31,6 +31,10 @@ contract WbtcPriceDataFeedMock {
     return (roundID, answer, startedAt, timeStamp, answeredInRound);
   }
 
+  function setLatestRoundDataAnswer(int256 _answer) public {
+    answer = _answer;
+  }
+
   function description() external pure returns (string memory) {
     return 'WBTC / USD';
   }

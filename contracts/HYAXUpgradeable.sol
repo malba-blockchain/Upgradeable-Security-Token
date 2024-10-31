@@ -24,17 +24,17 @@ contract HYAXUpgradeable is ERC20PausableUpgradeable, OwnableUpgradeable, Reentr
     /**
      * @dev Emitted when new HYAX tokens are issued.
      */
-    event TokenIssuance(address sender, uint256 amount);
+    event TokenIssuance(address indexed sender, uint256 amount);
 
     /**
      * @dev Emitted when an investment is made using Matic.
      */
-    event InvestFromMatic(address sender, uint256 maticAmount, uint256 totalInvestmentInUsd, uint256 hyaxAmount);
+    event InvestFromMatic(address indexed sender, uint256 maticAmount, uint256 totalInvestmentInUsd, uint256 hyaxAmount);
 
     /**
      * @dev Emitted when an investment is made using a crypto token.
      */
-    event InvestFromCryptoToken(TokenType tokenType, address sender, uint256 tokenAmount, uint256 totalInvestmentInUsd, uint256 hyaxAmount);
+    event InvestFromCryptoToken(TokenType indexed tokenType, address indexed sender, uint256 tokenAmount, uint256 totalInvestmentInUsd, uint256 hyaxAmount);
 
     /**
      * @dev Emitted when the HYAX price is updated.
@@ -64,7 +64,7 @@ contract HYAXUpgradeable is ERC20PausableUpgradeable, OwnableUpgradeable, Reentr
     /**
      * @dev Emitted when an investor is added to the whitelist.
      */
-    event InvestorAddedToWhiteList(address sender, address _investorAddress);
+    event InvestorAddedToWhiteList(address indexed sender, address indexed _investorAddress);
 
     /**
      * @dev Emitted when the whitelist status of an investor is updated.
@@ -125,6 +125,11 @@ contract HYAXUpgradeable is ERC20PausableUpgradeable, OwnableUpgradeable, Reentr
      * @dev Emitted when the WETH price feed address is updated.
      */
     event UpdatedWethPriceFeedAddress(address _newWethPriceFeedAddress);
+
+    /**
+     * @dev Emitted when MATIC is received by the smart contract.
+     */
+    event MaticReceived(address indexed sender, uint256 amount);
     
     ////////////////// SMART CONTRACT VARIABLES //////////////////
 
@@ -499,7 +504,7 @@ contract HYAXUpgradeable is ERC20PausableUpgradeable, OwnableUpgradeable, Reentr
         // Emit the event of qualified investor status updated
         emit QualifiedInvestorStatusUpdated(msg.sender, _qualifiedInvestorAddress, _newStatus);
     }
-
+    
     /**
      * @dev Function to issue HYAX tokens as required.
      * @param _amount The amount of HYAX tokens to issue.
@@ -521,7 +526,6 @@ contract HYAXUpgradeable is ERC20PausableUpgradeable, OwnableUpgradeable, Reentr
         // Emit the event of token issuance
         emit TokenIssuance(msg.sender, _amount);
     }
-
 
     /**
      * @dev Validates and tracks the investment made by an investor in USD.
@@ -616,7 +620,7 @@ contract HYAXUpgradeable is ERC20PausableUpgradeable, OwnableUpgradeable, Reentr
 
         // Transfer HYAX token to the investor wallet
         require(this.transfer(msg.sender, totalHyaxTokenToReturn), "There was an error on sending back the HYAX Token to the investor");
-
+        
         // Update the total amount of HYAX that an investor has bought
         investorData[msg.sender].totalHyaxBoughtByInvestor += totalHyaxTokenToReturn;
 
@@ -874,7 +878,7 @@ contract HYAXUpgradeable is ERC20PausableUpgradeable, OwnableUpgradeable, Reentr
 
             return uint256(answer);
         } catch {
-            revert("There was an error obtaining the price from the oracle");
+            revert("There was an error obtaining the token price from the oracle");
         }
     }
 
@@ -915,6 +919,8 @@ contract HYAXUpgradeable is ERC20PausableUpgradeable, OwnableUpgradeable, Reentr
     /**
      * @dev Receive function to be able to receive MATIC to pay for possible transaction gas in the future.
      */
-    receive() external payable nonReentrant {
+    receive() external payable nonReentrant onlyOwner {
+        //Emit an event to signal the received MATIC
+        emit MaticReceived(msg.sender, msg.value);
     }
 }

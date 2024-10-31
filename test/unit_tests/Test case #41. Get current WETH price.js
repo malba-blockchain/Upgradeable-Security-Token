@@ -45,7 +45,7 @@ describe("Test case #41. Get current WETH price", function () {
     await hyax.connect(owner).updatePriceFeedAddress(4, wethPriceDataFeedMock.target);
 
     //Return values as fixture for the testing cases
-    return { hyax, deployer, owner, addr1, addr2, addr3 };
+    return { hyax, deployer, owner, addr1, addr2, addr3, wethPriceDataFeedMock };
   }
 
   it("41.1. Should properly execute the function because it's reading the value parameter of the WETH data price mock", async function () {
@@ -53,6 +53,15 @@ describe("Test case #41. Get current WETH price", function () {
 
     //Current WETH price 261484866809 = 2,614.84866809
     expect(await hyax.getCurrentTokenPrice(4)).to.equal(261484866809);
+  });
+
+  it("41.2. Should throw an error because there is an invalid price", async function () {
+    const { hyax, deployer, owner, addr1, addr2, addr3, wethPriceDataFeedMock } = await loadFixture(deployContractAndSetVariables);
+
+    //Update the value of the MATIC price data feed mock
+    await wethPriceDataFeedMock.setLatestRoundDataAnswer(-1);
+
+    await expect(hyax.getCurrentTokenPrice(4)).to.be.revertedWith('Invalid price data from oracle');
   });
 
 });
