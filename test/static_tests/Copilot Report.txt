@@ -1,55 +1,92 @@
-Line: 180 Impact: Critical Detail: Reentrancy Attack The function investFromMatic sends ETH to a user-controlled address without using a reentrancy guard after the state changes. This can be exploited by calling the function multiple times before the first execution is complete.
+Line: 180 Impact: Critical Detail: Reentrancy Attack The function investFromMatic sends MATIC to a user-controlled address without using a reentrancy guard after the state changes. This can be exploited by calling the function multiple times before the first execution is complete.
+ANSWER: The user-controlled address the MATIC is sent is the treasury wallet. The only exploit that could happen is that an user, previously whitelisted by the team, tried to massively buy HYAX tokens.
+
 
 Line: 200 Impact: High Detail: Integer Overflow/Underflow The function validateMaximumInvestedAmountAndInvestorLimit does not use SafeMath for arithmetic operations, risking overflow/underflow vulnerabilities.
+ANSWER: SafeMath is not required after solidity V. 0.8.0, this smart contract uses V. 0.8.20
+
 
 Line: 190 Impact: High Detail: Unchecked Call Return Value In the investFromMatic function, the return value of payable(treasuryAddress).send(msg.value) is not checked. If the send fails, it could result in a loss of funds.
+ANSWER: The send() function has been replaced by call() and there is a require() statement to validate the execution result.
+
 
 Line: 238 Impact: High Detail: Integer Overflow/Underflow Similar to the earlier point, the calculateTotalHyaxTokenToReturn function does not use SafeMath for arithmetic operations, risking overflow/underflow vulnerabilities.
+ANSWER: SafeMath is not required after solidity V. 0.8.0, this smart contract uses V. 0.8.20
+
 
 Line: 257 Impact: High Detail: Unchecked Call Return Value In the investFromCryptoToken function, the return value of token.transferFrom(msg.sender, address(this), _amount) and token.transfer(payable(treasuryAddress), _amount) is not checked.
+ANSWER: transferFrom and transfer functions are now uisng the SafeERC20 library and the result is validated by a require() statement.
+
 
 Line: 67 Impact: Medium Detail: Insecure Access Control The onlyOwnerOrWhitelister modifier is used inconsistently throughout the code, risking unauthorized access to critical functions.
+ANSWER: This modifier is only used in functions that require to update the status of investors in the contract registry(whitelist, blacklist and accredited investor list).
+
 
 Line: 77 Impact: Medium Detail: Uninitialized Storage Pointers The updateQualifiedInvestorStatus function sets the status without first checking if the investor is already listed, risking logical errors.
+ANSWER: False positive. There is an initial validation to verify that the investor "isWhiteListed" that way, the listing status is checked.
+
 
 Line: 330 Impact: Medium Detail: Timestamp Dependence Usage of block timestamp to control the execution of certain functions can be manipulated by miners.
+ANSWER: The getCurrentTokenPrice() function, where there is usage of timestamp value, requires to do this validation and any potential miner manipulation is mitigated by the use of chainlink oracles and timestamp validation inside of require() statements.
+
 
 Line: 103 Impact: Critical Detail: Tx.origin Authentication The onlyOwnerOrWhitelister modifier may be susceptible to misuse if tx.origin is used for authentication. Avoid using tx.origin for security checks.
+ANSWER: Tx.origin is not implemented in the smart contract, instead msg.sender is validated.
 
-Line: 199 Impact: Critical Detail: Unrestricted Ether Withdrawal The investFromMatic function allows sending MATIC to a user-controlled address without proper validation, potentially allowing unauthorized withdrawals.
-
-Line: 250 Impact: High Detail: Unchecked External Calls In the investFromCryptoToken function, the external call to token.transferFrom and token.transfer are unchecked. Failure could result in loss of funds.
-
-Line: 290 Impact: High Detail: Oracle Manipulation The getCurrentTokenPrice function relies on oracles for price data. If the oracle is manipulated, it could lead to incorrect pricing and potential losses.
 
 Line: 140 Impact: Medium Detail: Race Conditions In functions updating investor status, multiple state changes could lead to race conditions and inconsistent states.
+ANSWER: These functions are called by the owner or the whitelister which are really safe wallets.
+
 
 Line: 350 Impact: Medium Detail: Unchecked Return Data When calling dataFeed.latestRoundData(), the return data is not validated, which could lead to incorrect handling of oracle failures.
+ANSWER: Added 3 requirement() validations for the right validation and a good way to handle oracle data.
+
 
 Line: 203 Impact: Medium Detail: Logic Errors The validateMaximumInvestedAmountAndInvestorLimit function may have logical flaws in how it updates investor limits, potentially allowing bypass.
+ANSWER: Added to the function the line of updating to the newTotalAmountInvestedInUSD, in order to decrease potential bypass.
+
 
 Line: 368 Impact: Medium Detail: Insufficient Gas Griefing The function pause and unpause could be exploited by forcing the contract to consume more gas than allocated, leading to DoS attacks.
+ANSWER: False positive. No other expensive operations are triggered within _pause and _unpause
+
 
 Line: 357 Impact: Low Detail: Gas Limit Vulnerabilities Gas limits for complex operations in the tokenIssuance function could lead to failure in execution during peak usage times.
+ANSWER: False positive. There is already a limit of token issuance capped at max. 1000 M HYAX.
 
 Line: 210 Impact: Low Detail: Flash Loan Attack Vectors The contract could be susceptible to flash loan attacks if an attacker manipulates token balances and exploits logic flaws during atomic transactions.
+ANSWER: False positivie. The smart contract logic has been organized in a way that stops flash loan attacks from happening.
 
 Line: 257 Impact: Critical Detail: Unchecked Low-Level Calls The function investFromCryptoToken makes a low-level call to token.transfer and token.transferFrom without checking the return value. This could result in failure to execute the transfer.
+ANSWER: False positive. The return value is checked with require() statements and the functions token.transfer and token.transferFrom use the SafeERC20 library.
 
-Line: 140 Impact: High Detail: Reentrancy Guard Bypass The investFromMatic function sends MATIC to a user-controlled address and makes state changes after the send, without reentrancy protection. This could allow reentrancy attacks.
 
 Line: 315 Impact: High Detail: Improper Error Handling The getCurrentTokenPrice function uses a try statement to handle errors but does not properly handle all possible exceptions, potentially leading to incorrect price calculations.
+ANSWER: Added require() statements and custom errors to handle possible exceptions related to the token price.
+
 
 Line: 130 Impact: Medium Detail: Incorrect Parameter Order In the updateWhitelistStatus and similar functions, parameters should be ordered to minimize mistakes, such as placing boolean parameters last.
+ANSWER: False positive. Literally there are only 2 parameters and the boolean parameter is the last one.
+
 
 Line: 297 Impact: Medium Detail: Storage Collision The contract uses upgradeable patterns but does not ensure storage slot safety, risking storage collision when new variables are added.
+ANSWER: Added the uint256[50] private __gap; variable in order to ensure safe storage slots for new variables.
+
 
 Line: 180 Impact: Medium Detail: Unexpected Ether Transfers (Force Feeding) The contract's receive function allows the contract to receive MATIC, which might be force-fed unexpectedly, impacting the contract state.
+ANSWER: The receive() function can now only receive MATIC from the owner.
+
 
 Line: 330 Impact: Medium Detail: Ambiguous Evaluation Order In complex functions with multiple state changes and external calls, the order of operations might be ambiguous, leading to unexpected behaviors.
+ANSWER: The evaluation order has been set based on business requirements of safety of funds first.
+
 
 Line: 100 Impact: Low Detail: Exposed Data Sensitive data such as investor status and balances are publicly accessible through mappings, risking data exposure.
+ANSWER: False positive. None of the data stored in the smart contract is sensitive.
+
 
 Line: 118 Impact: Low Detail: Approval Vulnerabilities ERC20 tokens have known issues with the approve function. Consider using safeApprove to prevent race conditions.
+ANSWER: False positive. There is not a single approval function being executed in the whole smart contract.
+
 
 Line: 175 Impact: Low Detail: ABI Hash Collisions Ensure function names and parameter types are chosen to avoid ABI hash collisions, which might lead to function calls being intercepted.
+ANSWER: Function names and parameter types have been chosen to avoid ABI hash collisions.

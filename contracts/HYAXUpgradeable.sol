@@ -8,7 +8,7 @@ import "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
 /**
- * @dev Implementation based on the ERC-20 standard
+ * @dev Implementation based on the ERC-20 standard and whitepaper requirements.
  * Developer: Carlos Alba
  */
 
@@ -399,7 +399,7 @@ contract HYAXUpgradeable is ERC20PausableUpgradeable, OwnableUpgradeable, Reentr
 
         return (totalInvestmentInUsd, totalHyaxTokenToReturn);
     }
-
+    
     /**
      * @dev Function to add an investor's address to the whitelist.
      * @param _investorAddress The address of the investor to be added to the whitelist.
@@ -513,7 +513,7 @@ contract HYAXUpgradeable is ERC20PausableUpgradeable, OwnableUpgradeable, Reentr
             
         // Ensure that the amount to issue in this execution is at least 1 token
         require(_amount >= 10 ** decimals(), "Amount of HYAX tokens to issue must be at least 1 token");
-            
+                
         // Ensure that the amount to issue in this execution is maximum 1000 M tokens
         require(_amount <= 1000000000 * 10 ** decimals(), "Amount of HYAX tokens to issue at a time must be maximum 1000 M");
             
@@ -617,7 +617,7 @@ contract HYAXUpgradeable is ERC20PausableUpgradeable, OwnableUpgradeable, Reentr
         
         // Transfer tokens to the treasury address first, as per requirements
         require(token.transfer(payable(treasuryAddress), _amount), "There was an error on sending the token investment to the treasury");
-
+        
         // Transfer HYAX token to the investor wallet
         require(this.transfer(msg.sender, totalHyaxTokenToReturn), "There was an error on sending back the HYAX Token to the investor");
         
