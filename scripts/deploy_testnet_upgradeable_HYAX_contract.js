@@ -11,7 +11,7 @@ require('dotenv').config();
 async function main() {
 
     // This line defines the name of the smart contract to be deployed.
-    const smartContractToDeploy = 'HYAXUpgradeable';
+    const smartContractToDeploy = 'HYAXUpgradeableToken';
 
     // This line creates a provider object to connect to the Polygon Amoy network using Alchemy.
     // A provider allows interaction with the blockchain, such as sending transactions.

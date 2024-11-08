@@ -5,7 +5,7 @@ require('dotenv').config(); // Load environment variables from a .env file
 
 async function main() {
 
-    const smartContractToDeploy = 'HYAXUpgradeable'; // Define the name of the smart contract to deploy
+    const smartContractToDeploy = 'HYAXUpgradeableToken'; // Define the name of the smart contract to deploy
 
     // Connect to the custom JsonRpcProvider for PolygonAmoy using Alchemy API
     const provider = new ethers.JsonRpcProvider(`https://polygon-amoy.g.alchemy.com/v2/${process.env.REACT_APP_ALCHEMY_API_KEY}`);

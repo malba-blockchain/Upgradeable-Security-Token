@@ -20,11 +20,11 @@ describe("Test case #1. Deployment of HYAX smart contract", function () {
     const [deployer, owner, addr1, addr2] = await ethers.getSigners();
 
     //Asociate the smart contract with its name in the context
-    const HYAXUpgradeable = await ethers.getContractFactory('HYAXUpgradeable');
+    const HYAXUpgradeableToken = await ethers.getContractFactory('HYAXUpgradeableToken');
     console.log("\n   [Log]: Deploying upgradeable HYAX...");
 
     // Deploy proxy with 'initialize' function
-    const hyax = await upgrades.deployProxy(HYAXUpgradeable,{ initializer: 'initialize'}); 
+    const hyax = await upgrades.deployProxy(HYAXUpgradeableToken,{ initializer: 'initialize'}); 
 
     await hyax.waitForDeployment();
 
@@ -55,21 +55,21 @@ describe("Test case #1. Deployment of HYAX smart contract", function () {
   it("1.4. Should have the right HYAX price", async function () {
     // Load the fixture to deploy the contract and set initial variables
     const { hyax } = await loadFixture(deployContractAndSetVariables);
-    // Assert that the price of HYAX is 0.006
+    // Assert that the price of HYAX is 0.006 with 8 decimals precision
     expect(await hyax.hyaxPrice()).to.equal(ethers.parseUnits("0.006", 8));
   });
 
   it("1.5. Should have the right minimum investment allowed in USD", async function () {
     // Load the fixture to deploy the contract and set initial variables
     const { hyax } = await loadFixture(deployContractAndSetVariables);
-    // Assert that the minimum investment allowed in USD is 1 USD
+    // Assert that the minimum investment allowed is 1 USD with 18 decimals precision
     expect(await hyax.minimumInvestmentAllowedInUSD()).to.equal(ethers.parseUnits("1", 18));
   });
 
   it("1.6. Should have the right maximum investment allowed in USD", async function () {
     // Load the fixture to deploy the contract and set initial variables
     const { hyax } = await loadFixture(deployContractAndSetVariables);
-    // Assert that the maximum investment allowed in USD is 10,000 USD
+    // Assert that the maximum investment allowed is 10,000 USD with 18 decimals precision
     expect(await hyax.maximumInvestmentAllowedInUSD()).to.equal(ethers.parseUnits("10000", 18));
   });
 
@@ -83,18 +83,18 @@ describe("Test case #1. Deployment of HYAX smart contract", function () {
   it("1.8. Smart contract should have all the total supply in it's balance", async function () {
     // Load the fixture to deploy the contract and set initial variables
     const { hyax } = await loadFixture(deployContractAndSetVariables);
-    // Get the total supply of HYAX
+    // Get the total supply of HYAX tokens
     var totalSupplyHex = await hyax.totalSupply();
-    // Transfer the total supply of HYAX from the deployer to the smart contract
+    // Transfer the total supply from the deployer's account to the smart contract address
     await hyax.transfer(hyax.target, totalSupplyHex.toString());  
-    // Assert that the smart contract HYAX balance is of 500 M HYAX
+    // Assert that the smart contract's balance equals 500M HYAX tokens with 18 decimals precision
     expect(await hyax.balanceOf(hyax.target)).to.equal(ethers.parseUnits("500000000", 18));
   });
 
   it("1.9. Smart contract owner should be the new admin address", async function () {
     // Load the fixture to deploy the contract and set initial variables
     const { hyax, deployer, owner } = await loadFixture(deployContractAndSetVariables);
-    // Log the deployer address
+    // Log the original deployer's address
     console.log("\n   [Log]: Deployer address: ", deployer.address);
     // Transfer ownership of the HYAX smart contract from the deployer to the owner
     await hyax.transferOwnership(owner.address);

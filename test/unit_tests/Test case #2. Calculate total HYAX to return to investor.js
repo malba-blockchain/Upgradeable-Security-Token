@@ -20,11 +20,11 @@ describe("Test case #2. Calculate total HYAX to return to investor", function ()
     const [deployer, owner, addr1, addr2] = await ethers.getSigners();
 
     //Asociate the smart contract with its name in the context
-    const HYAXUpgradeable = await ethers.getContractFactory('HYAXUpgradeable');
+    const HYAXUpgradeableToken = await ethers.getContractFactory('HYAXUpgradeableToken');
     console.log("\n   [Log]: Deploying upgradeable HYAX...");
 
     // Deploy proxy with 'initialize' function
-    const hyax = await upgrades.deployProxy(HYAXUpgradeable, { initializer: 'initialize' });
+    const hyax = await upgrades.deployProxy(HYAXUpgradeableToken, { initializer: 'initialize' });
     
     await hyax.waitForDeployment();
 
@@ -76,7 +76,7 @@ describe("Test case #2. Calculate total HYAX to return to investor", function ()
 
   it("2.5. Should revert transaction because it asks for an amount just over the maximum current supply", async function () {
     const { hyax } = await loadFixture(deployContractAndSetVariables);
-    //Trying to invest 100 BTC at a price of 30121 USD each BTC
+    //Trying to invest 100 BTC at a price of 30001 USD each BTC
     await expect(hyax.calculateTotalHyaxTokenToReturn(ethers.parseUnits("100", 18), ethers.parseUnits("30001", 8)))
       .to.be.revertedWith('The investment made returns an amount of HYAX greater than the available');
   });

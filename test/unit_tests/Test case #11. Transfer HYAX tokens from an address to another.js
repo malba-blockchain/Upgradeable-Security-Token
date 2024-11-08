@@ -21,11 +21,11 @@ describe("Test case #11. Transfer HYAX tokens from an address to another", funct
     const [deployer, owner, addr1, addr2, addr3] = await ethers.getSigners();
 
     //Asociate the smart contract with its name in the context
-    const HYAXUpgradeable = await ethers.getContractFactory('HYAXUpgradeable');
+    const HYAXUpgradeableToken = await ethers.getContractFactory('HYAXUpgradeableToken');
     console.log("\n   [Log]: Deploying upgradeable HYAX...");
 
     // Deploy proxy with 'initialize' function
-    const hyax = await upgrades.deployProxy(HYAXUpgradeable, { initializer: 'initialize' });
+    const hyax = await upgrades.deployProxy(HYAXUpgradeableToken, { initializer: 'initialize' });
     
     await hyax.waitForDeployment();
 

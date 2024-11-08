@@ -21,15 +21,15 @@ describe("Test case #25. Update crypto token MATIC price feed address", function
     const [deployer, owner, addr1, addr2, addr3] = await ethers.getSigners();
 
     //Asociate the smart contract with its name in the context
-    const HYAXUpgradeable = await ethers.getContractFactory('HYAXUpgradeable');
+    const HYAXUpgradeableToken = await ethers.getContractFactory('HYAXUpgradeableToken');
     console.log("\n   [Log]: Deploying upgradeable HYAX...");
 
     // Deploy proxy with 'initialize' function
-    const hyax = await upgrades.deployProxy(HYAXUpgradeable, { initializer: 'initialize' });
+    const hyax = await upgrades.deployProxy(HYAXUpgradeableToken, { initializer: 'initialize' });
     
     await hyax.waitForDeployment();
 
-    //Line to transfer the HYAX tokens from the deployer to the smart contract
+    //Transfer all HYAX tokens from the deployer to the smart contract
     var totalSupplyHex = await hyax.totalSupply();
     await hyax.transfer(hyax.target, totalSupplyHex.toString());
 
@@ -47,7 +47,7 @@ describe("Test case #25. Update crypto token MATIC price feed address", function
   }
 
 
-  it("25.1. Should revert transaction because of execution with no address that's not the owner", async function () {
+  it("25.1. Should revert transaction because of execution with address that's not the owner", async function () {
     const { hyax, deployer, owner, addr1, addr2, addr3, maticPriceDataFeedMock } = await loadFixture(deployContractAndSetVariables);
 
     //This is the actual MATIC price feed address on the local testnet

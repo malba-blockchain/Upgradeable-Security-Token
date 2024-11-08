@@ -13,10 +13,10 @@ import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
  */
 
 /**
- * @title HYAX token over the Mumbai Network
- * @dev ERC20Pausable token with additional functionality.
+ * @title HYAXUpgradeableToken
+ * @dev This contract is an upgradeable customized version of the ERC20PausableUpgradeable, OwnableUpgradeable, and ReentrancyGuardUpgradeable contracts.
  */
-contract HYAXUpgradeable is
+contract HYAXUpgradeableToken is
     ERC20PausableUpgradeable,
     OwnableUpgradeable,
     ReentrancyGuardUpgradeable
@@ -115,7 +115,7 @@ contract HYAXUpgradeable is
     );
 
     /**
-     * @dev Emitted when the Matic price feed address is updated.
+     * @dev Emitted when the MATIC price feed address is updated.
      */
     event UpdatedMaticPriceFeedAddress(address _newMaticPriceFeedAddress);
 
@@ -192,26 +192,34 @@ contract HYAXUpgradeable is
     address public treasuryAddress;
 
     /**
-     * @dev Mapping to store the data of the investors
+     * @dev Struct to store investor-related data
      */
     struct InvestorData {
-        bool isWhiteListed; // Whited investors approved after KYC.
-        bool isBlacklisted; // Blacklisted investors.
-        bool isQualifiedInvestor; //Track qualified investors.
-        uint256 totalHyaxBoughtByInvestor; //Track the total amount of HYAX bought by each investor.
-        uint256 totalUsdDepositedByInvestor; //Track the total amount of USD an investor has deposited to buy the HYAX token.
+        bool isWhiteListed; // Boolean indicating if the investor has been whitelisted after KYC
+        bool isBlacklisted; // Boolean indicating if the investor has been blacklisted
+        bool isQualifiedInvestor; //Boolean indicating if the investor is qualified to make larger investments
+        uint256 totalHyaxBoughtByInvestor; //Total amount of HYAX tokens purchased by this investor
+        uint256 totalUsdDepositedByInvestor; //Total USD value of all investments made by this investor
     }
 
-    // Mapping to store investor data, indexed by their address
+    /**
+     * @dev Mapping that associates each investor address with their investment data
+     * @notice This mapping stores all investor-related information including whitelist status,
+     * blacklist status, qualified investor status, and investment totals
+     */
     mapping(address => InvestorData) public investorData;
 
-    // Enum defining the supported token types
+    
+    /**
+     * @dev Enum for defining the types of tokens supported by the HYAX smart contract.
+     * @notice This enum includes the following token types: MATIC, USDC, USDT, WBTC, and WETH.
+     */
     enum TokenType {
-        MATIC,
-        USDC,
-        USDT,
-        WBTC,
-        WETH
+        MATIC, // Represents the MATIC token
+        USDC, // Represents the USDC token
+        USDT, // Represents the USDT token
+        WBTC, // Represents the WBTC token
+        WETH // Represents the WETH token
     }
 
     //////////MATIC VARIABLES//////////
@@ -454,9 +462,10 @@ contract HYAXUpgradeable is
         return (totalInvestmentInUsd, totalHyaxTokenToReturn);
     }
 
+
     /**
-     * @dev Function to add an investor's address to the whitelist.
-     * @param _investorAddress The address of the investor to be added to the whitelist.
+     * @dev Adds an investor to the whitelist.
+     * @param _investorAddress The address of the investor to add to the whitelist.
      */
     function addToWhiteList(
         address _investorAddress
@@ -536,7 +545,7 @@ contract HYAXUpgradeable is
             "Investor address has already been updated to that status"
         );
 
-        //Update the whitelist status
+        //Update the blacklist status
         investorData[_investorAddress].isBlacklisted = _newStatus;
 
         emit BlacklistStatusUpdated(msg.sender, _investorAddress, _newStatus);
@@ -558,6 +567,10 @@ contract HYAXUpgradeable is
         _;
     }
 
+    /**
+     * @dev Modifier to check if the sender is the owner or the whitelister address.
+     * @notice This modifier is used to restrict access to functions that are reserved only for the whitelister address or the owner.
+     */
     modifier onlyOwnerOrWhitelister() {
         // Ensure that the sender is the owner or the whitelister address
         require(
@@ -906,7 +919,7 @@ contract HYAXUpgradeable is
             "The whitelister address cannot be the zero address"
         );
 
-        //Ensure that the update transaction is not repeated for the same parameter, just as a good practice
+        // Ensure that the update transaction is not repeated for the same parameter, just as a good practice
         require(
             _newWhiteListerAddress != whiteListerAddress,
             "whitelister address has already been modified to that value"
@@ -946,8 +959,9 @@ contract HYAXUpgradeable is
     }
 
     /**
-     * @dev Function to update the address of the crypto token on the blockchain.
-     * @param newTokenAddress The new address of the token on the blockchain.
+     * @dev Function to update the address of a specific token.
+     * @param tokenType The type of token to update the address for.
+     * @param newTokenAddress The new address of the token.
      */
     function updateTokenAddress(
         TokenType tokenType,
@@ -997,9 +1011,10 @@ contract HYAXUpgradeable is
         }
     }
 
-    /*
-     * @dev Function to update the address of the oracle that provides the Token price feed.
-     * @param newPriceFeedAddress The new address of the Token price feed oracle.
+    /**
+     * @dev Updates the price feed address for a given token type.
+     * @param tokenType The type of token for which the price feed address is being updated.
+     * @param newPriceFeedAddress The new address of the price feed.
      */
     function updatePriceFeedAddress(
         TokenType tokenType,
@@ -1109,15 +1124,19 @@ contract HYAXUpgradeable is
     }
 
     /////////////ORACLE PRICE FEED FUNCTIONS//////////
+
     /**
-     * @dev Function to get the current price of the token in USD.
-     * @return The current price of the token in USD with 8 decimals.
+     * @dev Retrieves the current price of a specified token type from its associated oracle.
+     * @param tokenType The type of token for which to retrieve the price.
+     * @return The current price of the specified token type.
+     * @notice Price staleness check (MAX_PRICE_AGE) is currently disabled
      */
     function getCurrentTokenPrice(
         TokenType tokenType
     ) public view returns (uint256) {
         AggregatorV3Interface dataFeed;
 
+        // Determine the data feed to use based on the token type
         if (tokenType == TokenType.MATIC) {
             dataFeed = dataFeedMatic;
         } else if (tokenType == TokenType.USDC) {
@@ -1132,6 +1151,7 @@ contract HYAXUpgradeable is
             revert("Invalid token type");
         }
 
+        // Attempt to fetch the latest round data from the selected data feed
         try dataFeed.latestRoundData() returns (
             uint80 roundID,
             int256 answer,
@@ -1139,7 +1159,7 @@ contract HYAXUpgradeable is
             uint timeStamp,
             uint80 answeredInRound
         ) {
-            // Check if the oracle response is valid
+            // Validate the oracle response
             require(answer > 0, "Invalid price data from oracle"); // Ensure price is positive
             require(
                 timeStamp > 0 && timeStamp <= block.timestamp,
@@ -1148,6 +1168,7 @@ contract HYAXUpgradeable is
             require(answeredInRound >= roundID, "Incomplete round data"); // Check if round data is complete
             //require(block.timestamp - timeStamp <= MAX_PRICE_AGE, "Price data too old"); // Ensure price data freshness
 
+            // Return the price as an unsigned integer
             return uint256(answer);
         } catch {
             revert(
@@ -1187,7 +1208,7 @@ contract HYAXUpgradeable is
             newOwner != address(0),
             "Ownable: new owner is the zero address"
         );
-
+        
         //Validate the new owner is not the same contract address, otherwise management of the smart contract will be lost
         require(
             newOwner != address(this),
@@ -1198,10 +1219,11 @@ contract HYAXUpgradeable is
     }
 
     /**
-     * @dev Receive function to be able to receive MATIC to pay for possible transaction gas in the future.
+     * @dev Handles incoming MATIC transactions.
+     * Emits an event to signal the received MATIC.
+     * Can only be called by the owner.
      */
     receive() external payable nonReentrant onlyOwner {
-        //Emit an event to signal the received MATIC
         emit MaticReceived(msg.sender, msg.value);
     }
 }

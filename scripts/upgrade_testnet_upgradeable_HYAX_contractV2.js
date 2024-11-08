@@ -8,7 +8,7 @@ function sleep(time) {
 
 async function main() {
 
-    const smartContractToUpgradeWith = 'HYAXUpgradeableV2'; // Define the new version of the smart contract to upgrade with
+    const smartContractToUpgradeWith = 'HYAXUpgradeableTokenV2'; // Define the new version of the smart contract to upgrade with
 
     const proxySmartContractAddress = '0x55a0E75dA1Ea313b5e051be15d884D26C5332EaD'; // Define the address of the proxy smart contract
     

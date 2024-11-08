@@ -20,11 +20,11 @@ describe("Test case #7. Remove investor address from qualified investor status",
     const [deployer, owner, addr1, addr2, addr3] = await ethers.getSigners();
 
     //Asociate the smart contract with its name in the context
-    const HYAXUpgradeable = await ethers.getContractFactory('HYAXUpgradeable');
+    const HYAXUpgradeableToken = await ethers.getContractFactory('HYAXUpgradeableToken');
     console.log("\n   [Log]: Deploying upgradeable HYAX...");
 
     // Deploy proxy with 'initialize' function
-    const hyax = await upgrades.deployProxy(HYAXUpgradeable, { initializer: 'initialize' });
+    const hyax = await upgrades.deployProxy(HYAXUpgradeableToken, { initializer: 'initialize' });
     
     await hyax.waitForDeployment();
 
@@ -102,7 +102,7 @@ describe("Test case #7. Remove investor address from qualified investor status",
     //Update qualified investor status using the whitelister address
     await hyax.connect(addr1).updateQualifiedInvestorStatus(addr2.address, true);
 
-    //Remove investor address to the whitelist using the whitelister address
+    //Remove investor address from the qualified investor list using the whitelister address
     await hyax.connect(addr1).updateQualifiedInvestorStatus(addr2.address, false);
 
     //Remove investor address again to the qualified investor list using the whitelister address

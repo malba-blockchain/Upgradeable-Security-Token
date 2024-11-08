@@ -20,11 +20,11 @@ describe("Test case #4. Update investor address whitelist status", function () {
     const [deployer, owner, addr1, addr2, addr3] = await ethers.getSigners();
 
     //Asociate the smart contract with its name in the context
-    const HYAXUpgradeable = await ethers.getContractFactory('HYAXUpgradeable');
+    const HYAXUpgradeableToken = await ethers.getContractFactory('HYAXUpgradeableToken');
     console.log("\n   [Log]: Deploying upgradeable HYAX...");
 
     // Deploy proxy with 'initialize' function
-    const hyax = await upgrades.deployProxy(HYAXUpgradeable, { initializer: 'initialize' });
+    const hyax = await upgrades.deployProxy(HYAXUpgradeableToken, { initializer: 'initialize' });
     
     await hyax.waitForDeployment();
 
@@ -77,7 +77,7 @@ describe("Test case #4. Update investor address whitelist status", function () {
     //Add investor address to the whitelist using the whitelister address
     await hyax.connect(addr1).addToWhiteList(addr2.address);
 
-    //Remove investor address to the whitelist using the whitelister address
+    //Update investor address whitelist status using the whitelister address
     await hyax.connect(addr1).updateWhitelistStatus(addr2.address, false);
 
     const [isWhiteListed, isQualifiedInvestor, totalHyaxBoughtByInvestor, totalUsdDepositedByInvestor] = await hyax.investorData(addr2.address);
@@ -94,7 +94,7 @@ describe("Test case #4. Update investor address whitelist status", function () {
     //Add investor address to the whitelist using the whitelister address
     await hyax.connect(addr1).addToWhiteList(addr2.address);
 
-    //Remove investor address to the whitelist using the whitelister address
+    //Update investor address whitelist status using the whitelister address
     await hyax.connect(addr1).updateWhitelistStatus(addr2.address, false);
 
     //Remove investor address again to the whitelist using the whitelister address

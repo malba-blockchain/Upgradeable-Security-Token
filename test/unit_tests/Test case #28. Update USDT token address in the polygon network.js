@@ -21,15 +21,15 @@ describe("Test case #28. Update USDT token address in the polygon network", func
     const [deployer, owner, addr1, addr2, addr3] = await ethers.getSigners();
 
     //Asociate the smart contract with its name in the context
-    const HYAXUpgradeable = await ethers.getContractFactory('HYAXUpgradeable');
+    const HYAXUpgradeableToken = await ethers.getContractFactory('HYAXUpgradeableToken');
     console.log("\n   [Log]: Deploying upgradeable HYAX...");
 
     // Deploy proxy with 'initialize' function
-    const hyax = await upgrades.deployProxy(HYAXUpgradeable, { initializer: 'initialize' });
+    const hyax = await upgrades.deployProxy(HYAXUpgradeableToken, { initializer: 'initialize' });
     
     await hyax.waitForDeployment();
 
-    //Line to transfer the HYAX tokens from the deployer to the smart contract
+    //Transfer all HYAX tokens from the deployer to the smart contract
     var totalSupplyHex = await hyax.totalSupply();
     await hyax.transfer(hyax.target, totalSupplyHex.toString());
 

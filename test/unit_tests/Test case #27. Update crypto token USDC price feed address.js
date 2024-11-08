@@ -20,11 +20,11 @@ describe("Test case #27. Update crypto token USDC price feed address", function 
     const [deployer, owner, addr1, addr2, addr3] = await ethers.getSigners();
 
     //Asociate the smart contract with its name in the context
-    const HYAXUpgradeable = await ethers.getContractFactory('HYAXUpgradeable');
+    const HYAXUpgradeableToken = await ethers.getContractFactory('HYAXUpgradeableToken');
     console.log("\n   [Log]: Deploying upgradeable HYAX...");
 
     // Deploy proxy with 'initialize' function
-    const hyax = await upgrades.deployProxy(HYAXUpgradeable, { initializer: 'initialize' });
+    const hyax = await upgrades.deployProxy(HYAXUpgradeableToken, { initializer: 'initialize' });
     
     await hyax.waitForDeployment();
 
@@ -46,7 +46,7 @@ describe("Test case #27. Update crypto token USDC price feed address", function 
   }
 
 
-  it("27.1. Should revert transaction because of execution with address that's not the owner", async function () {
+  it("27.1. Should revert transaction because execution is attempted by address that's not the owner", async function () {
     const { hyax, deployer, owner, addr1, addr2, addr3, usdcPriceDataFeedMock } = await loadFixture(deployContractAndSetVariables);
 
     //This is the actual USDC price feed address on the local testnet

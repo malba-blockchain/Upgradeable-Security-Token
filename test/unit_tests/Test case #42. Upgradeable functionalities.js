@@ -16,8 +16,8 @@ describe("Test case #42. Upgradeable functionalities", function () {
   async function deployContractAndSetVariables() {
     const [deployer, owner, addr1, addr2, addr3] = await ethers.getSigners();
 
-    const HYAXUpgradeable = await ethers.getContractFactory('HYAXUpgradeable');
-    const hyax = await upgrades.deployProxy(HYAXUpgradeable, { initializer: 'initialize' });
+    const HYAXUpgradeableToken = await ethers.getContractFactory('HYAXUpgradeableToken');
+    const hyax = await upgrades.deployProxy(HYAXUpgradeableToken, { initializer: 'initialize' });
     
     await hyax.waitForDeployment();
     var totalSupplyHex = await hyax.totalSupply();
@@ -50,8 +50,8 @@ describe("Test case #42. Upgradeable functionalities", function () {
 
   it("42.4. Should allow upgrading the contract", async function () {
     const { hyax, deployer } = await deployContractAndSetVariables();
-    const HYAXUpgradeableV2 = await ethers.getContractFactory('HYAXUpgradeableV2');
-    const upgradedHyax = await upgrades.upgradeProxy(hyax.target, HYAXUpgradeableV2);
+    const HYAXUpgradeableTokenV2 = await ethers.getContractFactory('HYAXUpgradeableTokenV2');
+    const upgradedHyax = await upgrades.upgradeProxy(hyax.target, HYAXUpgradeableTokenV2);
 
     // Expect the upgraded contract to have the same address as the original
     expect(await upgradedHyax.getAddress()).to.equal(await hyax.getAddress());
@@ -59,8 +59,8 @@ describe("Test case #42. Upgradeable functionalities", function () {
 
   it("42.5. Should maintain state after upgrade", async function () {
     const { hyax, deployer } = await deployContractAndSetVariables();
-    const HYAXUpgradeableV2 = await ethers.getContractFactory('HYAXUpgradeableV2');
-    const upgradedHyax = await upgrades.upgradeProxy(hyax.target, HYAXUpgradeableV2);
+    const HYAXUpgradeableTokenV2 = await ethers.getContractFactory('HYAXUpgradeableTokenV2');
+    const upgradedHyax = await upgrades.upgradeProxy(hyax.target, HYAXUpgradeableTokenV2);
     const totalSupplyAfterUpgrade = await upgradedHyax.totalSupply();
 
     // Expect the total supply to remain unchanged after the upgrade
@@ -69,8 +69,8 @@ describe("Test case #42. Upgradeable functionalities", function () {
 
   it("42.6. Should allow calling new functions after upgrade", async function () {
     const { hyax, deployer } = await deployContractAndSetVariables();
-    const HYAXUpgradeableV2 = await ethers.getContractFactory('HYAXUpgradeableV2');
-    const upgradedHyax = await upgrades.upgradeProxy(hyax.target, HYAXUpgradeableV2);
+    const HYAXUpgradeableTokenV2 = await ethers.getContractFactory('HYAXUpgradeableTokenV2');
+    const upgradedHyax = await upgrades.upgradeProxy(hyax.target, HYAXUpgradeableTokenV2);
 
     // Expect the new function to return the expected string
     expect(await upgradedHyax.newFunction()).to.equal("New function in V2");
@@ -86,8 +86,8 @@ describe("Test case #42. Upgradeable functionalities", function () {
   it("42.8. Should have different state in implementation contract", async function () {
     const { hyax, owner } = await deployContractAndSetVariables();
     const implementationAddress = await upgrades.erc1967.getImplementationAddress(hyax.target);
-    const HYAXUpgradeable = await ethers.getContractFactory('HYAXUpgradeable');
-    const implementationContract = HYAXUpgradeable.attach(implementationAddress);
+    const HYAXUpgradeableToken = await ethers.getContractFactory('HYAXUpgradeableToken');
+    const implementationContract = HYAXUpgradeableToken.attach(implementationAddress);
 
     // The implementation contract should have a different state than the proxy
     const implTotalSupply = await implementationContract.totalSupply();
@@ -100,17 +100,17 @@ describe("Test case #42. Upgradeable functionalities", function () {
 
   it("42.9. Should allow admin to upgrade the contract", async function () {
     const { hyax, deployer } = await deployContractAndSetVariables();
-    const HYAXUpgradeableV2 = await ethers.getContractFactory('HYAXUpgradeableV2');
+    const HYAXUpgradeableTokenV2 = await ethers.getContractFactory('HYAXUpgradeableTokenV2');
 
     // Attempt to upgrade the contract as the admin and expect it to not revert
-    await expect(upgrades.upgradeProxy(hyax.target, HYAXUpgradeableV2)).to.not.be.reverted;
+    await expect(upgrades.upgradeProxy(hyax.target, HYAXUpgradeableTokenV2)).to.not.be.reverted;
   });
 
   it("42.10. Should not allow non-admin to upgrade the contract", async function () {
     const { hyax, addr1 } = await deployContractAndSetVariables();
-    const HYAXUpgradeableV2 = await ethers.getContractFactory('HYAXUpgradeableV2', addr1);
+    const HYAXUpgradeableTokenV2 = await ethers.getContractFactory('HYAXUpgradeableTokenV2', addr1);
 
     // Attempt to upgrade the contract as a non-admin and expect it to revert
-    await expect(upgrades.upgradeProxy(hyax.target, HYAXUpgradeableV2)).to.be.reverted;
+    await expect(upgrades.upgradeProxy(hyax.target, HYAXUpgradeableTokenV2)).to.be.reverted;
   });
 });

@@ -144,30 +144,30 @@ async function deployCryptoPriceFeedMocks() {
 
     console.log("\nDeploying upgradeable HYAX...");
 
-    const HYAXUpgradeable = await ethers.getContractFactory('HYAXUpgradeable');
+    const HYAXUpgradeableToken = await ethers.getContractFactory('HYAXUpgradeableToken');
 
     // Deploy proxy with 'initialize' function
-    const hyaxUpgradeable = await upgrades.deployProxy(HYAXUpgradeable, { initializer: 'initialize' });
+    const hyaxUpgradeableToken = await upgrades.deployProxy(HYAXUpgradeableToken, { initializer: 'initialize' });
 
-    await hyaxUpgradeable.waitForDeployment();
+    await hyaxUpgradeableToken.waitForDeployment();
 
     // Transfer ownership to the owner
-    await hyaxUpgradeable.connect(deployer).transferOwnership(owner.address);
+    await hyaxUpgradeableToken.connect(deployer).transferOwnership(owner.address);
 
     // Transfer 500 M of current HYAX supply to the owner
-    var totalSupply = await hyaxUpgradeable.totalSupply();
+    var totalSupply = await hyaxUpgradeableToken.totalSupply();
 
-    await hyaxUpgradeable.transfer(hyaxUpgradeable.target, totalSupply.toString());
+    await hyaxUpgradeableToken.transfer(hyaxUpgradeableToken.target, totalSupply.toString());
 
 
     /////////////UPDATE THE HYAX SMART CONTRACT/////////////
     //Update the whitelister address
-    await hyaxUpgradeable.connect(owner).updateWhiteListerAddress(whiteListerAddress.address);
+    await hyaxUpgradeableToken.connect(owner).updateWhiteListerAddress(whiteListerAddress.address);
 
     //Update the treasury address
-    await hyaxUpgradeable.connect(owner).updateTreasuryAddress(treasuryAddress.address);
+    await hyaxUpgradeableToken.connect(owner).updateTreasuryAddress(treasuryAddress.address);
 
-    console.log("\nUpgradeable HYAX smart contract address: ", hyaxUpgradeable.target);
+    console.log("\nUpgradeable HYAX smart contract address: ", hyaxUpgradeableToken.target);
 
     console.log("\nDeployer address: ", deployer.address);
 
@@ -178,105 +178,105 @@ async function deployCryptoPriceFeedMocks() {
     console.log("Treasury address: ", treasuryAddress.address);
 
     //Balance of the smart contract
-    console.log("\nSmart contract HYAX initial balance: ", Number(ethers.formatEther(await hyaxUpgradeable.balanceOf(hyaxUpgradeable.target))));
+    console.log("\nSmart contract HYAX initial balance: ", Number(ethers.formatEther(await hyaxUpgradeableToken.balanceOf(hyaxUpgradeableToken.target))));
     
     // Update the addresses.ts file with the new LOCAL_TOKEN_SMART_CONTRACT_ADDRESS
-    await updateLocalTokenAddress(hyaxUpgradeable.target);
+    await updateLocalTokenAddress(hyaxUpgradeableToken.target);
 
     // Get the bytecode and ABI of the deployed contract
-    const {bytecode, abi} = await hre.artifacts.readArtifact('HYAXUpgradeable');
+    const {bytecode, abi} = await hre.artifacts.readArtifact('HYAXUpgradeableToken');
 
     // Call the function to update the abi.ts file
     await updateAbiFile(abi);
     
-    return hyaxUpgradeable;
+    return hyaxUpgradeableToken;
   }
 
 
-async function updatePriceFeedsAndTokenAddresses(hyaxUpgradeable, owner, maticPriceDataFeedMock, usdcPriceDataFeedMock, 
+async function updatePriceFeedsAndTokenAddresses(hyaxUpgradeableToken, owner, maticPriceDataFeedMock, usdcPriceDataFeedMock, 
     usdtPriceDataFeedMock, wbtcPriceDataFeedMock, wethPriceDataFeedMock, usdcToken, usdtToken, wbtcToken, wethToken) {
 
     //Update the addresses of the price data feeds
-    await hyaxUpgradeable.connect(owner).updatePriceFeedAddress(0, maticPriceDataFeedMock.target);
-    await hyaxUpgradeable.connect(owner).updatePriceFeedAddress(1, usdcPriceDataFeedMock.target);
-    await hyaxUpgradeable.connect(owner).updatePriceFeedAddress(2, usdtPriceDataFeedMock.target);
-    await hyaxUpgradeable.connect(owner).updatePriceFeedAddress(3, wbtcPriceDataFeedMock.target);
-    await hyaxUpgradeable.connect(owner).updatePriceFeedAddress(4, wethPriceDataFeedMock.target);
+    await hyaxUpgradeableToken.connect(owner).updatePriceFeedAddress(0, maticPriceDataFeedMock.target);
+    await hyaxUpgradeableToken.connect(owner).updatePriceFeedAddress(1, usdcPriceDataFeedMock.target);
+    await hyaxUpgradeableToken.connect(owner).updatePriceFeedAddress(2, usdtPriceDataFeedMock.target);
+    await hyaxUpgradeableToken.connect(owner).updatePriceFeedAddress(3, wbtcPriceDataFeedMock.target);
+    await hyaxUpgradeableToken.connect(owner).updatePriceFeedAddress(4, wethPriceDataFeedMock.target);
 
     /////////////UPDATE THE CRYPTO TOKENS/////////////
-    await hyaxUpgradeable.connect(owner).updateTokenAddress(1, usdcToken.target);
-    await hyaxUpgradeable.connect(owner).updateTokenAddress(2, usdtToken.target);
-    await hyaxUpgradeable.connect(owner).updateTokenAddress(3, wbtcToken.target);
-    await hyaxUpgradeable.connect(owner).updateTokenAddress(4, wethToken.target);
+    await hyaxUpgradeableToken.connect(owner).updateTokenAddress(1, usdcToken.target);
+    await hyaxUpgradeableToken.connect(owner).updateTokenAddress(2, usdtToken.target);
+    await hyaxUpgradeableToken.connect(owner).updateTokenAddress(3, wbtcToken.target);
+    await hyaxUpgradeableToken.connect(owner).updateTokenAddress(4, wethToken.target);
   }
 
 
-async function addInvestorToWhitelistAndQualifiedInvestorList(hyaxUpgradeable, owner, addr1, addr2, addr3, addr4, addr5) {
+async function addInvestorToWhitelistAndQualifiedInvestorList(hyaxUpgradeableToken, owner, addr1, addr2, addr3, addr4, addr5) {
 
     /////////////ADD THE 5 INVESTORS TO THE WHITELIST/////////////
-    await hyaxUpgradeable.connect(owner).addToWhiteList(addr1.address);
-    await hyaxUpgradeable.connect(owner).addToWhiteList(addr2.address);
-    await hyaxUpgradeable.connect(owner).addToWhiteList(addr3.address);
-    await hyaxUpgradeable.connect(owner).addToWhiteList(addr4.address);
-    await hyaxUpgradeable.connect(owner).addToWhiteList(addr5.address);
+    await hyaxUpgradeableToken.connect(owner).addToWhiteList(addr1.address);
+    await hyaxUpgradeableToken.connect(owner).addToWhiteList(addr2.address);
+    await hyaxUpgradeableToken.connect(owner).addToWhiteList(addr3.address);
+    await hyaxUpgradeableToken.connect(owner).addToWhiteList(addr4.address);
+    await hyaxUpgradeableToken.connect(owner).addToWhiteList(addr5.address);
 
     /////////////QUALIFIED INVESTOR STATUS UPDATE/////////////
-    await hyaxUpgradeable.connect(owner).updateQualifiedInvestorStatus(addr1.address, true);
-    await hyaxUpgradeable.connect(owner).updateQualifiedInvestorStatus(addr2.address, true);
-    await hyaxUpgradeable.connect(owner).updateQualifiedInvestorStatus(addr3.address, true);
-    await hyaxUpgradeable.connect(owner).updateQualifiedInvestorStatus(addr4.address, true);
-    await hyaxUpgradeable.connect(owner).updateQualifiedInvestorStatus(addr5.address, true);
+    await hyaxUpgradeableToken.connect(owner).updateQualifiedInvestorStatus(addr1.address, true);
+    await hyaxUpgradeableToken.connect(owner).updateQualifiedInvestorStatus(addr2.address, true);
+    await hyaxUpgradeableToken.connect(owner).updateQualifiedInvestorStatus(addr3.address, true);
+    await hyaxUpgradeableToken.connect(owner).updateQualifiedInvestorStatus(addr4.address, true);
+    await hyaxUpgradeableToken.connect(owner).updateQualifiedInvestorStatus(addr5.address, true);
   }
 
-async function approveHyaxContractToSpendCryptoTokens(hyaxUpgradeable, addr1, addr2, addr3, addr4, addr5, usdcToken, usdtToken, wbtcToken, wethToken) {
+async function approveHyaxContractToSpendCryptoTokens(hyaxUpgradeableToken, addr1, addr2, addr3, addr4, addr5, usdcToken, usdtToken, wbtcToken, wethToken) {
 
     /////////////APPROVE THE HYAX SMART CONTRACT TO SPEND USDC TOKENS/////////////
-    await usdcToken.connect(addr1).approve(hyaxUpgradeable.target, ethers.parseUnits("100000", 18));
-    await usdcToken.connect(addr2).approve(hyaxUpgradeable.target, ethers.parseUnits("100000", 18));
-    await usdcToken.connect(addr3).approve(hyaxUpgradeable.target, ethers.parseUnits("100000", 18));
-    await usdcToken.connect(addr4).approve(hyaxUpgradeable.target, ethers.parseUnits("100000", 18));
-    await usdcToken.connect(addr5).approve(hyaxUpgradeable.target, ethers.parseUnits("100000", 18));
+    await usdcToken.connect(addr1).approve(hyaxUpgradeableToken.target, ethers.parseUnits("100000", 18));
+    await usdcToken.connect(addr2).approve(hyaxUpgradeableToken.target, ethers.parseUnits("100000", 18));
+    await usdcToken.connect(addr3).approve(hyaxUpgradeableToken.target, ethers.parseUnits("100000", 18));
+    await usdcToken.connect(addr4).approve(hyaxUpgradeableToken.target, ethers.parseUnits("100000", 18));
+    await usdcToken.connect(addr5).approve(hyaxUpgradeableToken.target, ethers.parseUnits("100000", 18));
 
     /////////////APPROVE THE HYAX SMART CONTRACT TO SPEND USDT TOKENS/////////////
-    await usdtToken.connect(addr1).approve(hyaxUpgradeable.target, ethers.parseUnits("100000", 18));
-    await usdtToken.connect(addr2).approve(hyaxUpgradeable.target, ethers.parseUnits("100000", 18));
-    await usdtToken.connect(addr3).approve(hyaxUpgradeable.target, ethers.parseUnits("100000", 18));
-    await usdtToken.connect(addr4).approve(hyaxUpgradeable.target, ethers.parseUnits("100000", 18));
-    await usdtToken.connect(addr5).approve(hyaxUpgradeable.target, ethers.parseUnits("100000", 18));
+    await usdtToken.connect(addr1).approve(hyaxUpgradeableToken.target, ethers.parseUnits("100000", 18));
+    await usdtToken.connect(addr2).approve(hyaxUpgradeableToken.target, ethers.parseUnits("100000", 18));
+    await usdtToken.connect(addr3).approve(hyaxUpgradeableToken.target, ethers.parseUnits("100000", 18));
+    await usdtToken.connect(addr4).approve(hyaxUpgradeableToken.target, ethers.parseUnits("100000", 18));
+    await usdtToken.connect(addr5).approve(hyaxUpgradeableToken.target, ethers.parseUnits("100000", 18));
 
     /////////////APPROVE THE HYAX SMART CONTRACT TO SPEND WBTC TOKENS/////////////
-    await wbtcToken.connect(addr1).approve(hyaxUpgradeable.target, ethers.parseUnits("100000", 18));
-    await wbtcToken.connect(addr2).approve(hyaxUpgradeable.target, ethers.parseUnits("100000", 18));
-    await wbtcToken.connect(addr3).approve(hyaxUpgradeable.target, ethers.parseUnits("100000", 18));
-    await wbtcToken.connect(addr4).approve(hyaxUpgradeable.target, ethers.parseUnits("100000", 18));
-    await wbtcToken.connect(addr5).approve(hyaxUpgradeable.target, ethers.parseUnits("100000", 18));
+    await wbtcToken.connect(addr1).approve(hyaxUpgradeableToken.target, ethers.parseUnits("100000", 18));
+    await wbtcToken.connect(addr2).approve(hyaxUpgradeableToken.target, ethers.parseUnits("100000", 18));
+    await wbtcToken.connect(addr3).approve(hyaxUpgradeableToken.target, ethers.parseUnits("100000", 18));
+    await wbtcToken.connect(addr4).approve(hyaxUpgradeableToken.target, ethers.parseUnits("100000", 18));
+    await wbtcToken.connect(addr5).approve(hyaxUpgradeableToken.target, ethers.parseUnits("100000", 18));
 
     /////////////APPROVE THE HYAX SMART CONTRACT TO SPEND WETH TOKENS/////////////
-    await wethToken.connect(addr1).approve(hyaxUpgradeable.target, ethers.parseUnits("100000", 18));
-    await wethToken.connect(addr2).approve(hyaxUpgradeable.target, ethers.parseUnits("100000", 18));
-    await wethToken.connect(addr3).approve(hyaxUpgradeable.target, ethers.parseUnits("100000", 18));
-    await wethToken.connect(addr4).approve(hyaxUpgradeable.target, ethers.parseUnits("100000", 18));
-    await wethToken.connect(addr5).approve(hyaxUpgradeable.target, ethers.parseUnits("100000", 18));
+    await wethToken.connect(addr1).approve(hyaxUpgradeableToken.target, ethers.parseUnits("100000", 18));
+    await wethToken.connect(addr2).approve(hyaxUpgradeableToken.target, ethers.parseUnits("100000", 18));
+    await wethToken.connect(addr3).approve(hyaxUpgradeableToken.target, ethers.parseUnits("100000", 18));
+    await wethToken.connect(addr4).approve(hyaxUpgradeableToken.target, ethers.parseUnits("100000", 18));
+    await wethToken.connect(addr5).approve(hyaxUpgradeableToken.target, ethers.parseUnits("100000", 18));
   }
 
-  async function investorsInvestFromCryptoTokens(hyaxUpgradeable, addr1, addr2, addr3, addr4, addr5) {
+  async function investorsInvestFromCryptoTokens(hyaxUpgradeableToken, addr1, addr2, addr3, addr4, addr5) {
 
     /////////////THE 5 INVESTORS INVEST FROM CRYPTO TOKENS/////////////
-    await hyaxUpgradeable.connect(addr1).investFromMatic({ value: ethers.parseUnits("10000", 18) });
-    await hyaxUpgradeable.connect(addr2).investFromCryptoToken(1, ethers.parseUnits("10000", 18));
-    await hyaxUpgradeable.connect(addr3).investFromCryptoToken(2, ethers.parseUnits("15000", 18));
-    await hyaxUpgradeable.connect(addr4).investFromCryptoToken(3, ethers.parseUnits("10", 18));
-    await hyaxUpgradeable.connect(addr5).investFromCryptoToken(4, ethers.parseUnits("50", 18));
+    await hyaxUpgradeableToken.connect(addr1).investFromMatic({ value: ethers.parseUnits("10000", 18) });
+    await hyaxUpgradeableToken.connect(addr2).investFromCryptoToken(1, ethers.parseUnits("10000", 18));
+    await hyaxUpgradeableToken.connect(addr3).investFromCryptoToken(2, ethers.parseUnits("15000", 18));
+    await hyaxUpgradeableToken.connect(addr4).investFromCryptoToken(3, ethers.parseUnits("10", 18));
+    await hyaxUpgradeableToken.connect(addr5).investFromCryptoToken(4, ethers.parseUnits("50", 18));
 
     /////////////GET INVESTORS HYAX BALANCES/////////////
-    console.log("\nInvestor 1 HYAX balance: ", Number(ethers.formatEther(await hyaxUpgradeable.balanceOf(addr1.address))));
-    console.log("Investor 2 HYAX balance: ", Number(ethers.formatEther(await hyaxUpgradeable.balanceOf(addr2.address))));
-    console.log("Investor 3 HYAX balance: ", Number(ethers.formatEther(await hyaxUpgradeable.balanceOf(addr3.address))));
-    console.log("Investor 4 HYAX balance: ", Number(ethers.formatEther(await hyaxUpgradeable.balanceOf(addr4.address))));
-    console.log("Investor 5 HYAX balance: ", Number(ethers.formatEther(await hyaxUpgradeable.balanceOf(addr5.address))));
+    console.log("\nInvestor 1 HYAX balance: ", Number(ethers.formatEther(await hyaxUpgradeableToken.balanceOf(addr1.address))));
+    console.log("Investor 2 HYAX balance: ", Number(ethers.formatEther(await hyaxUpgradeableToken.balanceOf(addr2.address))));
+    console.log("Investor 3 HYAX balance: ", Number(ethers.formatEther(await hyaxUpgradeableToken.balanceOf(addr3.address))));
+    console.log("Investor 4 HYAX balance: ", Number(ethers.formatEther(await hyaxUpgradeableToken.balanceOf(addr4.address))));
+    console.log("Investor 5 HYAX balance: ", Number(ethers.formatEther(await hyaxUpgradeableToken.balanceOf(addr5.address))));
     
     /////////////GET SMART CONTRACT HYAX BALANCE/////////////
-    console.log("\nSmart contract HYAX balance: ", Number(ethers.formatEther(await hyaxUpgradeable.balanceOf(hyaxUpgradeable.target))));
+    console.log("\nSmart contract HYAX balance: ", Number(ethers.formatEther(await hyaxUpgradeableToken.balanceOf(hyaxUpgradeableToken.target))));
   }
 
 
@@ -294,21 +294,21 @@ async function main() {
     const { usdcToken, usdtToken, wbtcToken, wethToken} = await deployCryptoTokensMocks();
 
     /////////////HYAX TOKEN SMART CONTRACT DEPLOYMENT/////////////
-    const hyaxUpgradeable = await deployHYAXTokenContract(owner, deployer, whiteListerAddress, treasuryAddress);
+    const hyaxUpgradeableToken = await deployHYAXTokenContract(owner, deployer, whiteListerAddress, treasuryAddress);
 
     /////////////UPDATE THE PRICE FEEDS AND TOKEN ADDRESSES/////////////
-    await updatePriceFeedsAndTokenAddresses(hyaxUpgradeable, owner, maticPriceDataFeedMock, usdcPriceDataFeedMock, 
+    await updatePriceFeedsAndTokenAddresses(hyaxUpgradeableToken, owner, maticPriceDataFeedMock, usdcPriceDataFeedMock, 
         usdtPriceDataFeedMock, wbtcPriceDataFeedMock, wethPriceDataFeedMock, usdcToken, usdtToken, wbtcToken, wethToken);
     
     /////////////ADD THE INVESTORS TO THE WHITELIST AND QUALIFIED INVESTOR LIST/////////////
-    await addInvestorToWhitelistAndQualifiedInvestorList(hyaxUpgradeable, owner, addr1, addr2, addr3, addr4, addr5);
+    await addInvestorToWhitelistAndQualifiedInvestorList(hyaxUpgradeableToken, owner, addr1, addr2, addr3, addr4, addr5);
 
     /////////////APPROVE THE HYAX SMART CONTRACT TO SPEND CRYPTO TOKENS/////////////
-    await approveHyaxContractToSpendCryptoTokens(hyaxUpgradeable, addr1, addr2, addr3, addr4, addr5, usdcToken,
+    await approveHyaxContractToSpendCryptoTokens(hyaxUpgradeableToken, addr1, addr2, addr3, addr4, addr5, usdcToken,
         usdtToken, wbtcToken, wethToken);
 
     /////////////THE 5 INVESTORS INVEST FROM CRYPTO TOKENS/////////////
-    await investorsInvestFromCryptoTokens(hyaxUpgradeable, addr1, addr2, addr3, addr4, addr5);
+    await investorsInvestFromCryptoTokens(hyaxUpgradeableToken, addr1, addr2, addr3, addr4, addr5);
 
 }
 
