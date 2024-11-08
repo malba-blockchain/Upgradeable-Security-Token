@@ -1,0 +1,149 @@
+==== Integer Arithmetic Bugs ====
+SWC ID: 101
+Severity: High
+Contract: ERC20Upgradeable
+Function name: name()
+PC address: 3426
+Estimated Gas Usage: 2570 - 3512
+The arithmetic operator can underflow.
+It is possible to cause an integer overflow or underflow in the arithmetic operation.
+--------------------
+In file: #utility.yul:206
+
+        if iszero(lt(value, 5)) { reve
+
+--------------------
+Initial State:
+
+Account: [CREATOR], balance: 0x0, nonce:0, storage:{}
+Account: [ATTACKER], balance: 0x0, nonce:0, storage:{}
+
+Transaction Sequence:
+
+Caller: [CREATOR], calldata: , decoded_data: , value: 0x0
+Caller: [SOMEGUY], function: name(), txdata: 0x06fdde03, value: 0x0
+
+==== Integer Arithmetic Bugs ====
+SWC ID: 101
+Severity: High
+Contract: ERC20Upgradeable
+Function name: symbol()
+PC address: 3426
+Estimated Gas Usage: 2613 - 3555
+The arithmetic operator can underflow.
+It is possible to cause an integer overflow or underflow in the arithmetic operation.
+--------------------
+In file: #utility.yul:206
+
+        if iszero(lt(value, 5)) { reve
+
+--------------------
+Initial State:
+
+Account: [CREATOR], balance: 0x0, nonce:0, storage:{}
+Account: [ATTACKER], balance: 0x0, nonce:0, storage:{}
+
+Transaction Sequence:
+
+Caller: [CREATOR], calldata: , decoded_data: , value: 0x0
+Caller: [SOMEGUY], function: symbol(), txdata: 0x95d89b41, value: 0x0
+
+==== Dependence on predictable environment variable ====
+SWC ID: 116
+Severity: Low
+Contract: HYAXUpgradeable
+Function name: getCurrentTokenPrice(uint8)
+PC address: 20028
+Estimated Gas Usage: 3291 - 38650
+A control flow decision is made based on The block.timestamp environment variable.
+The block.timestamp environment variable is used to determine a control flow decision. Note that the values of variables like coinbase, gaslimit, block number and timestamp are predictable and can be manipulated by a malicious miner. Also keep in mind that attackers know hashes of earlier blocks. Don't use any of those environment variables as sources of randomness and be aware that use of these variables introduces a certain level of trust into miners.
+--------------------
+In file: /project/HYAXUpgradeable_flat.sol:2664
+
+require(timeStamp > 0 && timeStamp <= block.timestamp, "Stale price data")
+
+--------------------
+Initial State:
+
+Account: [CREATOR], balance: 0x0, nonce:0, storage:{}
+Account: [ATTACKER], balance: 0x0, nonce:0, storage:{}
+
+Transaction Sequence:
+
+Caller: [CREATOR], calldata: , decoded_data: , value: 0x0
+Caller: [ATTACKER], function: getCurrentTokenPrice(uint8), txdata: 0xbb6f98fb0000000000000000000000000000000000000000000000000000000000000000, decoded_data: (0,), value: 0x0
+
+==== Integer Arithmetic Bugs ====
+SWC ID: 101
+Severity: High
+Contract: HYAXUpgradeable
+Function name: name()
+PC address: 26400
+Estimated Gas Usage: 2616 - 3558
+The arithmetic operator can underflow.
+It is possible to cause an integer overflow or underflow in the arithmetic operation.
+--------------------
+In file: #utility.yul:434
+
+eq(outOfPlaceEncoding, lt(length, 32))
+
+--------------------
+Initial State:
+
+Account: [CREATOR], balance: 0x0, nonce:0, storage:{}
+Account: [ATTACKER], balance: 0x0, nonce:0, storage:{}
+
+Transaction Sequence:
+
+Caller: [CREATOR], calldata: , decoded_data: , value: 0x0
+Caller: [SOMEGUY], function: name(), txdata: 0x06fdde03, value: 0x0
+
+==== Integer Arithmetic Bugs ====
+SWC ID: 101
+Severity: High
+Contract: HYAXUpgradeable
+Function name: symbol()
+PC address: 26400
+Estimated Gas Usage: 2658 - 3600
+The arithmetic operator can underflow.
+It is possible to cause an integer overflow or underflow in the arithmetic operation.
+--------------------
+In file: #utility.yul:434
+
+eq(outOfPlaceEncoding, lt(length, 32))
+
+--------------------
+Initial State:
+
+Account: [CREATOR], balance: 0x0, nonce:0, storage:{}
+Account: [ATTACKER], balance: 0x0, nonce:0, storage:{}
+
+Transaction Sequence:
+
+Caller: [CREATOR], calldata: , decoded_data: , value: 0x0
+Caller: [SOMEGUY], function: symbol(), txdata: 0x95d89b41, value: 0x0
+
+==== Integer Arithmetic Bugs ====
+SWC ID: 101
+Severity: High
+Contract: HYAXUpgradeable
+Function name: initialize()
+PC address: 26400
+Estimated Gas Usage: 216584 - 895683
+The arithmetic operator can underflow.
+It is possible to cause an integer overflow or underflow in the arithmetic operation.
+--------------------
+In file: #utility.yul:434
+
+eq(outOfPlaceEncoding, lt(length, 32))
+
+--------------------
+Initial State:
+
+Account: [CREATOR], balance: 0x0, nonce:0, storage:{}
+Account: [ATTACKER], balance: 0x0, nonce:0, storage:{}
+
+Transaction Sequence:
+
+Caller: [CREATOR], calldata: , decoded_data: , value: 0x0
+Caller: [ATTACKER], function: initialize(), txdata: 0x8129fc1c, value: 0x0

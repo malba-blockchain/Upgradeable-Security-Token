@@ -1,0 +1,335 @@
+INFO:Printers:
+Compiled with Builder
+Total number of contracts in source files: 1
+Number of contracts in dependencies: 15
+Source lines of code (SLOC) in source files: 346
+Source lines of code (SLOC) in dependencies: 561
+Number of  assembly lines: 0
+Number of optimization issues: 5
+Number of informational issues: 64
+Number of low issues: 1
+Number of medium issues: 8
+Number of high issues: 1
+ERCs: ERC20
+
++-----------------+-------------+-------+--------------------+--------------+--------------------+
+| Name            | # functions |  ERCS |         ERC20 info | Complex code |           Features |
++-----------------+-------------+-------+--------------------+--------------+--------------------+
+| HYAXUpgradeable |          81 | ERC20 |           Pausable |          Yes |        Receive ETH |
+|                 |             |       |         No Minting |              |           Send ETH |
+|                 |             |       | Approve Race Cond. |              | Tokens interaction |
+|                 |             |       |                    |              |        Upgradeable |
++-----------------+-------------+-------+--------------------+--------------+--------------------+
+INFO:Printers:
++ Contract AggregatorV3Interface (Most derived contract)
+  - From AggregatorV3Interface
+    - decimals() (external)
+    - description() (external)
+    - getRoundData(uint80) (external)
+    - latestRoundData() (external)
+    - version() (external)
+
++ Contract OwnableUpgradeable (Upgradeable)
+  - From ContextUpgradeable
+    - __Context_init() (internal)
+    - __Context_init_unchained() (internal)
+    - _msgData() (internal)
+    - _msgSender() (internal)
+  - From Initializable
+    - _disableInitializers() (internal)
+    - _getInitializedVersion() (internal)
+    - _isInitializing() (internal)
+  - From OwnableUpgradeable
+    - __Ownable_init() (internal)
+    - __Ownable_init_unchained() (internal)
+    - _checkOwner() (internal)
+    - _transferOwnership(address) (internal)
+    - owner() (public)
+    - renounceOwnership() (public)
+    - transferOwnership(address) (public)
+
++ Contract Initializable
+  - From Initializable
+    - _disableInitializers() (internal)
+    - _getInitializedVersion() (internal)
+    - _isInitializing() (internal)
+
++ Contract PausableUpgradeable (Upgradeable)
+  - From ContextUpgradeable
+    - __Context_init() (internal)
+    - __Context_init_unchained() (internal)
+    - _msgData() (internal)
+    - _msgSender() (internal)
+  - From Initializable
+    - _disableInitializers() (internal)
+    - _getInitializedVersion() (internal)
+    - _isInitializing() (internal)
+  - From PausableUpgradeable
+    - __Pausable_init() (internal)
+    - __Pausable_init_unchained() (internal)
+    - _pause() (internal)
+    - _requireNotPaused() (internal)
+    - _requirePaused() (internal)
+    - _unpause() (internal)
+    - paused() (public)
+
++ Contract ReentrancyGuardUpgradeable (Upgradeable)
+  - From Initializable
+    - _disableInitializers() (internal)
+    - _getInitializedVersion() (internal)
+    - _isInitializing() (internal)
+  - From ReentrancyGuardUpgradeable
+    - __ReentrancyGuard_init() (internal)
+    - __ReentrancyGuard_init_unchained() (internal)
+    - _nonReentrantAfter() (private)
+    - _nonReentrantBefore() (private)
+    - _reentrancyGuardEntered() (internal)
+
++ Contract ERC20Upgradeable (Upgradeable)
+  - From ContextUpgradeable
+    - __Context_init() (internal)
+    - __Context_init_unchained() (internal)
+    - _msgData() (internal)
+    - _msgSender() (internal)
+  - From Initializable
+    - _disableInitializers() (internal)
+    - _getInitializedVersion() (internal)
+    - _isInitializing() (internal)
+  - From ERC20Upgradeable
+    - __ERC20_init(string,string) (internal)
+    - __ERC20_init_unchained(string,string) (internal)
+    - _afterTokenTransfer(address,address,uint256) (internal)
+    - _approve(address,address,uint256) (internal)
+    - _beforeTokenTransfer(address,address,uint256) (internal)
+    - _burn(address,uint256) (internal)
+    - _mint(address,uint256) (internal)
+    - _spendAllowance(address,address,uint256) (internal)
+    - _transfer(address,address,uint256) (internal)
+    - allowance(address,address) (public)
+    - approve(address,uint256) (public)
+    - balanceOf(address) (public)
+    - decimals() (public)
+    - decreaseAllowance(address,uint256) (public)
+    - increaseAllowance(address,uint256) (public)
+    - name() (public)
+    - symbol() (public)
+    - totalSupply() (public)
+    - transfer(address,uint256) (public)
+    - transferFrom(address,address,uint256) (public)
+
++ Contract IERC20Upgradeable (Upgradeable)
+  - From IERC20Upgradeable
+    - allowance(address,address) (external)
+    - approve(address,uint256) (external)
+    - balanceOf(address) (external)
+    - totalSupply() (external)
+    - transfer(address,uint256) (external)
+    - transferFrom(address,address,uint256) (external)
+
++ Contract ERC20PausableUpgradeable (Upgradeable)
+  - From PausableUpgradeable
+    - __Pausable_init() (internal)
+    - __Pausable_init_unchained() (internal)
+    - _pause() (internal)
+    - _requireNotPaused() (internal)
+    - _requirePaused() (internal)
+    - _unpause() (internal)
+    - paused() (public)
+  - From ContextUpgradeable
+    - __Context_init() (internal)
+    - __Context_init_unchained() (internal)
+    - _msgData() (internal)
+    - _msgSender() (internal)
+  - From Initializable
+    - _disableInitializers() (internal)
+    - _getInitializedVersion() (internal)
+    - _isInitializing() (internal)
+  - From ERC20Upgradeable
+    - __ERC20_init(string,string) (internal)
+    - __ERC20_init_unchained(string,string) (internal)
+    - _afterTokenTransfer(address,address,uint256) (internal)
+    - _approve(address,address,uint256) (internal)
+    - _burn(address,uint256) (internal)
+    - _mint(address,uint256) (internal)
+    - _spendAllowance(address,address,uint256) (internal)
+    - _transfer(address,address,uint256) (internal)
+    - allowance(address,address) (public)
+    - approve(address,uint256) (public)
+    - balanceOf(address) (public)
+    - decimals() (public)
+    - decreaseAllowance(address,uint256) (public)
+    - increaseAllowance(address,uint256) (public)
+    - name() (public)
+    - symbol() (public)
+    - totalSupply() (public)
+    - transfer(address,uint256) (public)
+    - transferFrom(address,address,uint256) (public)
+  - From ERC20PausableUpgradeable
+    - __ERC20Pausable_init() (internal)
+    - __ERC20Pausable_init_unchained() (internal)
+    - _beforeTokenTransfer(address,address,uint256) (internal)
+
++ Contract IERC20MetadataUpgradeable (Upgradeable)
+  - From IERC20Upgradeable
+    - allowance(address,address) (external)
+    - approve(address,uint256) (external)
+    - balanceOf(address) (external)
+    - totalSupply() (external)
+    - transfer(address,uint256) (external)
+    - transferFrom(address,address,uint256) (external)
+  - From IERC20MetadataUpgradeable
+    - decimals() (external)
+    - name() (external)
+    - symbol() (external)
+
++ Contract AddressUpgradeable (Upgradeable) (Most derived contract)
+  - From AddressUpgradeable
+    - _revert(bytes,string) (private)
+    - functionCall(address,bytes) (internal)
+    - functionCall(address,bytes,string) (internal)
+    - functionCallWithValue(address,bytes,uint256) (internal)
+    - functionCallWithValue(address,bytes,uint256,string) (internal)
+    - functionDelegateCall(address,bytes) (internal)
+    - functionDelegateCall(address,bytes,string) (internal)
+    - functionStaticCall(address,bytes) (internal)
+    - functionStaticCall(address,bytes,string) (internal)
+    - isContract(address) (internal)
+    - sendValue(address,uint256) (internal)
+    - verifyCallResult(bool,bytes,string) (internal)
+    - verifyCallResultFromTarget(address,bool,bytes,string) (internal)
+
++ Contract ContextUpgradeable (Upgradeable)
+  - From Initializable
+    - _disableInitializers() (internal)
+    - _getInitializedVersion() (internal)
+    - _isInitializing() (internal)
+  - From ContextUpgradeable
+    - __Context_init() (internal)
+    - __Context_init_unchained() (internal)
+    - _msgData() (internal)
+    - _msgSender() (internal)
+
++ Contract IERC20 (Most derived contract)
+  - From IERC20
+    - allowance(address,address) (external)
+    - approve(address,uint256) (external)
+    - balanceOf(address) (external)
+    - totalSupply() (external)
+    - transfer(address,uint256) (external)
+    - transferFrom(address,address,uint256) (external)
+
++ Contract IERC20Permit (Most derived contract)
+  - From IERC20Permit
+    - DOMAIN_SEPARATOR() (external)
+    - nonces(address) (external)
+    - permit(address,address,uint256,uint256,uint8,bytes32,bytes32) (external)
+
++ Contract SafeERC20 (Most derived contract)
+  - From SafeERC20
+    - _callOptionalReturn(IERC20,bytes) (private)
+    - _callOptionalReturnBool(IERC20,bytes) (private)
+    - forceApprove(IERC20,address,uint256) (internal)
+    - safeDecreaseAllowance(IERC20,address,uint256) (internal)
+    - safeIncreaseAllowance(IERC20,address,uint256) (internal)
+    - safeTransfer(IERC20,address,uint256) (internal)
+    - safeTransferFrom(IERC20,address,address,uint256) (internal)
+
++ Contract Address (Most derived contract)
+  - From Address
+    - _revert(bytes) (private)
+    - functionCall(address,bytes) (internal)
+    - functionCallWithValue(address,bytes,uint256) (internal)
+    - functionDelegateCall(address,bytes) (internal)
+    - functionStaticCall(address,bytes) (internal)
+    - sendValue(address,uint256) (internal)
+    - verifyCallResult(bool,bytes) (internal)
+    - verifyCallResultFromTarget(address,bool,bytes) (internal)
+
++ Contract HYAXUpgradeable (Upgradeable) (Most derived contract)
+  - From ReentrancyGuardUpgradeable
+    - __ReentrancyGuard_init() (internal)
+    - __ReentrancyGuard_init_unchained() (internal)
+    - _nonReentrantAfter() (private)
+    - _nonReentrantBefore() (private)
+    - _reentrancyGuardEntered() (internal)
+  - From Initializable
+    - _disableInitializers() (internal)
+    - _getInitializedVersion() (internal)
+    - _isInitializing() (internal)
+  - From OwnableUpgradeable
+    - __Ownable_init() (internal)
+    - __Ownable_init_unchained() (internal)
+    - _checkOwner() (internal)
+    - _transferOwnership(address) (internal)
+    - owner() (public)
+    - renounceOwnership() (public)
+  - From ContextUpgradeable
+    - __Context_init() (internal)
+    - __Context_init_unchained() (internal)
+    - _msgData() (internal)
+    - _msgSender() (internal)
+  - From ERC20PausableUpgradeable
+    - __ERC20Pausable_init() (internal)
+    - __ERC20Pausable_init_unchained() (internal)
+    - _beforeTokenTransfer(address,address,uint256) (internal)
+  - From PausableUpgradeable
+    - __Pausable_init() (internal)
+    - __Pausable_init_unchained() (internal)
+    - _pause() (internal)
+    - _requireNotPaused() (internal)
+    - _requirePaused() (internal)
+    - _unpause() (internal)
+    - paused() (public)
+  - From ERC20Upgradeable
+    - __ERC20_init(string,string) (internal)
+    - __ERC20_init_unchained(string,string) (internal)
+    - _afterTokenTransfer(address,address,uint256) (internal)
+    - _approve(address,address,uint256) (internal)
+    - _burn(address,uint256) (internal)
+    - _mint(address,uint256) (internal)
+    - _spendAllowance(address,address,uint256) (internal)
+    - _transfer(address,address,uint256) (internal)
+    - allowance(address,address) (public)
+    - approve(address,uint256) (public)
+    - balanceOf(address) (public)
+    - decimals() (public)
+    - decreaseAllowance(address,uint256) (public)
+    - increaseAllowance(address,uint256) (public)
+    - name() (public)
+    - symbol() (public)
+    - totalSupply() (public)
+    - transfer(address,uint256) (public)
+    - transferFrom(address,address,uint256) (public)
+  - From HYAXUpgradeable
+    - addToWhiteList(address) (external)
+    - calculateTotalHyaxTokenToReturn(uint256,uint256) (public)
+    - getCurrentTokenPrice(HYAXUpgradeable.TokenType) (public)
+    - initialize() (public)
+    - investFromCryptoToken(HYAXUpgradeable.TokenType,uint256) (external)
+    - investFromMatic() (external)
+    - pause() (public)
+    - receive() (external)
+    - tokenIssuance(uint256) (public)
+    - transferOwnership(address) (public)
+    - unpause() (public)
+    - updateBlacklistStatus(address,bool) (external)
+    - updateHyaxPrice(uint256) (external)
+    - updateMaximumInvestmentAllowedInUSD(uint256) (external)
+    - updateMinimumInvestmentAllowedInUSD(uint256) (external)
+    - updatePriceFeedAddress(HYAXUpgradeable.TokenType,address) (external)
+    - updateQualifiedInvestorStatus(address,bool) (external)
+    - updateTokenAddress(HYAXUpgradeable.TokenType,address) (external)
+    - updateTreasuryAddress(address) (external)
+    - updateWhiteListerAddress(address) (external)
+    - updateWhitelistStatus(address,bool) (external)
+    - validateAndTrackInvestment(uint256,address) (internal)
+
+INFO:Printers:Lines of Code
++-------+------+------+------+
+|       |  src |  dep | test |
++-------+------+------+------+
+| loc   |  926 | 1746 |    0 |
+| sloc  |  346 |  561 |    0 |
+| cloc  |  378 | 1007 |    0 |
+| Total | 1650 | 3314 |    0 |
++-------+------+------+------+

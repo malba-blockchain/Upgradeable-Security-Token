@@ -2,7 +2,7 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "D:\\USER\\Downloads\\ATLAS\\Projects\\HYAX-Upgradeable-Token\\contracts\\HYAXLocal.sol": {
-      "lastModificationDate": 1728489618576,
+      "lastModificationDate": 1731014551656,
       "contentHash": "9cbb6a1f961496f972dc42d6131223cd",
       "sourceName": "contracts/HYAXLocal.sol",
       "solcConfig": {
@@ -44,45 +44,6 @@
         "HYAXLocal"
       ]
     },
-    "D:\\USER\\Downloads\\ATLAS\\Projects\\HYAX-Upgradeable-Token\\node_modules\\@openzeppelin\\contracts\\access\\Ownable.sol": {
-      "lastModificationDate": 1725228581822,
-      "contentHash": "d3c790edc9ccf808a17c5a6cd13614fd",
-      "sourceName": "@openzeppelin/contracts/access/Ownable.sol",
-      "solcConfig": {
-        "version": "0.8.20",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "evmVersion": "paris",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata",
-                "storageLayout"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "../utils/Context.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.20"
-      ],
-      "artifacts": [
-        "Ownable"
-      ]
-    },
     "D:\\USER\\Downloads\\ATLAS\\Projects\\HYAX-Upgradeable-Token\\node_modules\\@openzeppelin\\contracts-upgradeable\\security\\ReentrancyGuardUpgradeable.sol": {
       "lastModificationDate": 1725229483633,
       "contentHash": "efeffcf5034292d7ea635de588c95995",
@@ -120,6 +81,43 @@
       ],
       "artifacts": [
         "ReentrancyGuardUpgradeable"
+      ]
+    },
+    "D:\\USER\\Downloads\\ATLAS\\Projects\\HYAX-Upgradeable-Token\\node_modules\\@chainlink\\contracts\\src\\v0.8\\shared\\interfaces\\AggregatorV3Interface.sol": {
+      "lastModificationDate": 1725229483950,
+      "contentHash": "64a3f906dc7696aa3c9fa8454b673be7",
+      "sourceName": "@chainlink/contracts/src/v0.8/shared/interfaces/AggregatorV3Interface.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "storageLayout"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "AggregatorV3Interface"
       ]
     },
     "D:\\USER\\Downloads\\ATLAS\\Projects\\HYAX-Upgradeable-Token\\node_modules\\@openzeppelin\\contracts\\token\\ERC20\\extensions\\ERC20Pausable.sol": {
@@ -162,10 +160,10 @@
         "ERC20Pausable"
       ]
     },
-    "D:\\USER\\Downloads\\ATLAS\\Projects\\HYAX-Upgradeable-Token\\node_modules\\@chainlink\\contracts\\src\\v0.8\\shared\\interfaces\\AggregatorV3Interface.sol": {
-      "lastModificationDate": 1725229483950,
-      "contentHash": "64a3f906dc7696aa3c9fa8454b673be7",
-      "sourceName": "@chainlink/contracts/src/v0.8/shared/interfaces/AggregatorV3Interface.sol",
+    "D:\\USER\\Downloads\\ATLAS\\Projects\\HYAX-Upgradeable-Token\\node_modules\\@openzeppelin\\contracts\\access\\Ownable.sol": {
+      "lastModificationDate": 1725228581822,
+      "contentHash": "d3c790edc9ccf808a17c5a6cd13614fd",
+      "sourceName": "@openzeppelin/contracts/access/Ownable.sol",
       "solcConfig": {
         "version": "0.8.20",
         "settings": {
@@ -191,49 +189,14 @@
           }
         }
       },
-      "imports": [],
-      "versionPragmas": [
-        "^0.8.0"
+      "imports": [
+        "../utils/Context.sol"
       ],
-      "artifacts": [
-        "AggregatorV3Interface"
-      ]
-    },
-    "D:\\USER\\Downloads\\ATLAS\\Projects\\HYAX-Upgradeable-Token\\node_modules\\@openzeppelin\\contracts\\utils\\Context.sol": {
-      "lastModificationDate": 1725228581264,
-      "contentHash": "67bfbc07588eb8683b3fd8f6f909563e",
-      "sourceName": "@openzeppelin/contracts/utils/Context.sol",
-      "solcConfig": {
-        "version": "0.8.20",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "evmVersion": "paris",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata",
-                "storageLayout"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
       "versionPragmas": [
         "^0.8.20"
       ],
       "artifacts": [
-        "Context"
+        "Ownable"
       ]
     },
     "D:\\USER\\Downloads\\ATLAS\\Projects\\HYAX-Upgradeable-Token\\node_modules\\@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol": {
@@ -393,10 +356,10 @@
         "Pausable"
       ]
     },
-    "D:\\USER\\Downloads\\ATLAS\\Projects\\HYAX-Upgradeable-Token\\node_modules\\@openzeppelin\\contracts\\interfaces\\draft-IERC6093.sol": {
-      "lastModificationDate": 1725228581282,
-      "contentHash": "4aefc698f77ecbace7f401257dfe182d",
-      "sourceName": "@openzeppelin/contracts/interfaces/draft-IERC6093.sol",
+    "D:\\USER\\Downloads\\ATLAS\\Projects\\HYAX-Upgradeable-Token\\node_modules\\@openzeppelin\\contracts\\utils\\Context.sol": {
+      "lastModificationDate": 1725228581264,
+      "contentHash": "67bfbc07588eb8683b3fd8f6f909563e",
+      "sourceName": "@openzeppelin/contracts/utils/Context.sol",
       "solcConfig": {
         "version": "0.8.20",
         "settings": {
@@ -427,9 +390,7 @@
         "^0.8.20"
       ],
       "artifacts": [
-        "IERC1155Errors",
-        "IERC20Errors",
-        "IERC721Errors"
+        "Context"
       ]
     },
     "D:\\USER\\Downloads\\ATLAS\\Projects\\HYAX-Upgradeable-Token\\node_modules\\@openzeppelin\\contracts\\token\\ERC20\\IERC20.sol": {
@@ -467,6 +428,45 @@
       ],
       "artifacts": [
         "IERC20"
+      ]
+    },
+    "D:\\USER\\Downloads\\ATLAS\\Projects\\HYAX-Upgradeable-Token\\node_modules\\@openzeppelin\\contracts\\interfaces\\draft-IERC6093.sol": {
+      "lastModificationDate": 1725228581282,
+      "contentHash": "4aefc698f77ecbace7f401257dfe182d",
+      "sourceName": "@openzeppelin/contracts/interfaces/draft-IERC6093.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "storageLayout"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "IERC1155Errors",
+        "IERC20Errors",
+        "IERC721Errors"
       ]
     },
     "D:\\USER\\Downloads\\ATLAS\\Projects\\HYAX-Upgradeable-Token\\node_modules\\@openzeppelin\\contracts\\token\\ERC20\\extensions\\IERC20Metadata.sol": {
@@ -508,10 +508,10 @@
         "IERC20Metadata"
       ]
     },
-    "D:\\USER\\Downloads\\ATLAS\\Projects\\HYAX-Upgradeable-Token\\contracts\\WethToken.sol": {
-      "lastModificationDate": 1729530449704,
-      "contentHash": "1401d7cfd2abcbc81d5d63a227e019dd",
-      "sourceName": "contracts/WethToken.sol",
+    "D:\\USER\\Downloads\\ATLAS\\Projects\\HYAX-Upgradeable-Token\\node_modules\\@openzeppelin\\contracts\\token\\ERC20\\utils\\SafeERC20.sol": {
+      "lastModificationDate": 1730308527356,
+      "contentHash": "697fd27924863e77c17dace2179018b2",
+      "sourceName": "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol",
       "solcConfig": {
         "version": "0.8.20",
         "settings": {
@@ -538,97 +538,21 @@
         }
       },
       "imports": [
-        "@openzeppelin/contracts/token/ERC20/ERC20.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "WethToken"
-      ]
-    },
-    "D:\\USER\\Downloads\\ATLAS\\Projects\\HYAX-Upgradeable-Token\\contracts\\WethPriceDataFeedMock.sol": {
-      "lastModificationDate": 1730386377916,
-      "contentHash": "e9958600ff5297bcf50f891a5cd7b22c",
-      "sourceName": "contracts/WethPriceDataFeedMock.sol",
-      "solcConfig": {
-        "version": "0.8.20",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "evmVersion": "paris",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata",
-                "storageLayout"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "@openzeppelin/contracts/token/ERC20/ERC20.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "WethPriceDataFeedMock"
-      ]
-    },
-    "D:\\USER\\Downloads\\ATLAS\\Projects\\HYAX-Upgradeable-Token\\contracts\\WbtcToken.sol": {
-      "lastModificationDate": 1729530445103,
-      "contentHash": "6bc57d540953e1270a65b7029c551d92",
-      "sourceName": "contracts/WbtcToken.sol",
-      "solcConfig": {
-        "version": "0.8.20",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "evmVersion": "paris",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata",
-                "storageLayout"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "@openzeppelin/contracts/token/ERC20/ERC20.sol"
+        "../IERC20.sol",
+        "../extensions/IERC20Permit.sol",
+        "../../../utils/Address.sol"
       ],
       "versionPragmas": [
         "^0.8.20"
       ],
       "artifacts": [
-        "WbtcToken"
+        "SafeERC20"
       ]
     },
-    "D:\\USER\\Downloads\\ATLAS\\Projects\\HYAX-Upgradeable-Token\\contracts\\WbtcPriceDataFeedMock.sol": {
-      "lastModificationDate": 1730386372949,
-      "contentHash": "cfcd0a292f639419cddec9b320c64c5d",
-      "sourceName": "contracts/WbtcPriceDataFeedMock.sol",
+    "D:\\USER\\Downloads\\ATLAS\\Projects\\HYAX-Upgradeable-Token\\node_modules\\@openzeppelin\\contracts\\utils\\Address.sol": {
+      "lastModificationDate": 1725228581210,
+      "contentHash": "79c699f80eb8a9b168cb34e37816f894",
+      "sourceName": "@openzeppelin/contracts/utils/Address.sol",
       "solcConfig": {
         "version": "0.8.20",
         "settings": {
@@ -654,59 +578,18 @@
           }
         }
       },
-      "imports": [
-        "@openzeppelin/contracts/token/ERC20/ERC20.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "WbtcPriceDataFeedMock"
-      ]
-    },
-    "D:\\USER\\Downloads\\ATLAS\\Projects\\HYAX-Upgradeable-Token\\contracts\\UsdtToken.sol": {
-      "lastModificationDate": 1729530440514,
-      "contentHash": "08bf8cd30bc40c46fe0b18ee91a77387",
-      "sourceName": "contracts/UsdtToken.sol",
-      "solcConfig": {
-        "version": "0.8.20",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "evmVersion": "paris",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata",
-                "storageLayout"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "@openzeppelin/contracts/token/ERC20/ERC20.sol"
-      ],
+      "imports": [],
       "versionPragmas": [
         "^0.8.20"
       ],
       "artifacts": [
-        "UsdtToken"
+        "Address"
       ]
     },
-    "D:\\USER\\Downloads\\ATLAS\\Projects\\HYAX-Upgradeable-Token\\contracts\\UsdtPriceDataFeedMock.sol": {
-      "lastModificationDate": 1730386367165,
-      "contentHash": "f3fdd237478c9228509ae03ceef70437",
-      "sourceName": "contracts/UsdtPriceDataFeedMock.sol",
+    "D:\\USER\\Downloads\\ATLAS\\Projects\\HYAX-Upgradeable-Token\\node_modules\\@openzeppelin\\contracts\\token\\ERC20\\extensions\\IERC20Permit.sol": {
+      "lastModificationDate": 1725228581690,
+      "contentHash": "da291753fa4641f2c5837bfc4aa4c01b",
+      "sourceName": "@openzeppelin/contracts/token/ERC20/extensions/IERC20Permit.sol",
       "solcConfig": {
         "version": "0.8.20",
         "settings": {
@@ -732,59 +615,18 @@
           }
         }
       },
-      "imports": [
-        "@openzeppelin/contracts/token/ERC20/ERC20.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "UsdtPriceDataFeedMock"
-      ]
-    },
-    "D:\\USER\\Downloads\\ATLAS\\Projects\\HYAX-Upgradeable-Token\\contracts\\UsdcToken.sol": {
-      "lastModificationDate": 1729530434457,
-      "contentHash": "d098fd521192bca32fd68cc147dd488f",
-      "sourceName": "contracts/UsdcToken.sol",
-      "solcConfig": {
-        "version": "0.8.20",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "evmVersion": "paris",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata",
-                "storageLayout"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "@openzeppelin/contracts/token/ERC20/ERC20.sol"
-      ],
+      "imports": [],
       "versionPragmas": [
         "^0.8.20"
       ],
       "artifacts": [
-        "UsdcToken"
+        "IERC20Permit"
       ]
     },
-    "D:\\USER\\Downloads\\ATLAS\\Projects\\HYAX-Upgradeable-Token\\contracts\\UsdcPriceDataFeedMock.sol": {
-      "lastModificationDate": 1730386364070,
-      "contentHash": "644fd1c660a3ff59533d39e5f7bbe296",
-      "sourceName": "contracts/UsdcPriceDataFeedMock.sol",
+    "D:\\USER\\Downloads\\ATLAS\\Projects\\HYAX-Upgradeable-Token\\contracts\\HYAXUpgradeableV2.sol": {
+      "lastModificationDate": 1731014551500,
+      "contentHash": "24d7068a4a0d9ad8e0087a7d5a29e9cd",
+      "sourceName": "contracts/HYAXUpgradeableV2.sol",
       "solcConfig": {
         "version": "0.8.20",
         "settings": {
@@ -811,91 +653,17 @@
         }
       },
       "imports": [
-        "@openzeppelin/contracts/token/ERC20/ERC20.sol"
+        "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20PausableUpgradeable.sol",
+        "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol",
+        "@chainlink/contracts/src/v0.8/shared/interfaces/AggregatorV3Interface.sol",
+        "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol",
+        "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol"
       ],
       "versionPragmas": [
-        "^0.8.0"
+        "0.8.20"
       ],
       "artifacts": [
-        "UsdcPriceDataFeedMock"
-      ]
-    },
-    "D:\\USER\\Downloads\\ATLAS\\Projects\\HYAX-Upgradeable-Token\\contracts\\MaticToken.sol": {
-      "lastModificationDate": 1724026650420,
-      "contentHash": "98cd11534a162a82285cd1b9fbc37e52",
-      "sourceName": "contracts/MaticToken.sol",
-      "solcConfig": {
-        "version": "0.8.20",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "evmVersion": "paris",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata",
-                "storageLayout"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "@openzeppelin/contracts/token/ERC20/ERC20.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "MaticToken"
-      ]
-    },
-    "D:\\USER\\Downloads\\ATLAS\\Projects\\HYAX-Upgradeable-Token\\contracts\\MaticPriceDataFeedMock.sol": {
-      "lastModificationDate": 1730386401279,
-      "contentHash": "071e8a2ee83ccd2c1371f9131c7daa5f",
-      "sourceName": "contracts/MaticPriceDataFeedMock.sol",
-      "solcConfig": {
-        "version": "0.8.20",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "evmVersion": "paris",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata",
-                "storageLayout"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "@openzeppelin/contracts/token/ERC20/ERC20.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "MaticPriceDataFeedMock"
+        "HYAXUpgradeableV2"
       ]
     },
     "D:\\USER\\Downloads\\ATLAS\\Projects\\HYAX-Upgradeable-Token\\node_modules\\@openzeppelin\\contracts-upgradeable\\access\\OwnableUpgradeable.sol": {
@@ -1176,52 +944,9 @@
         "IERC20MetadataUpgradeable"
       ]
     },
-    "D:\\USER\\Downloads\\ATLAS\\Projects\\HYAX-Upgradeable-Token\\contracts\\HYAXUpgradeableV2.sol": {
-      "lastModificationDate": 1730326799283,
-      "contentHash": "24d7068a4a0d9ad8e0087a7d5a29e9cd",
-      "sourceName": "contracts/HYAXUpgradeableV2.sol",
-      "solcConfig": {
-        "version": "0.8.20",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "evmVersion": "paris",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata",
-                "storageLayout"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20PausableUpgradeable.sol",
-        "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol",
-        "@chainlink/contracts/src/v0.8/shared/interfaces/AggregatorV3Interface.sol",
-        "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol",
-        "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol"
-      ],
-      "versionPragmas": [
-        "0.8.20"
-      ],
-      "artifacts": [
-        "HYAXUpgradeableV2"
-      ]
-    },
     "D:\\USER\\Downloads\\ATLAS\\Projects\\HYAX-Upgradeable-Token\\contracts\\HYAXUpgradeable.sol": {
-      "lastModificationDate": 1730477708990,
-      "contentHash": "1236489fb88903b97b5230cd38d4416e",
+      "lastModificationDate": 1731078160999,
+      "contentHash": "3e990bcaa6957ed59929a81d9e418243",
       "sourceName": "contracts/HYAXUpgradeable.sol",
       "solcConfig": {
         "version": "0.8.20",
@@ -1262,10 +987,10 @@
         "HYAXUpgradeable"
       ]
     },
-    "D:\\USER\\Downloads\\ATLAS\\Projects\\HYAX-Upgradeable-Token\\node_modules\\@openzeppelin\\contracts\\token\\ERC20\\utils\\SafeERC20.sol": {
-      "lastModificationDate": 1725228581859,
-      "contentHash": "697fd27924863e77c17dace2179018b2",
-      "sourceName": "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol",
+    "D:\\USER\\Downloads\\ATLAS\\Projects\\HYAX-Upgradeable-Token\\contracts\\WethToken.sol": {
+      "lastModificationDate": 1731014551656,
+      "contentHash": "1401d7cfd2abcbc81d5d63a227e019dd",
+      "sourceName": "contracts/WethToken.sol",
       "solcConfig": {
         "version": "0.8.20",
         "settings": {
@@ -1292,95 +1017,19 @@
         }
       },
       "imports": [
-        "../IERC20.sol",
-        "../extensions/IERC20Permit.sol",
-        "../../../utils/Address.sol"
+        "@openzeppelin/contracts/token/ERC20/ERC20.sol"
       ],
       "versionPragmas": [
-        "^0.8.20"
+        "^0.8.0"
       ],
       "artifacts": [
-        "SafeERC20"
+        "WethToken"
       ]
     },
-    "D:\\USER\\Downloads\\ATLAS\\Projects\\HYAX-Upgradeable-Token\\node_modules\\@openzeppelin\\contracts\\utils\\Address.sol": {
-      "lastModificationDate": 1725228581210,
-      "contentHash": "79c699f80eb8a9b168cb34e37816f894",
-      "sourceName": "@openzeppelin/contracts/utils/Address.sol",
-      "solcConfig": {
-        "version": "0.8.20",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "evmVersion": "paris",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata",
-                "storageLayout"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        "^0.8.20"
-      ],
-      "artifacts": [
-        "Address"
-      ]
-    },
-    "D:\\USER\\Downloads\\ATLAS\\Projects\\HYAX-Upgradeable-Token\\node_modules\\@openzeppelin\\contracts\\token\\ERC20\\extensions\\IERC20Permit.sol": {
-      "lastModificationDate": 1725228581690,
-      "contentHash": "da291753fa4641f2c5837bfc4aa4c01b",
-      "sourceName": "@openzeppelin/contracts/token/ERC20/extensions/IERC20Permit.sol",
-      "solcConfig": {
-        "version": "0.8.20",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "evmVersion": "paris",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata",
-                "storageLayout"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        "^0.8.20"
-      ],
-      "artifacts": [
-        "IERC20Permit"
-      ]
-    },
-    "D:\\USER\\Downloads\\ATLAS\\Projects\\HYAX-Upgradeable-Token\\node_modules\\@openzeppelin\\contracts-upgradeable\\token\\ERC20\\utils\\SafeERC20Upgradeable.sol": {
-      "lastModificationDate": 1725229483649,
-      "contentHash": "f6d59fee2d6fafaea5a33717dfba1260",
-      "sourceName": "@openzeppelin/contracts-upgradeable/token/ERC20/utils/SafeERC20Upgradeable.sol",
+    "D:\\USER\\Downloads\\ATLAS\\Projects\\HYAX-Upgradeable-Token\\contracts\\WethPriceDataFeedMock.sol": {
+      "lastModificationDate": 1731014551640,
+      "contentHash": "e9958600ff5297bcf50f891a5cd7b22c",
+      "sourceName": "contracts/WethPriceDataFeedMock.sol",
       "solcConfig": {
         "version": "0.8.20",
         "settings": {
@@ -1407,21 +1056,19 @@
         }
       },
       "imports": [
-        "../IERC20Upgradeable.sol",
-        "../extensions/IERC20PermitUpgradeable.sol",
-        "../../../utils/AddressUpgradeable.sol"
+        "@openzeppelin/contracts/token/ERC20/ERC20.sol"
       ],
       "versionPragmas": [
         "^0.8.0"
       ],
       "artifacts": [
-        "SafeERC20Upgradeable"
+        "WethPriceDataFeedMock"
       ]
     },
-    "D:\\USER\\Downloads\\ATLAS\\Projects\\HYAX-Upgradeable-Token\\node_modules\\@openzeppelin\\contracts-upgradeable\\token\\ERC20\\extensions\\IERC20PermitUpgradeable.sol": {
-      "lastModificationDate": 1725229482508,
-      "contentHash": "30ef13e9a1b22e74e5e4ce5ab2a247e4",
-      "sourceName": "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/IERC20PermitUpgradeable.sol",
+    "D:\\USER\\Downloads\\ATLAS\\Projects\\HYAX-Upgradeable-Token\\contracts\\WbtcToken.sol": {
+      "lastModificationDate": 1731014551640,
+      "contentHash": "6bc57d540953e1270a65b7029c551d92",
+      "sourceName": "contracts/WbtcToken.sol",
       "solcConfig": {
         "version": "0.8.20",
         "settings": {
@@ -1447,12 +1094,287 @@
           }
         }
       },
-      "imports": [],
+      "imports": [
+        "@openzeppelin/contracts/token/ERC20/ERC20.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "WbtcToken"
+      ]
+    },
+    "D:\\USER\\Downloads\\ATLAS\\Projects\\HYAX-Upgradeable-Token\\contracts\\WbtcPriceDataFeedMock.sol": {
+      "lastModificationDate": 1731014551625,
+      "contentHash": "cfcd0a292f639419cddec9b320c64c5d",
+      "sourceName": "contracts/WbtcPriceDataFeedMock.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "storageLayout"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/token/ERC20/ERC20.sol"
+      ],
       "versionPragmas": [
         "^0.8.0"
       ],
       "artifacts": [
-        "IERC20PermitUpgradeable"
+        "WbtcPriceDataFeedMock"
+      ]
+    },
+    "D:\\USER\\Downloads\\ATLAS\\Projects\\HYAX-Upgradeable-Token\\contracts\\UsdtToken.sol": {
+      "lastModificationDate": 1731014551625,
+      "contentHash": "08bf8cd30bc40c46fe0b18ee91a77387",
+      "sourceName": "contracts/UsdtToken.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "storageLayout"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/token/ERC20/ERC20.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "UsdtToken"
+      ]
+    },
+    "D:\\USER\\Downloads\\ATLAS\\Projects\\HYAX-Upgradeable-Token\\contracts\\UsdtPriceDataFeedMock.sol": {
+      "lastModificationDate": 1731014551609,
+      "contentHash": "f3fdd237478c9228509ae03ceef70437",
+      "sourceName": "contracts/UsdtPriceDataFeedMock.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "storageLayout"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/token/ERC20/ERC20.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "UsdtPriceDataFeedMock"
+      ]
+    },
+    "D:\\USER\\Downloads\\ATLAS\\Projects\\HYAX-Upgradeable-Token\\contracts\\UsdcToken.sol": {
+      "lastModificationDate": 1731014551609,
+      "contentHash": "d098fd521192bca32fd68cc147dd488f",
+      "sourceName": "contracts/UsdcToken.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "storageLayout"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/token/ERC20/ERC20.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "UsdcToken"
+      ]
+    },
+    "D:\\USER\\Downloads\\ATLAS\\Projects\\HYAX-Upgradeable-Token\\contracts\\UsdcPriceDataFeedMock.sol": {
+      "lastModificationDate": 1731014551515,
+      "contentHash": "644fd1c660a3ff59533d39e5f7bbe296",
+      "sourceName": "contracts/UsdcPriceDataFeedMock.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "storageLayout"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/token/ERC20/ERC20.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "UsdcPriceDataFeedMock"
+      ]
+    },
+    "D:\\USER\\Downloads\\ATLAS\\Projects\\HYAX-Upgradeable-Token\\contracts\\MaticToken.sol": {
+      "lastModificationDate": 1731014551515,
+      "contentHash": "98cd11534a162a82285cd1b9fbc37e52",
+      "sourceName": "contracts/MaticToken.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "storageLayout"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/token/ERC20/ERC20.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "MaticToken"
+      ]
+    },
+    "D:\\USER\\Downloads\\ATLAS\\Projects\\HYAX-Upgradeable-Token\\contracts\\MaticPriceDataFeedMock.sol": {
+      "lastModificationDate": 1731014551500,
+      "contentHash": "071e8a2ee83ccd2c1371f9131c7daa5f",
+      "sourceName": "contracts/MaticPriceDataFeedMock.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "storageLayout"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/token/ERC20/ERC20.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "MaticPriceDataFeedMock"
       ]
     }
   }

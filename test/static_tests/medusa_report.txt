@@ -1,0 +1,60 @@
+⇾ Reading the configuration file at: /share/medusa.json
+⇾ Compiling targets with crytic-compile
+warn Currently, optimization mode's call sequence shrinking is inefficient; this may lead to minor performance issues
+⇾ Initializing corpus
+⇾ Setting up base chain
+⇾ Initializing and validating corpus call sequences
+⇾ Fuzzing with 10 workers
+⇾ [NOT STARTED] Assertion Test: HYAXUpgradeable.unpause()
+⇾ [NOT STARTED] Assertion Test: HYAXUpgradeable.updatePriceFeedAddress(uint8,address)
+⇾ fuzz: elapsed: 0s, calls: 0 (0/sec), seq/s: 0, coverage: 0
+⇾ [NOT STARTED] Assertion Test: HYAXUpgradeable.investFromMatic()
+⇾ [NOT STARTED] Assertion Test: HYAXUpgradeable.updateTokenAddress(uint8,address)
+⇾ [NOT STARTED] Assertion Test: HYAXUpgradeable.addToWhiteList(address)
+⇾ [NOT STARTED] Assertion Test: HYAXUpgradeable.decreaseAllowance(address,uint256)
+⇾ [NOT STARTED] Assertion Test: HYAXUpgradeable.investFromCryptoToken(uint8,uint256)
+⇾ [NOT STARTED] Assertion Test: HYAXUpgradeable.transferFrom(address,address,uint256)
+⇾ [NOT STARTED] Assertion Test: HYAXUpgradeable.updateBlacklistStatus(address,bool)
+⇾ [NOT STARTED] Assertion Test: HYAXUpgradeable.updateHyaxPrice(uint256)
+⇾ [NOT STARTED] Assertion Test: HYAXUpgradeable.pause()
+⇾ [NOT STARTED] Assertion Test: HYAXUpgradeable.transferOwnership(address)
+⇾ [NOT STARTED] Assertion Test: HYAXUpgradeable.updateMinimumInvestmentAllowedInUSD(uint256)
+⇾ [NOT STARTED] Assertion Test: HYAXUpgradeable.updateQualifiedInvestorStatus(address,bool)
+⇾ [NOT STARTED] Assertion Test: HYAXUpgradeable.updateWhitelistStatus(address,bool)
+⇾ [NOT STARTED] Assertion Test: HYAXUpgradeable.updateWhiteListerAddress(address)
+⇾ [NOT STARTED] Assertion Test: HYAXUpgradeable.approve(address,uint256)
+⇾ [NOT STARTED] Assertion Test: HYAXUpgradeable.tokenIssuance(uint256)
+⇾ [NOT STARTED] Assertion Test: HYAXUpgradeable.initialize()
+⇾ [NOT STARTED] Assertion Test: HYAXUpgradeable.transfer(address,uint256)
+⇾ [NOT STARTED] Assertion Test: HYAXUpgradeable.updateMaximumInvestmentAllowedInUSD(uint256)
+⇾ [NOT STARTED] Assertion Test: HYAXUpgradeable.increaseAllowance(address,uint256)
+⇾ [NOT STARTED] Assertion Test: HYAXUpgradeable.renounceOwnership()
+⇾ [NOT STARTED] Assertion Test: HYAXUpgradeable.updateTreasuryAddress(address)
+⇾ fuzz: elapsed: 3s, calls: 21246 (7081/sec), seq/s: 69, coverage: 22
+⇾ Transaction test limit reached, halting now...
+⇾ Fuzzer stopped, test results follow below ...
+⇾ [PASSED] Assertion Test: HYAXUpgradeable.addToWhiteList(address)
+⇾ [PASSED] Assertion Test: HYAXUpgradeable.approve(address,uint256)
+⇾ [PASSED] Assertion Test: HYAXUpgradeable.decreaseAllowance(address,uint256)
+⇾ [PASSED] Assertion Test: HYAXUpgradeable.increaseAllowance(address,uint256)
+⇾ [PASSED] Assertion Test: HYAXUpgradeable.initialize()
+⇾ [PASSED] Assertion Test: HYAXUpgradeable.investFromCryptoToken(uint8,uint256)
+⇾ [PASSED] Assertion Test: HYAXUpgradeable.investFromMatic()
+⇾ [PASSED] Assertion Test: HYAXUpgradeable.pause()
+⇾ [PASSED] Assertion Test: HYAXUpgradeable.renounceOwnership()
+⇾ [PASSED] Assertion Test: HYAXUpgradeable.tokenIssuance(uint256)
+⇾ [PASSED] Assertion Test: HYAXUpgradeable.transfer(address,uint256)
+⇾ [PASSED] Assertion Test: HYAXUpgradeable.transferFrom(address,address,uint256)
+⇾ [PASSED] Assertion Test: HYAXUpgradeable.transferOwnership(address)
+⇾ [PASSED] Assertion Test: HYAXUpgradeable.unpause()
+⇾ [PASSED] Assertion Test: HYAXUpgradeable.updateBlacklistStatus(address,bool)
+⇾ [PASSED] Assertion Test: HYAXUpgradeable.updateHyaxPrice(uint256)
+⇾ [PASSED] Assertion Test: HYAXUpgradeable.updateMaximumInvestmentAllowedInUSD(uint256)
+⇾ [PASSED] Assertion Test: HYAXUpgradeable.updateMinimumInvestmentAllowedInUSD(uint256)
+⇾ [PASSED] Assertion Test: HYAXUpgradeable.updatePriceFeedAddress(uint8,address)
+⇾ [PASSED] Assertion Test: HYAXUpgradeable.updateQualifiedInvestorStatus(address,bool)
+⇾ [PASSED] Assertion Test: HYAXUpgradeable.updateTokenAddress(uint8,address)
+⇾ [PASSED] Assertion Test: HYAXUpgradeable.updateTreasuryAddress(address)
+⇾ [PASSED] Assertion Test: HYAXUpgradeable.updateWhiteListerAddress(address)
+⇾ [PASSED] Assertion Test: HYAXUpgradeable.updateWhitelistStatus(address,bool)
+⇾ Test summary: 24 test(s) passed, 0 test(s) failed

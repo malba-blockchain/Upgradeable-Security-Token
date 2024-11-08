@@ -5,6 +5,7 @@ require("@nomicfoundation/hardhat-verify");
 require("hardhat-gas-reporter");
 require("@nomicfoundation/hardhat-chai-matchers");
 require("@nomicfoundation/hardhat-toolbox");
+require("@nomiclabs/hardhat-solhint");
 require('dotenv').config();
 
 /** @type import('hardhat/config').HardhatUserConfig */
