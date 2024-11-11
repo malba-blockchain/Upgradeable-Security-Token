@@ -1214,8 +1214,8 @@
       ]
     },
     "D:\\USER\\Downloads\\ATLAS\\Projects\\HYAX-Upgradeable-Token\\contracts\\MaticToken.sol": {
-      "lastModificationDate": 1731014551515,
-      "contentHash": "98cd11534a162a82285cd1b9fbc37e52",
+      "lastModificationDate": 1731285481332,
+      "contentHash": "09e7bea0cf353e3dd72bffc993211ba2",
       "sourceName": "contracts/MaticToken.sol",
       "solcConfig": {
         "version": "0.8.20",
