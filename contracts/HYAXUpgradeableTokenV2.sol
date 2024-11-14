@@ -14,7 +14,7 @@ import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
 /**
  * @title HYAXUpgradeableTokenV2
- * @dev This contract is an upgradeable customized version of the ERC20PausableUpgradeable, OwnableUpgradeable, and ReentrancyGuardUpgradeable contracts.
+ * @dev The version 2 of the upgradeable customized version of the ERC20PausableUpgradeable, OwnableUpgradeable, and ReentrancyGuardUpgradeable contracts.
  */
 contract HYAXUpgradeableTokenV2 is
     ERC20PausableUpgradeable,
@@ -1166,8 +1166,8 @@ contract HYAXUpgradeableTokenV2 is
                 "Stale price data"
             ); // Ensure timestamp is valid
             require(answeredInRound >= roundID, "Incomplete round data"); // Check if round data is complete
-            //require(block.timestamp - timeStamp <= MAX_PRICE_AGE, "Price data too old"); // Ensure price data freshness
-
+            require(block.timestamp - timeStamp <= MAX_PRICE_AGE, "Price data too old"); // Ensure price data freshness
+            
             // Return the price as an unsigned integer
             return uint256(answer);
         } catch {

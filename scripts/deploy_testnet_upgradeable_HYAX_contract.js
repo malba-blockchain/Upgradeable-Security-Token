@@ -25,7 +25,7 @@ async function main() {
     
     // This line logs the address of the deployer wallet to the console.
     console.log("\nDeployer wallet address: ", deployerWallet.address);
-
+    
     // This line gets the balance of the deployer wallet and logs it to the console.
     console.log("\nDeployer wallet balance: ", await provider.getBalance(deployerWallet.address));
 

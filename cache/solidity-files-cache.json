@@ -1292,8 +1292,8 @@
       ]
     },
     "D:\\USER\\Downloads\\ATLAS\\Projects\\HYAX-Upgradeable-Token\\contracts\\HYAXUpgradeableTokenV2.sol": {
-      "lastModificationDate": 1731082339258,
-      "contentHash": "ad2267fdf1397e0aee4fa80bf5b42fa3",
+      "lastModificationDate": 1731602252334,
+      "contentHash": "73c3e667e15b2a1c153bf9cb4243e295",
       "sourceName": "contracts/HYAXUpgradeableTokenV2.sol",
       "solcConfig": {
         "version": "0.8.20",
@@ -1335,8 +1335,8 @@
       ]
     },
     "D:\\USER\\Downloads\\ATLAS\\Projects\\HYAX-Upgradeable-Token\\contracts\\HYAXUpgradeableToken.sol": {
-      "lastModificationDate": 1731083833358,
-      "contentHash": "0397ac70a1211863230882f9da419535",
+      "lastModificationDate": 1731602299719,
+      "contentHash": "b0739c7b77da1a96d009fa7f6e2105c7",
       "sourceName": "contracts/HYAXUpgradeableToken.sol",
       "solcConfig": {
         "version": "0.8.20",

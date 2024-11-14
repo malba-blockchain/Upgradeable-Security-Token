@@ -1166,8 +1166,8 @@ contract HYAXUpgradeableToken is
                 "Stale price data"
             ); // Ensure timestamp is valid
             require(answeredInRound >= roundID, "Incomplete round data"); // Check if round data is complete
-            //require(block.timestamp - timeStamp <= MAX_PRICE_AGE, "Price data too old"); // Ensure price data freshness
-
+            require(block.timestamp - timeStamp <= MAX_PRICE_AGE, "Price data too old"); // Ensure price data freshness
+            
             // Return the price as an unsigned integer
             return uint256(answer);
         } catch {
@@ -1217,7 +1217,7 @@ contract HYAXUpgradeableToken is
 
         _transferOwnership(newOwner);
     }
-
+    
     /**
      * @dev Handles incoming MATIC transactions.
      * Emits an event to signal the received MATIC.

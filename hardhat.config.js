@@ -28,7 +28,10 @@ module.exports = {
     hardhat: {
       accounts: {
         accountsBalance: "100000000000000000000000",
-        count: 70, 
+        count: 70,
+      },
+      mining: {
+        auto: true, // Enable automatic mining
       },
   }
   },
