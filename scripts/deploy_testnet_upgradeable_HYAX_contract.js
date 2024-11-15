@@ -46,14 +46,10 @@ async function main() {
     // This line logs the address of the deployed upgradeable contract proxy to the console.
     console.log("\nContract deployed at address: ", txSmartContractDeployment.target);
 
-    // This line gets the ABI (Application Binary Interface) of the deployed smart contract.
-    // The ABI defines how to interact with the contract's functions and events.
-    const smartContractAbi = smartContractFactory.interface.formatJson();
-
     // This line creates a new contract object instance representing the deployed contract proxy.
     // It provides methods for interacting with the contract's functions and events.
     const smartContractInstance = await new ethers.Contract(txSmartContractDeployment.target, smartContractAbi, deployerWallet);
-
+    
     // This line logs the address of the deployed contract proxy again (likely for verification).
     console.log("\nContract deployed at address: ", smartContractInstance.target);
 }
