@@ -100,7 +100,7 @@ describe("Test case #8. HYAX token issuance", function () {
 
     //Issuance of 1000M tokens makes the total supply, creates 10500 M tokes which surpasses the maximum amount of tokens to create
     await expect(hyax.connect(owner).tokenIssuance(ethers.parseUnits("1000000000", 18)))
-      .to.be.revertedWith('Amount of HYAX tokens to issue surpases the 10,000 M tokens');
+      .to.be.revertedWith('Amount of HYAX tokens to issue surpasses the 10,000 M tokens');
   });
 
   it("8.6. Should properly execute the function because it's executed with the owner address and a valid amount as parameter", async function () {

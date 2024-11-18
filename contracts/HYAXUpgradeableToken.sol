@@ -640,7 +640,7 @@ contract HYAXUpgradeableToken is
         // Validate the amount to issue doesn't go beyond the established total supply
         require(
             totalSupply() + _amount <= 10000000000 * 10 ** decimals(),
-            "Amount of HYAX tokens to issue surpases the 10,000 M tokens"
+            "Amount of HYAX tokens to issue surpasses the 10,000 M tokens"
         );
 
         // Mint the specified amount of tokens to the owner
