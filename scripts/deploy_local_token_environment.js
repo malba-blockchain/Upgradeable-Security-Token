@@ -36,7 +36,6 @@ async function getTheSigners() {
 }
 
 
-
 // Function to update the LOCAL_TOKEN_SMART_CONTRACT_ADDRESS in addresses.ts
 async function updateLocalTokenAddress(newAddress) {
   const addressesFilePath = path.join(__dirname, '../utils/addresses.ts');

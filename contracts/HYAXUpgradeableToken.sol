@@ -594,7 +594,7 @@ contract HYAXUpgradeableToken is
             _qualifiedInvestorAddress != address(0),
             "Investor address to update qualified investor status cannot be the zero address"
         );
-
+        
         // Ensure that the investor address to update is already in the whitelist of investors
         require(
             investorData[_qualifiedInvestorAddress].isWhiteListed,
@@ -1166,7 +1166,7 @@ contract HYAXUpgradeableToken is
                 "Stale price data"
             ); // Ensure timestamp is valid
             require(answeredInRound >= roundID, "Incomplete round data"); // Check if round data is complete
-            require(block.timestamp - timeStamp <= MAX_PRICE_AGE, "Price data too old"); // Ensure price data freshness
+            //require(block.timestamp - timeStamp <= MAX_PRICE_AGE, "Price data too old"); // Ensure price data freshness
             
             // Return the price as an unsigned integer
             return uint256(answer);
